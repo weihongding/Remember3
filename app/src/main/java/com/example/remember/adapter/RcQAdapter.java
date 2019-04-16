@@ -8,10 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.entity.Rc_q;
 import com.example.remember.util.DateUtil;
+import com.example.remember.util.MyApplication;
 
 import java.util.List;
 
@@ -35,8 +37,21 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Rc_q rcq = mRcqList.get(position);
         String date = rcq.getStartTime();
-        String color = rcq.getColor();
+        final String color = rcq.getColor();
         holder.rcStartTime.setText(DateUtil.getH(date)+":"+DateUtil.getM(date));
+        holder.rcStartTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MyApplication.getContext(), "点击了RecyclerViewItem，颜色为"+color, Toast.LENGTH_SHORT).show();
+            }
+        });
+        holder.rcStartTime.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Toast.makeText(MyApplication.getContext(), "长按了RecyclerViewItem，颜色为"+color, Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
         GradientDrawable p = (GradientDrawable) holder.rcStartTime.getBackground();
         p.setColor(Color.parseColor(color));
     }

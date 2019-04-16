@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.widget.Button;
 
 import com.example.remember.R;
@@ -13,6 +14,7 @@ import com.example.remember.adapter.RcUnqAdapter;
 import com.example.remember.entity.Rc_q;
 import com.example.remember.entity.Rc_unq;
 import com.example.remember.listener.RcBtnListener;
+import com.example.remember.listener.RcBtnLongListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +34,7 @@ public class RcActivity extends AppCompatActivity {
 
         Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         RcBtnListener listener = new RcBtnListener(this);
+        RcBtnLongListener longListener = new RcBtnLongListener(this);
 
         RecyclerView recyclerView1 = (RecyclerView) findViewById(R.id.recycler_rc_q1);
         RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.recycler_rc_q2);
@@ -44,10 +47,11 @@ public class RcActivity extends AppCompatActivity {
         btn_add.setOnClickListener(listener);
         btn_history.setOnClickListener(listener);
         btn_change.setOnClickListener(listener);
+        btn_add.setOnLongClickListener(longListener);
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
-        LinearLayoutManager layoutManagerUnq = new LinearLayoutManager(this);
+        StaggeredGridLayoutManager layoutManagerUnq = new StaggeredGridLayoutManager(6,StaggeredGridLayoutManager.VERTICAL);
 
         recyclerView1.setLayoutManager(layoutManager1);
         recyclerView2.setLayoutManager(layoutManager2);
@@ -82,6 +86,24 @@ public class RcActivity extends AppCompatActivity {
         rcUnq1.setColor("#ff0000");
         Rc_unq rcUnq2 = new Rc_unq();
         rcUnq2.setColor("#00ff00");
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
+        rcUnqList.add(rcUnq1);
+        rcUnqList.add(rcUnq2);
         rcUnqList.add(rcUnq1);
         rcUnqList.add(rcUnq2);
     }
