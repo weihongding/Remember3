@@ -1,8 +1,13 @@
 package com.example.remember.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.google.gson.JsonObject;
+
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Map;
 
 public class DataUtil {
 
@@ -26,6 +31,22 @@ public class DataUtil {
             md5code = "0" + md5code;
         }
         return md5code;
+    }
+
+    //将普通的string格式转化为jsonStr格式
+    //输入格式： key1:value1,key2:value2 ...
+    //返回格式： {"key1":"value1","key2":"value2"}
+    public static String getJsonStr(String str){
+        str = "{\""+str+"\"}";
+        str = str.replace(":", "\":\"");
+        str = str.replace(",", "\",\"");
+        return str;
+    }
+
+    //fastjson转map
+    public static Map jsonToMap(JSONObject json){
+        Map map = (Map) json;
+        return map;
     }
 
 }
