@@ -7,6 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.RcActivity;
+import com.example.remember.entity.Rc_q;
+
+import java.util.Collections;
 
 public class RcBtnListener implements View.OnClickListener  {
 
@@ -20,7 +24,12 @@ public class RcBtnListener implements View.OnClickListener  {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_rc_add: {
-                Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
+                Rc_q rcq = new Rc_q();
+                rcq.setStartTime("2019-4-8 15:05:59");
+                rcq.setColor("#0000ff");
+                RcActivity.rcqlist1.add(rcq);
+                Collections.sort(RcActivity.rcqlist1);
+                RcActivity.adapter1.notifyDataSetChanged();
             }
             case R.id.btn_rc_change: {
                 View layout_rc_add = (View) mActivity.findViewById(R.id.layout_rc_add);

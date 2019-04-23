@@ -74,25 +74,34 @@ public class DateUtil {
         return str.substring(index1, index2);
     }
 
+    //获取标准日期字符串为当天的第几秒
+    public static int getSofB(String str){
+        return ((Integer.parseInt(getH(str)) * 60)+Integer.parseInt(getM(str)))*60+Integer.parseInt(getS(str));
+    }
+
     //根据传入的日期获取所在周的日期list
-    public static List<Date> getWeek(Date mdate) {
+    public static List<String> getWeek(Date mdate) {
         int b = mdate.getDay();
         Date fdate;
-        List<Date> list = new ArrayList<Date>();
+        String str = "";
+        List<String> list = new ArrayList<String>();
         Long fTime = mdate.getTime() - b * 24 * 3600000;
         for (int a = 1; a <= 7; a++) {
             fdate = new Date();
             fdate.setTime(fTime + (a * 24 * 3600000));
-            list.add(a-1, fdate);
+            str = getDay(dateToStr(fdate));
+            list.add(a-1, str);
         }
         return list;
     }
 
+    //Date转String
     public static String dateToStr(Date mdate) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(mdate);
     }
 
+    //String转Date
     public static Date strToDate(String strDate) {
         SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         ParsePosition pos = new ParsePosition(0);

@@ -1,6 +1,8 @@
 package com.example.remember.entity;
 
-public class Rc_q {
+import com.example.remember.util.DateUtil;
+
+public class Rc_q implements Comparable<Rc_q>{
 
     private String startTime;
     private String endTime;
@@ -8,6 +10,15 @@ public class Rc_q {
     private String des;
     private String color;
 
+    public Rc_q(){}
+
+    public Rc_q(String startTime,String endTime,String content,String des,String color){
+        setStartTime(startTime);
+        setEndTime(endTime);
+        setContent(content);
+        setDes(des);
+        setColor(color);
+    }
     public String getStartTime() {
         return startTime;
     }
@@ -46,5 +57,10 @@ public class Rc_q {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    @Override
+    public int compareTo(Rc_q r) {
+        return DateUtil.getSofB(this.getStartTime())- DateUtil.getSofB(r.getStartTime());
     }
 }
