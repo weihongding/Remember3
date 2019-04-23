@@ -1,0 +1,12 @@
+<litepal>
+
+    <dbname value="Remember" />
+    <version value="1" />
+
+    <list>
+        <mapping class="com.example.remember.db.Province" />
+        <mapping class="com.example.remember.db.City" />
+        <mapping class="com.example.remember.db.County" />
+    </list>
+
+</litepal>
