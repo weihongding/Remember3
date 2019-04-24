@@ -4,7 +4,7 @@
     android:layout_height="match_parent">
 
     <fragment
-        android:id="@+id/choose_area_fragment"
+        android:id="@+id/frag_tq_choose"
         android:name="com.example.remember.fragment.ChooseAreaFragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
