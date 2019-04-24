@@ -17,7 +17,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.MainActivity;
 import com.example.remember.activity.RcActivity;
+import com.example.remember.activity.TqActivity;
 import com.example.remember.activity.WeatherActivity;
 import com.example.remember.db.City;
 import com.example.remember.db.County;
@@ -88,7 +90,7 @@ public class ChooseAreaFragment extends Fragment {
                     queryCounties();
                 }else if (currentLevel == LEVEL_COUNTY){
                     String weatherId = countyList.get(position).getWeatherId();
-                    if (getActivity() instanceof RcActivity){
+                    if (getActivity() instanceof TqActivity){
                         Intent intent = new Intent(getActivity(), WeatherActivity.class);
                         intent.putExtra("weather_id",weatherId);
                         startActivity(intent);
