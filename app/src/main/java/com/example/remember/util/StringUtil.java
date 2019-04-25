@@ -10,4 +10,44 @@ public class StringUtil {
     public static final String eventType_sj = "事件记录";
     public static final String eventType_sb = "设备";
 
+    public static String numToStr(int n){
+
+        switch (n){
+            case 1:
+                return "一";
+            case 2:
+                return "二";
+            case 3:
+                return "三";
+            case 4:
+                return "四";
+            case 5:
+                return "五";
+            case 6:
+                return "六";
+            case 7:
+                return "七";
+            case 8:
+                return "八";
+            case 9:
+                return "九";
+            case 10:
+                return "十";
+            case 11:
+                return "十一";
+            case 12:
+                return "十二";
+        }
+
+        return null;
+    }
+
+    public static String getContent_bwl(String str){
+        if (str.length()>10){
+            return str.substring(0,10)+"...";
+        }else{
+            return str;
+        }
+    }
+
 }

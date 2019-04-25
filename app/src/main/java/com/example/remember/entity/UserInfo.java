@@ -1,7 +1,6 @@
 package com.example.remember.entity;
 
 public class UserInfo {
-
     private int id;
     private String name;
 

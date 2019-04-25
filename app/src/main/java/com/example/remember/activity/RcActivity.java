@@ -1,6 +1,5 @@
 package com.example.remember.activity;
 
-import android.graphics.Typeface;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -12,12 +11,13 @@ import android.widget.TextView;
 import com.example.remember.R;
 import com.example.remember.adapter.RcQAdapter;
 import com.example.remember.adapter.RcUnqAdapter;
-import com.example.remember.entity.Rc_q;
-import com.example.remember.entity.Rc_unq;
-import com.example.remember.listener.RcBtnListener;
-import com.example.remember.listener.RcBtnLongListener;
+import com.example.remember.db.Rc_q;
+import com.example.remember.db.Rc_unq;
+import com.example.remember.listener.BtnListener;
+import com.example.remember.listener.BtnLongListener;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.FontManager;
+import com.example.remember.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,20 +37,19 @@ public class RcActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_rc);
-        if (rcqlist1==null){
-            iniRcqList1();//初始化数据
-        }
-        if (rcqlist2==null){
-            iniRcqList2();//初始化数据
-        }
-        if (rcUnqList==null){
-            iniRcUnqList();//初始化数据
-        }
+
+        //初始化数据
+        iniRcqList1();
+        iniRcqList2();
+        iniRcUnqList();
         List<String> list = DateUtil.getWeek(new Date());
 
-        RcBtnListener listener = new RcBtnListener(this);
-        RcBtnLongListener longListener = new RcBtnLongListener(this);
+        BtnListener listener = new BtnListener(this);
+        BtnLongListener longListener = new BtnLongListener(this);
 
+        //控件实例获取
+        TextView tvYear = (TextView)findViewById(R.id.text_rc_year);
+        TextView tvMonth = (TextView)findViewById(R.id.text_rc_month);
         TextView tv1 = (TextView)findViewById(R.id.text_rc_q1);
         TextView tv2 = (TextView)findViewById(R.id.text_rc_q2);
         TextView tv3 = (TextView)findViewById(R.id.text_rc_q3);
@@ -64,12 +63,18 @@ public class RcActivity extends AppCompatActivity {
         Button btn_add = (Button) findViewById(R.id.btn_rc_add);
         Button btn_history = (Button) findViewById(R.id.btn_rc_history);
         Button btn_change = (Button) findViewById(R.id.btn_rc_change);
+
+        //设置字体、监听器
         btn_history.setTypeface(FontManager.font);
         btn_change.setTypeface(FontManager.font);
         btn_add.setOnClickListener(listener);
         btn_history.setOnClickListener(listener);
         btn_change.setOnClickListener(listener);
         btn_add.setOnLongClickListener(longListener);
+
+        //设置文本内容
+        tvYear.setText(DateUtil.getYear()+"年");
+        tvMonth.setText(StringUtil.numToStr(DateUtil.getMonth())+"月");
         tv1.setText(list.get(0));
         tv2.setText(list.get(1));
         tv3.setText(list.get(2));
@@ -78,6 +83,7 @@ public class RcActivity extends AppCompatActivity {
         tv6.setText(list.get(5));
         tv7.setText(list.get(6));
 
+        //列表初始化
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
         StaggeredGridLayoutManager layoutManagerUnq = new StaggeredGridLayoutManager(6,StaggeredGridLayoutManager.VERTICAL);

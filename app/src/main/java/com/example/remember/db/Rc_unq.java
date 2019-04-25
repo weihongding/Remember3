@@ -1,6 +1,8 @@
-package com.example.remember.entity;
+package com.example.remember.db;
 
-public class Rc_unq {
+import org.litepal.crud.DataSupport;
+
+public class Rc_unq extends DataSupport {
 
     private String content;
     private String des;

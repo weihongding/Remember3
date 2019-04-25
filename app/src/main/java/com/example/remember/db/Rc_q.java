@@ -1,8 +1,10 @@
-package com.example.remember.entity;
+package com.example.remember.db;
 
 import com.example.remember.util.DateUtil;
 
-public class Rc_q implements Comparable<Rc_q>{
+import org.litepal.crud.DataSupport;
+
+public class Rc_q extends DataSupport implements Comparable<Rc_q>{
 
     private String startTime;
     private String endTime;

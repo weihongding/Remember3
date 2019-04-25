@@ -37,7 +37,6 @@ public class DtActivity extends AppCompatActivity {
         mLocationClient.registerLocationListener(locationListener);
 
         //获取权限
-        positionText = (TextView)findViewById(R.id.text_position);
         List<String> permissionList = new ArrayList<>();
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION)!= PackageManager.PERMISSION_GRANTED){
             permissionList.add(Manifest.permission.ACCESS_FINE_LOCATION);

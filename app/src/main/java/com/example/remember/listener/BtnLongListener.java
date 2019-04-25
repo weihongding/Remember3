@@ -6,11 +6,11 @@ import android.widget.Toast;
 
 import com.example.remember.R;
 
-public class RcBtnLongListener implements View.OnLongClickListener {
+public class BtnLongListener implements View.OnLongClickListener {
 
     private Activity mActivity;
 
-    public RcBtnLongListener(Activity activity) {
+    public BtnLongListener(Activity activity) {
         mActivity = activity;
     }
 

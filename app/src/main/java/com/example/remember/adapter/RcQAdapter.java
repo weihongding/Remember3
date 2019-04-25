@@ -11,7 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
-import com.example.remember.entity.Rc_q;
+import com.example.remember.db.Rc_q;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
 

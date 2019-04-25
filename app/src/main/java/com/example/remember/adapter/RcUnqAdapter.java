@@ -10,9 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.example.remember.R;
-import com.example.remember.entity.Rc_q;
-import com.example.remember.entity.Rc_unq;
-import com.example.remember.util.DateUtil;
+import com.example.remember.db.Rc_unq;
 
 import java.util.List;
 

@@ -1,22 +1,20 @@
 package com.example.remember.listener;
 
 import android.app.Activity;
-import android.text.Layout;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.activity.RcActivity;
-import com.example.remember.entity.Rc_q;
+import com.example.remember.db.Rc_q;
 
 import java.util.Collections;
 
-public class RcBtnListener implements View.OnClickListener  {
+public class BtnListener implements View.OnClickListener  {
 
     private Activity mActivity;
 
-    public RcBtnListener(Activity activity){
+    public BtnListener(Activity activity){
         mActivity = activity;
     }
 
@@ -40,6 +38,10 @@ public class RcBtnListener implements View.OnClickListener  {
             }
             case R.id.btn_rc_history: {
                 Toast.makeText(mActivity, "点击了同步", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_bwl_add:{
+                Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
         }
