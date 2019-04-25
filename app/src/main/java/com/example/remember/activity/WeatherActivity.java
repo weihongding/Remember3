@@ -26,6 +26,7 @@ import com.example.remember.R;
 import com.example.remember.gson.Forecast;
 import com.example.remember.gson.Weather;
 import com.example.remember.service.TqAutoUpdateService;
+import com.example.remember.util.FontManager;
 import com.example.remember.util.HttpUtil;
 import com.example.remember.util.JsonUtil;
 
@@ -82,9 +83,7 @@ public class WeatherActivity extends AppCompatActivity {
         sportText = (TextView)findViewById(R.id.text_tq_sport);
         bingPicImg = (ImageView)findViewById(R.id.img_tq_bing);
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
-
-        navButton.setTypeface(font);
+        navButton.setTypeface(FontManager.font);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather",null);

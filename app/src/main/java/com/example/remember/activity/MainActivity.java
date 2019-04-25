@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.example.remember.R;
 import com.example.remember.util.CheckUtil;
+import com.example.remember.util.FontManager;
 import com.example.remember.util.MyDialog;
 import com.example.remember.listener.MaBtnListener;
 
@@ -32,10 +33,8 @@ public class MainActivity extends AppCompatActivity {
         View logView = this.getLayoutInflater().inflate(R.layout.login, null);
         View regView = this.getLayoutInflater().inflate(R.layout.register, null);
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
-
-        btn_share.setTypeface(font);
-        btn_set.setTypeface(font);
+        btn_share.setTypeface(FontManager.font);
+        btn_set.setTypeface(FontManager.font);
         MaBtnListener listener = new MaBtnListener(this);
 
         //修改颜色

@@ -2,6 +2,7 @@ package com.example.remember.fragment;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -24,6 +25,7 @@ import com.example.remember.activity.WeatherActivity;
 import com.example.remember.db.City;
 import com.example.remember.db.County;
 import com.example.remember.db.Province;
+import com.example.remember.util.FontManager;
 import com.example.remember.util.HttpUtil;
 import com.example.remember.util.JsonUtil;
 
@@ -72,6 +74,7 @@ public class ChooseAreaFragment extends Fragment {
         backButton = (Button) view.findViewById(R.id.btn_tq_back);
         listView = (ListView) view.findViewById(R.id.list_tq);
         adapter = new ArrayAdapter<>(getContext(),android.R.layout.simple_list_item_1,dataList);
+        backButton.setTypeface(FontManager.font);
         listView.setAdapter(adapter);
         return view;
     }

@@ -17,6 +17,7 @@ import com.example.remember.entity.Rc_unq;
 import com.example.remember.listener.RcBtnListener;
 import com.example.remember.listener.RcBtnLongListener;
 import com.example.remember.util.DateUtil;
+import com.example.remember.util.FontManager;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -47,7 +48,6 @@ public class RcActivity extends AppCompatActivity {
         }
         List<String> list = DateUtil.getWeek(new Date());
 
-        Typeface font = Typeface.createFromAsset(getAssets(), "fonts/fontawesome-webfont.ttf");
         RcBtnListener listener = new RcBtnListener(this);
         RcBtnLongListener longListener = new RcBtnLongListener(this);
 
@@ -64,8 +64,8 @@ public class RcActivity extends AppCompatActivity {
         Button btn_add = (Button) findViewById(R.id.btn_rc_add);
         Button btn_history = (Button) findViewById(R.id.btn_rc_history);
         Button btn_change = (Button) findViewById(R.id.btn_rc_change);
-        btn_history.setTypeface(font);
-        btn_change.setTypeface(font);
+        btn_history.setTypeface(FontManager.font);
+        btn_change.setTypeface(FontManager.font);
         btn_add.setOnClickListener(listener);
         btn_history.setOnClickListener(listener);
         btn_change.setOnClickListener(listener);
