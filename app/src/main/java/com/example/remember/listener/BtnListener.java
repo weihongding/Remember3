@@ -44,6 +44,11 @@ public class BtnListener implements View.OnClickListener  {
                 Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.btn_jl_add:{
+                Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
         }
     }
 

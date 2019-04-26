@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_jl_item"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:layout_marginTop="1dp"
+    android:background="@drawable/circle_15">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="5">
+
+        <TextView
+            android:id="@+id/text_jl_item_title"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:text="前十个字，若不止则..."
+            android:textSize="20dp"
+            android:layout_marginLeft="10dp"
+            android:gravity="center_vertical"
+            />
+
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp">
+
+            <TextView
+                android:id="@+id/text_jl_item_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="事件"
+                android:textSize="16dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentLeft="true"
+                android:gravity="center_vertical"/>
+
+            <TextView
+                android:id="@+id/text_jl_item_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2019-4-24 15:09:31"
+                android:textSize="16dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:gravity="center_vertical"
+                />
+
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/btn_jl_item_add"
+        android:text="@string/fa_pencil"
+        android:textSize="20dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@null"/>
+
+
+</LinearLayout>

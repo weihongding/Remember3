@@ -21,6 +21,8 @@ import com.example.remember.activity.RcActivity;
 import com.example.remember.activity.SbActivity;
 import com.example.remember.activity.TqActivity;
 
+import org.litepal.LitePal;
+
 import java.util.Map;
 
 
@@ -36,6 +38,7 @@ public class MaBtnListener implements View.OnClickListener {
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_mail:{
+                LitePal.getDatabase();
                 Toast.makeText(MyApplication.getContext(),"点击了分享", Toast.LENGTH_SHORT).show();
                 break;
             }

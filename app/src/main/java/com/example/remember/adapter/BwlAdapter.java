@@ -29,7 +29,7 @@ public class BwlAdapter extends RecyclerView.Adapter<BwlAdapter.ViewHolder>{
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bwl_event_item,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.bwl_item,parent,false);
         BwlAdapter.ViewHolder holder = new BwlAdapter.ViewHolder(view);
         return holder;
     }
