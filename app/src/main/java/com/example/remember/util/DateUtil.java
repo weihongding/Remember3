@@ -79,6 +79,32 @@ public class DateUtil {
         return ((Integer.parseInt(getH(str)) * 60)+Integer.parseInt(getM(str)))*60+Integer.parseInt(getS(str));
     }
 
+    public static int getGapOfTime(String time1,String time2){
+        //比较年份
+        String year1 = getYear(time1);
+        String year2 = getYear(time2);
+        if (!year1.equals(year2)){
+            return Integer.parseInt(year1)-Integer.parseInt(year2);
+        }
+
+        //比较月份
+        String month1 = getMonth(time1);
+        String month2 = getMonth(time2);
+        if (!month1.equals(month2)){
+            return Integer.parseInt(month1)-Integer.parseInt(month2);
+        }
+
+        //比较日期
+        String day1 = getDay(time1);
+        String day2 = getDay(time2);
+        if (!day1.equals(day2)){
+            return Integer.parseInt(day1)-Integer.parseInt(day2);
+        }
+
+        //年月日相同则返回具体时间差
+        return getSofB(time1)-getSofB(time2);
+    }
+
     //根据传入的日期获取所在周的日期list
     public static List<String> getWeek(Date mdate) {
         int b = mdate.getDay();

@@ -1,9 +1,11 @@
 package com.example.remember.db;
 
+import com.example.remember.util.DateUtil;
+
 import org.litepal.crud.DataSupport;
 
 //指标记录
-public class Jl extends DataSupport {
+public class Jl extends DataSupport implements Comparable<Jl> {
 
     private int id;
     private String type;
@@ -67,5 +69,10 @@ public class Jl extends DataSupport {
 
     public void setFinTime(String finTime) {
         this.finTime = finTime;
+    }
+
+    @Override
+    public int compareTo(Jl jl) {
+        return DateUtil.getGapOfTime(this.finTime,jl.finTime);
     }
 }

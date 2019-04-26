@@ -1,14 +1,16 @@
 package com.example.remember.entity;
 
-public class Sb {
+import com.example.remember.util.DateUtil;
+
+public class Sb implements Comparable<Sb> {
 
     private String name;
-    private String status;
+    private String state;
     private String time;
 
-    public Sb(String name,String status,String time){
+    public Sb(String name,String state,String time){
         setName(name);
-        setStatus(status);
+        setState(state);
         setTime(time);
     }
 
@@ -20,12 +22,12 @@ public class Sb {
         this.name = name;
     }
 
-    public String getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getTime() {
@@ -34,5 +36,11 @@ public class Sb {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+
+    @Override
+    public int compareTo(Sb sb) {
+        return DateUtil.getGapOfTime(this.time,sb.time);
     }
 }

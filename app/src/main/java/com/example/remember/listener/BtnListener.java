@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.BwlActivity;
 import com.example.remember.activity.RcActivity;
 import com.example.remember.db.Rc_q;
 
@@ -41,12 +42,17 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_bwl_add:{
+                Collections.sort(BwlActivity.bwlList);
+                BwlActivity.bwlAdapter.notifyDataSetChanged();
                 Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_add:{
                 Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
+            }
+            case R.id.btn_sb_add:{
+                Toast.makeText(mActivity, "点击了添加", Toast.LENGTH_SHORT).show();
             }
 
         }

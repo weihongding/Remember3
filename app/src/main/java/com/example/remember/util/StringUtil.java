@@ -10,6 +10,8 @@ public class StringUtil {
     public static final String eventType_sj = "事件";
     public static final String eventType_sb = "设备";
 
+    public static final String[] state_sb = {"关","开"};
+
     public static String numToStr(int n){
 
         switch (n){

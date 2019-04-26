@@ -6,4 +6,14 @@ public class ColorUtil {
             "#636CA2","#FF5A92","#EC5156","#32C8BA","#4AEC49","#F0AA41","#8CCC43",
             "#717586","#A44F6C","#BF6467","#4E8C86","#488C47","#C39B5F"};
 
+    public static final String state_open = "#D4ECB9";
+    public static final String state_close = "#666873";
+
+    public static String getStateColor(String state){
+        if (state.equals(StringUtil.state_sb[1])){
+            return state_open;
+        }
+        return state_close;
+    }
+
 }
