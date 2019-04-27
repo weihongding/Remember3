@@ -30,6 +30,10 @@ public class DateUtil {
         int index = str.indexOf("-");
         return str.substring(0, index);
     }
+    public static String getYear(Date date){
+        String str = dateToStr(date);
+        return getYear(str);
+    }
 
     //获取标准日期字符串中的月份
     public static String getMonth(String str) {
@@ -40,6 +44,10 @@ public class DateUtil {
             resultstr = resultstr.substring(1,2);
         }
         return resultstr;
+    }
+    public static String getMonth(Date date){
+        String str = dateToStr(date);
+        return getMonth(str);
     }
 
     //获取标准日期字符串中的日期
@@ -106,19 +114,67 @@ public class DateUtil {
     }
 
     //根据传入的日期获取所在周的日期list
-    public static List<String> getWeek(Date mdate) {
+    public static List<Date> getWeek(Date mdate) {
         int b = mdate.getDay();
         Date fdate;
         String str = "";
-        List<String> list = new ArrayList<String>();
+        List<Date> list = new ArrayList<>();
         Long fTime = mdate.getTime() - b * 24 * 3600000;
         for (int a = 1; a <= 7; a++) {
             fdate = new Date();
             fdate.setTime(fTime + (a * 24 * 3600000));
-            str = getDay(dateToStr(fdate));
-            list.add(a-1, str);
+            list.add(a-1, fdate);
         }
         return list;
+    }
+
+    //根据传入的日期获取上周的日期list
+    public static List<Date> getPreWeek(Date mdate) {
+        mdate = getDateBefore(mdate, 7);
+        int b = mdate.getDay();
+        Date fdate;
+        String str = "";
+        List<Date> list = new ArrayList<>();
+        Long fTime = mdate.getTime() - b * 24 * 3600000;
+        for (int a = 1; a <= 7; a++) {
+            fdate = new Date();
+            fdate.setTime(fTime + (a * 24 * 3600000));
+            list.add(a-1, fdate);
+        }
+        return list;
+    }
+
+    //根据传入的日期获取下周的日期list
+    public static List<Date> getLatWeek(Date mdate) {
+        mdate = getDateBefore(mdate, -7);
+        int b = mdate.getDay();
+        Date fdate;
+        String str = "";
+        List<Date> list = new ArrayList<>();
+        Long fTime = mdate.getTime() - b * 24 * 3600000;
+        for (int a = 1; a <= 7; a++) {
+            fdate = new Date();
+            fdate.setTime(fTime + (a * 24 * 3600000));
+            list.add(a-1, fdate);
+        }
+        return list;
+    }
+
+    //把周日期List转化为Strlist
+    public static List<String> dateListToStrList(List<Date> datelist){
+        List<String> list = new ArrayList<>();
+        for (Date date : datelist) {
+            list.add(getDay(dateToStr(date)));
+        }
+        return list;
+    }
+
+    //得到n天前的日期
+    public static Date getDateBefore(Date d, int day) {
+        Calendar no = Calendar.getInstance();
+        no.setTime(d);
+        no.set(Calendar.DATE, no.get(Calendar.DATE) - day);
+        return no.getTime();
     }
 
     //Date转String

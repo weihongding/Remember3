@@ -5,8 +5,11 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.MotionEvent;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.adapter.RcQAdapter;
@@ -15,8 +18,10 @@ import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.listener.BtnLongListener;
+import com.example.remember.listener.TouchListener;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.FontManager;
+import com.example.remember.util.MyApplication;
 import com.example.remember.util.StringUtil;
 
 import java.util.ArrayList;
@@ -25,12 +30,48 @@ import java.util.List;
 
 public class RcActivity extends AppCompatActivity {
 
+    private float mPosX;
+    private float mPosY;
+    private float mCurPosX;
+    private float mCurPosY;
+
+    private TextView tvYear;
+    private TextView tvMonth;
+    private TextView tv1;
+    private TextView tv2;
+    private TextView tv3;
+    private TextView tv4;
+    private TextView tv5;
+    private TextView tv6;
+    private TextView tv7;
+    private List<Date> dateList;
+    private List<String> list;
+
+    private RecyclerView rv1;
+    private RecyclerView rv2;
+    private RecyclerView rv3;
+    private RecyclerView rv4;
+    private RecyclerView rv5;
+    private RecyclerView rv6;
+    private RecyclerView rv7;
+    private RecyclerView rvUnq;
+
     public static List<Rc_q> rcqlist1;
-    public static List<Rc_q> rcqlist2 ;
+    public static List<Rc_q> rcqlist2;
+    public static List<Rc_q> rcqlist3;
+    public static List<Rc_q> rcqlist4;
+    public static List<Rc_q> rcqlist5;
+    public static List<Rc_q> rcqlist6;
+    public static List<Rc_q> rcqlist7;
     public static List<Rc_unq> rcUnqList;
 
     public static RcQAdapter adapter1;
     public static RcQAdapter adapter2;
+    public static RcQAdapter adapter3;
+    public static RcQAdapter adapter4;
+    public static RcQAdapter adapter5;
+    public static RcQAdapter adapter6;
+    public static RcQAdapter adapter7;
     public static RcUnqAdapter adapterUnq;
 
     @Override
@@ -39,27 +80,32 @@ public class RcActivity extends AppCompatActivity {
         setContentView(R.layout.activity_rc);
 
         //初始化数据
-        iniRcqList1();
-        iniRcqList2();
+        iniRcqList();
         iniRcUnqList();
-        List<String> list = DateUtil.getWeek(new Date());
+        dateList = DateUtil.getWeek(new Date());
 
+        TouchListener touchListener = new TouchListener();
         BtnListener listener = new BtnListener(this);
         BtnLongListener longListener = new BtnLongListener(this);
 
         //控件实例获取
-        TextView tvYear = (TextView)findViewById(R.id.text_rc_year);
-        TextView tvMonth = (TextView)findViewById(R.id.text_rc_month);
-        TextView tv1 = (TextView)findViewById(R.id.text_rc_q1);
-        TextView tv2 = (TextView)findViewById(R.id.text_rc_q2);
-        TextView tv3 = (TextView)findViewById(R.id.text_rc_q3);
-        TextView tv4 = (TextView)findViewById(R.id.text_rc_q4);
-        TextView tv5 = (TextView)findViewById(R.id.text_rc_q5);
-        TextView tv6 = (TextView)findViewById(R.id.text_rc_q6);
-        TextView tv7 = (TextView)findViewById(R.id.text_rc_q7);
-        RecyclerView recyclerView1 = (RecyclerView) findViewById(R.id.recycler_rc_q1);
-        RecyclerView recyclerView2 = (RecyclerView) findViewById(R.id.recycler_rc_q2);
-        RecyclerView recyclerViewUnq = (RecyclerView) findViewById(R.id.recycler_rc_unq);
+        tvYear = (TextView)findViewById(R.id.text_rc_year);
+        tvMonth = (TextView)findViewById(R.id.text_rc_month);
+        tv1 = (TextView)findViewById(R.id.text_rc_q1);
+        tv2 = (TextView)findViewById(R.id.text_rc_q2);
+        tv3 = (TextView)findViewById(R.id.text_rc_q3);
+        tv4 = (TextView)findViewById(R.id.text_rc_q4);
+        tv5 = (TextView)findViewById(R.id.text_rc_q5);
+        tv6 = (TextView)findViewById(R.id.text_rc_q6);
+        tv7 = (TextView)findViewById(R.id.text_rc_q7);
+        rv1 = (RecyclerView) findViewById(R.id.recycler_rc_q1);
+        rv2 = (RecyclerView) findViewById(R.id.recycler_rc_q2);
+        rv3 = (RecyclerView) findViewById(R.id.recycler_rc_q3);
+        rv4 = (RecyclerView) findViewById(R.id.recycler_rc_q4);
+        rv5 = (RecyclerView) findViewById(R.id.recycler_rc_q5);
+        rv6 = (RecyclerView) findViewById(R.id.recycler_rc_q6);
+        rv7 = (RecyclerView) findViewById(R.id.recycler_rc_q7);
+        rvUnq = (RecyclerView) findViewById(R.id.recycler_rc_unq);
         Button btn_add = (Button) findViewById(R.id.btn_rc_add);
         Button btn_history = (Button) findViewById(R.id.btn_rc_history);
         Button btn_change = (Button) findViewById(R.id.btn_rc_change);
@@ -75,6 +121,7 @@ public class RcActivity extends AppCompatActivity {
         //设置文本内容
         tvYear.setText(DateUtil.getYear()+"年");
         tvMonth.setText(StringUtil.numToStr(DateUtil.getMonth())+"月");
+        list = DateUtil.dateListToStrList(dateList);
         tv1.setText(list.get(0));
         tv2.setText(list.get(1));
         tv3.setText(list.get(2));
@@ -86,24 +133,51 @@ public class RcActivity extends AppCompatActivity {
         //列表初始化
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(this);
         LinearLayoutManager layoutManager2 = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager3 = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager4 = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager5 = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager6 = new LinearLayoutManager(this);
+        LinearLayoutManager layoutManager7 = new LinearLayoutManager(this);
         StaggeredGridLayoutManager layoutManagerUnq = new StaggeredGridLayoutManager(6,StaggeredGridLayoutManager.VERTICAL);
 
-        recyclerView1.setLayoutManager(layoutManager1);
-        recyclerView2.setLayoutManager(layoutManager2);
-        recyclerViewUnq.setLayoutManager(layoutManagerUnq);
+        rv1.setLayoutManager(layoutManager1);
+        rv2.setLayoutManager(layoutManager2);
+        rv3.setLayoutManager(layoutManager3);
+        rv4.setLayoutManager(layoutManager4);
+        rv5.setLayoutManager(layoutManager5);
+        rv6.setLayoutManager(layoutManager6);
+        rv7.setLayoutManager(layoutManager7);
+        rvUnq.setLayoutManager(layoutManagerUnq);
 
         adapter1 = new RcQAdapter(rcqlist1);
         adapter2 = new RcQAdapter(rcqlist2);
+        adapter3 = new RcQAdapter(rcqlist3);
+        adapter4 = new RcQAdapter(rcqlist4);
+        adapter5 = new RcQAdapter(rcqlist5);
+        adapter6 = new RcQAdapter(rcqlist6);
+        adapter7 = new RcQAdapter(rcqlist7);
         adapterUnq = new RcUnqAdapter(rcUnqList);
 
-        recyclerView1.setAdapter(adapter1);
-        recyclerView2.setAdapter(adapter2);
-        recyclerViewUnq.setAdapter(adapterUnq);
+        rv1.setAdapter(adapter1);
+        rv2.setAdapter(adapter2);
+        rv3.setAdapter(adapter3);
+        rv4.setAdapter(adapter4);
+        rv5.setAdapter(adapter5);
+        rv6.setAdapter(adapter6);
+        rv7.setAdapter(adapter7);
+        rvUnq.setAdapter(adapterUnq);
 
     }
 
-    private void iniRcqList1() {
+    private void iniRcqList() {
         rcqlist1 = new ArrayList<>();
+        rcqlist2 = new ArrayList<>();
+        rcqlist3 = new ArrayList<>();
+        rcqlist4 = new ArrayList<>();
+        rcqlist5 = new ArrayList<>();
+        rcqlist6 = new ArrayList<>();
+        rcqlist7 = new ArrayList<>();
+
         Rc_q rcq1 = new Rc_q();
         rcq1.setStartTime("2019-4-8 15:03:59");
         rcq1.setColor("#ff0000");
@@ -112,18 +186,16 @@ public class RcActivity extends AppCompatActivity {
         rcq2.setColor("#00ff00");
         rcqlist1.add(rcq2);
         rcqlist1.add(rcq1);
-    }
 
-    private void iniRcqList2() {
-        rcqlist2 = new ArrayList<>();
-        Rc_q rcq1 = new Rc_q();
-        rcq1.setStartTime("2019-4-8 15:03:59");
-        rcq1.setColor("#ff0000");
-        Rc_q rcq2 = new Rc_q();
-        rcq2.setStartTime("2019-4-8 21:35:03");
-        rcq2.setColor("#00ff00");
-        rcqlist2.add(rcq2);
         rcqlist2.add(rcq1);
+        rcqlist2.add(rcq2);
+
+        rcqlist3.add(rcq2);
+        rcqlist3.add(rcq1);
+
+        rcqlist4.add(rcq1);
+        rcqlist4.add(rcq2);
+
     }
 
     private void iniRcUnqList() {
@@ -154,4 +226,47 @@ public class RcActivity extends AppCompatActivity {
         rcUnqList.add(rcUnq2);
     }
 
+    @Override
+    public boolean onTouchEvent(MotionEvent event) {
+        switch (event.getAction()){
+            case MotionEvent.ACTION_DOWN:
+                mPosX = event.getX();
+                mPosY = event.getY();
+                break;
+            case MotionEvent.ACTION_MOVE:
+                mCurPosX = event.getX();
+                mCurPosY = event.getY();
+
+                break;
+            case MotionEvent.ACTION_UP:
+                if (mCurPosX - mPosX < 0) {
+                    dateList = DateUtil.getLatWeek(dateList.get(0));
+                    tvYear.setText(DateUtil.getYear(dateList.get(0))+"年");
+                    tvMonth.setText(StringUtil.numToStr(Integer.parseInt(DateUtil.getMonth(dateList.get(0))))+"月");
+                    list = DateUtil.dateListToStrList(dateList);
+                    tv1.setText(list.get(0));
+                    tv2.setText(list.get(1));
+                    tv3.setText(list.get(2));
+                    tv4.setText(list.get(3));
+                    tv5.setText(list.get(4));
+                    tv6.setText(list.get(5));
+                    tv7.setText(list.get(6));
+                }
+                if (mCurPosX - mPosX > 0) {
+                    dateList = DateUtil.getPreWeek(dateList.get(0));
+                    tvYear.setText(DateUtil.getYear(dateList.get(0))+"年");
+                    tvMonth.setText(StringUtil.numToStr(Integer.parseInt(DateUtil.getMonth(dateList.get(0))))+"月");
+                    list = DateUtil.dateListToStrList(dateList);
+                    tv1.setText(list.get(0));
+                    tv2.setText(list.get(1));
+                    tv3.setText(list.get(2));
+                    tv4.setText(list.get(3));
+                    tv5.setText(list.get(4));
+                    tv6.setText(list.get(5));
+                    tv7.setText(list.get(6));
+                }
+                break;
+        }
+        return super.onTouchEvent(event);
+    }
 }

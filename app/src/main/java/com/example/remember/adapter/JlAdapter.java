@@ -16,6 +16,7 @@ import com.example.remember.R;
 import com.example.remember.db.Jl;
 import com.example.remember.util.FontManager;
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.StringUtil;
 
 import java.util.List;
 
@@ -47,32 +48,61 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
         holder.tv_type.setText(type);
         holder.tv_title.setText(title);
         holder.tv_time.setText(finTime);
-        holder.layout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "点击了整个Item", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "长按了整个Item", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
-        holder.btn_item_add.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "点击了Item中的添加", Toast.LENGTH_SHORT).show();
-            }
-        });
-        holder.btn_item_add.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "长按了Item中的添加", Toast.LENGTH_SHORT).show();
-                return true;
-            }
-        });
+
+        if (type.equals(StringUtil.eventType_sj)){//记录类型为事件时添加监听器
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "点击了整个事件Item", Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "长按了整个事件Item", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+            holder.btn_item_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "点击了事件Item中的添加", Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.btn_item_add.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "长按了事件Item中的添加", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+        }else if (type.equals(StringUtil.eventType_zb)){//记录类型为指标时添加监听器
+            holder.layout.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "点击了整个指标Item", Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "长按了整个指标Item", Toast.LENGTH_SHORT).show();
+                    return true;
+                }
+            });
+            holder.btn_item_add.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(MyApplication.getContext(), "点击了指标Item中的添加", Toast.LENGTH_SHORT).show();
+                }
+            });
+            holder.btn_item_add.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    return true;
+                }
+            });
+        }
         GradientDrawable p = (GradientDrawable) holder.layout.getBackground();
         p.setColor(Color.parseColor(color));
         holder.btn_item_add.setTypeface(FontManager.getTypeface());
