@@ -6,6 +6,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -19,12 +20,15 @@ import com.example.remember.db.Rc_unq;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.listener.BtnLongListener;
 import com.example.remember.listener.TouchListener;
+import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.FontManager;
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.MyDialog;
 import com.example.remember.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -87,6 +91,9 @@ public class RcActivity extends AppCompatActivity {
         TouchListener touchListener = new TouchListener();
         BtnListener listener = new BtnListener(this);
         BtnLongListener longListener = new BtnLongListener(this);
+        View rcqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q, null);
+        View rcqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
+        View rcqAddView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
 
         //控件实例获取
         tvYear = (TextView)findViewById(R.id.text_rc_year);
@@ -167,6 +174,13 @@ public class RcActivity extends AppCompatActivity {
         rv7.setAdapter(adapter7);
         rvUnq.setAdapter(adapterUnq);
 
+        MyDialog.rcqDialog = new MyDialog(this, rcqView, R.style.DialogTheme);
+        MyDialog.rcqDialog_set = new MyDialog(this, rcqSetView, R.style.DialogTheme);
+        MyDialog.rcqDialog_add = new MyDialog(this, rcqAddView, R.style.DialogTheme);
+        MyDialog.rcqDialog.setCancelable(true);
+        MyDialog.rcqDialog_set.setCancelable(true);
+        MyDialog.rcqDialog_add.setCancelable(true);
+
     }
 
     private void iniRcqList() {
@@ -178,12 +192,9 @@ public class RcActivity extends AppCompatActivity {
         rcqlist6 = new ArrayList<>();
         rcqlist7 = new ArrayList<>();
 
-        Rc_q rcq1 = new Rc_q();
-        rcq1.setStartTime("2019-4-8 15:03:59");
-        rcq1.setColor("#ff0000");
-        Rc_q rcq2 = new Rc_q();
-        rcq2.setStartTime("2019-4-8 21:35:03");
-        rcq2.setColor("#00ff00");
+        Rc_q rcq1 = new Rc_q("2019-4-8 15:03:59","标题111","备注111",ColorUtil.colors[5]);
+        Rc_q rcq2 = new Rc_q("2019-4-8 21:35:03","标题222","备注222",ColorUtil.colors[6]);
+
         rcqlist1.add(rcq2);
         rcqlist1.add(rcq1);
 
@@ -269,4 +280,22 @@ public class RcActivity extends AppCompatActivity {
         }
         return super.onTouchEvent(event);
     }
+
+    public static void notifyDateChange(){
+        Collections.sort(RcActivity.rcqlist1);
+        Collections.sort(RcActivity.rcqlist2);
+        Collections.sort(RcActivity.rcqlist3);
+        Collections.sort(RcActivity.rcqlist4);
+        Collections.sort(RcActivity.rcqlist5);
+        Collections.sort(RcActivity.rcqlist6);
+        Collections.sort(RcActivity.rcqlist7);
+        adapter1.notifyDataSetChanged();
+        adapter2.notifyDataSetChanged();
+        adapter3.notifyDataSetChanged();
+        adapter4.notifyDataSetChanged();
+        adapter5.notifyDataSetChanged();
+        adapter6.notifyDataSetChanged();
+        adapter7.notifyDataSetChanged();
+    }
+
 }

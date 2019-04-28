@@ -2,7 +2,6 @@ package com.example.remember.listener;
 
 import android.app.Activity;
 import android.view.View;
-import android.widget.Toast;
 
 import com.example.remember.R;
 

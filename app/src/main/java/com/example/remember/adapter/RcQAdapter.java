@@ -14,6 +14,7 @@ import com.example.remember.R;
 import com.example.remember.db.Rc_q;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.MyDialog;
 
 import java.util.List;
 
@@ -36,23 +37,36 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Rc_q rcq = mRcqList.get(position);
-        String date = rcq.getStartTime();
+        final String des = rcq.getDes();
+        final String time = rcq.getTime();
+        final String title = rcq.getTitle();
         final String color = rcq.getColor();
-        holder.rcStartTime.setText(DateUtil.getH(date)+":"+DateUtil.getM(date));
-        holder.rcStartTime.setOnClickListener(new View.OnClickListener() {
+
+        final TextView tv_title = (TextView)MyDialog.rcqDialog.findViewById(R.id.text_rc_q_title);
+        final TextView tv_des = (TextView)MyDialog.rcqDialog.findViewById(R.id.text_rc_q_des);
+        final TextView tv_time = (TextView)MyDialog.rcqDialog.findViewById(R.id.text_rc_q_time);
+        final TextView tv_color = (TextView)MyDialog.rcqDialog.findViewById(R.id.text_rc_q_color);
+
+        holder.rcTime.setText(DateUtil.getH(time)+":"+DateUtil.getM(time));
+        holder.rcTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "点击了RecyclerViewItem，颜色为"+color, Toast.LENGTH_SHORT).show();
+                tv_title.setText(title);
+                tv_des.setText(des);
+                tv_time.setText(time);
+                GradientDrawable p = (GradientDrawable) tv_color.getBackground();
+                p.setColor(Color.parseColor(color));
+                MyDialog.rcqDialog.show();
             }
         });
-        holder.rcStartTime.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.rcTime.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "长按了RecyclerViewItem，颜色为"+color, Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "长按了RecyclerViewItem\n颜色为："+color+"\n标题为："+title, Toast.LENGTH_SHORT).show();
                 return true;
             }
         });
-        GradientDrawable p = (GradientDrawable) holder.rcStartTime.getBackground();
+        GradientDrawable p = (GradientDrawable) holder.rcTime.getBackground();
         p.setColor(Color.parseColor(color));
     }
 
@@ -62,11 +76,11 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
     }
 
     static class ViewHolder extends RecyclerView.ViewHolder{
-        TextView rcStartTime;
+        TextView rcTime;
 
         public ViewHolder(@NonNull View view) {
             super(view);
-            rcStartTime = (TextView)view.findViewById(R.id.text_rc_q_item_time);
+            rcTime = (TextView)view.findViewById(R.id.text_rc_q_item_time);
         }
     }
 

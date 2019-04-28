@@ -32,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
         Button btn_login = (Button)findViewById(R.id.btn_login);
         View logView = this.getLayoutInflater().inflate(R.layout.login, null);
         View regView = this.getLayoutInflater().inflate(R.layout.register, null);
+        View colorView = this.getLayoutInflater().inflate(R.layout.choose_color,null);
 
         btn_share.setTypeface(FontManager.font);
         btn_set.setTypeface(FontManager.font);
@@ -52,8 +53,10 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(listener);
         MyDialog.loginDialog=new MyDialog(this, logView, R.style.DialogTheme);
         MyDialog.regDialog=new MyDialog(this, regView, R.style.DialogTheme);
+        MyDialog.colorDialog=new MyDialog(this,colorView,R.style.DialogTheme);
         MyDialog.loginDialog.setCancelable(true);
         MyDialog.regDialog.setCancelable(true);
+        MyDialog.colorDialog.setCancelable(true);
 
         CheckUtil.setUserLoginState(this);
 

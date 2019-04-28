@@ -6,43 +6,34 @@ import org.litepal.crud.DataSupport;
 
 public class Rc_q extends DataSupport implements Comparable<Rc_q>{
 
-    private String startTime;
-    private String endTime;
-    private String content;
+    private String time;
+    private String title;
     private String des;
     private String color;
 
     public Rc_q(){}
 
-    public Rc_q(String startTime,String endTime,String content,String des,String color){
-        setStartTime(startTime);
-        setEndTime(endTime);
-        setContent(content);
+    public Rc_q(String time,String title,String des,String color){
+        setTime(time);
+        setTitle(title);
         setDes(des);
         setColor(color);
     }
-    public String getStartTime() {
-        return startTime;
+
+    public String getTime() {
+        return time;
     }
 
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
+    public void setTime(String time) {
+        this.time = time;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getTitle() {
+        return title;
     }
 
-    public void setEndTime(String endTime) {
-        this.endTime = endTime;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDes() {
@@ -63,6 +54,6 @@ public class Rc_q extends DataSupport implements Comparable<Rc_q>{
 
     @Override
     public int compareTo(Rc_q r) {
-        return DateUtil.getSofB(this.getStartTime())- DateUtil.getSofB(r.getStartTime());
+        return DateUtil.getSofB(this.getTime())- DateUtil.getSofB(r.getTime());
     }
 }
