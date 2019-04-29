@@ -2,14 +2,19 @@ package com.example.remember.util;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.remember.R;
+import com.example.remember.adapter.ColorAdapter;
+
 public class MyDialog extends Dialog {
 
-    public static MyDialog colorDialog;
+    public static MyDialog colorDialog_rc;
     public static MyDialog loginDialog;
     public static MyDialog regDialog;
 
@@ -17,11 +22,12 @@ public class MyDialog extends Dialog {
     public static MyDialog rcqDialog_set;
     public static MyDialog rcqDialog_add;
 
+    public static MyDialog rcunqDialog;
+    public static MyDialog rcunqDialog_set;
 
 
     //    style引用style样式
     public MyDialog(Context context, View layout, int style) {
-
         super(context, style);
         setContentView(layout);
         Window window = getWindow();
@@ -29,4 +35,5 @@ public class MyDialog extends Dialog {
         params.gravity = Gravity.CENTER;
         window.setAttributes(params);
     }
+
 }

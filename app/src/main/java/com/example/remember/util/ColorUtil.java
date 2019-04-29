@@ -9,6 +9,8 @@ public class ColorUtil {
     public static final String state_open = "#D4ECB9";
     public static final String state_close = "#666873";
 
+//    public static String choose_color_rc = null;
+
     public static String getStateColor(String state){
         if (state.equals(StringUtil.state_sb[1])){
             return state_open;

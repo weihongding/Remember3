@@ -30,9 +30,14 @@ public class DateUtil {
         int index = str.indexOf("-");
         return str.substring(0, index);
     }
+    //获取Date中的年份
     public static String getYear(Date date){
         String str = dateToStr(date);
         return getYear(str);
+    }
+    //获取当前年份
+    public static int getYear() {
+        return Calendar.getInstance().get(Calendar.YEAR);
     }
 
     //获取标准日期字符串中的月份
@@ -45,9 +50,14 @@ public class DateUtil {
         }
         return resultstr;
     }
+    //获取Date中的月份
     public static String getMonth(Date date){
         String str = dateToStr(date);
         return getMonth(str);
+    }
+    //获取当前月份
+    public static int getMonth() {
+        return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }
 
     //获取标准日期字符串中的日期
@@ -60,6 +70,10 @@ public class DateUtil {
         }
         return resultstr;
     }
+    //获取当前日期
+    public static int getDay(){
+        return Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
+    }
 
     //获取标准日期字符串中的时
     public static String getH(String str) {
@@ -67,6 +81,11 @@ public class DateUtil {
         int index2 = str.indexOf(":");
         return str.substring(index1, index2);
     }
+    //获取当前的时
+    public static int getH(){
+        return Calendar.getInstance().get(Calendar.HOUR_OF_DAY);
+    }
+
 
     //获取标准日期字符串中的分
     public static String getM(String str) {
@@ -74,12 +93,20 @@ public class DateUtil {
         int index2 = str.indexOf(":", index1);
         return str.substring(index1, index2);
     }
+    //获取当前的分
+    public static int getM(){
+        return Calendar.getInstance().get(Calendar.MINUTE);
+    }
 
     //获取标准日期字符串中的秒
     public static String getS(String str) {
         int index1 = str.lastIndexOf(":") + 1;
         int index2 = str.length();
         return str.substring(index1, index2);
+    }
+    //获取当前的秒
+    public static int getS(){
+        return Calendar.getInstance().get(Calendar.SECOND);
     }
 
     //获取标准日期字符串为当天的第几秒
@@ -189,16 +216,6 @@ public class DateUtil {
         ParsePosition pos = new ParsePosition(0);
         Date strtodate = formatter.parse(strDate, pos);
         return strtodate;
-    }
-
-    //获取当前年份
-    public static int getYear() {
-        return Calendar.getInstance().get(Calendar.YEAR);
-    }
-
-    //获取当前月份
-    public static int getMonth() {
-        return Calendar.getInstance().get(Calendar.MONTH) + 1;
     }
 
     //获取当前日期是该月的第几天

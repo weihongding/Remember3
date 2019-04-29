@@ -6,6 +6,9 @@ import org.litepal.crud.DataSupport;
 
 public class Rc_q extends DataSupport implements Comparable<Rc_q>{
 
+    public static Rc_q chooseRcq = null;
+
+    private int id;
     private String time;
     private String title;
     private String des;
@@ -18,6 +21,14 @@ public class Rc_q extends DataSupport implements Comparable<Rc_q>{
         setTitle(title);
         setDes(des);
         setColor(color);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getTime() {

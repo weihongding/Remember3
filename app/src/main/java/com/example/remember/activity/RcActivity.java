@@ -1,5 +1,7 @@
 package com.example.remember.activity;
 
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -13,6 +15,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.adapter.ColorAdapter;
 import com.example.remember.adapter.RcQAdapter;
 import com.example.remember.adapter.RcUnqAdapter;
 import com.example.remember.db.Rc_q;
@@ -25,6 +28,7 @@ import com.example.remember.util.DateUtil;
 import com.example.remember.util.FontManager;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.ObjectUtil;
 import com.example.remember.util.StringUtil;
 
 import java.util.ArrayList;
@@ -94,6 +98,8 @@ public class RcActivity extends AppCompatActivity {
         View rcqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q, null);
         View rcqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
         View rcqAddView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
+        View rcUnqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_unq, null);
+        View rcUnqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_unq_set, null);
 
         //控件实例获取
         tvYear = (TextView)findViewById(R.id.text_rc_year);
@@ -177,20 +183,54 @@ public class RcActivity extends AppCompatActivity {
         MyDialog.rcqDialog = new MyDialog(this, rcqView, R.style.DialogTheme);
         MyDialog.rcqDialog_set = new MyDialog(this, rcqSetView, R.style.DialogTheme);
         MyDialog.rcqDialog_add = new MyDialog(this, rcqAddView, R.style.DialogTheme);
+        MyDialog.rcunqDialog = new MyDialog(this, rcUnqView, R.style.DialogTheme);
+        MyDialog.rcunqDialog_set = new MyDialog(this, rcUnqSetView, R.style.DialogTheme);
+
         MyDialog.rcqDialog.setCancelable(true);
         MyDialog.rcqDialog_set.setCancelable(true);
         MyDialog.rcqDialog_add.setCancelable(true);
+        MyDialog.rcunqDialog.setCancelable(true);
+        MyDialog.rcunqDialog_set.setCancelable(true);
 
+        View colorView = this.getLayoutInflater().inflate(R.layout.choose_color,null);
+        MyDialog.colorDialog_rc=new MyDialog(this,colorView,R.style.DialogTheme);
+        StaggeredGridLayoutManager colorLayoutManager = new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL);
+        RecyclerView recycler_color = (RecyclerView)MyDialog.colorDialog_rc.findViewById(R.id.recycler_color);
+        recycler_color.setLayoutManager(colorLayoutManager);
+        recycler_color.setAdapter(new ColorAdapter());
+    }
+
+    @Override
+    protected void onDestroy() {
+        MyDialog.rcqDialog_set.dismiss();
+        MyDialog.rcqDialog_add.dismiss();
+        MyDialog.rcqDialog.dismiss();
+        MyDialog.colorDialog_rc.dismiss();
+        super.onDestroy();
     }
 
     private void iniRcqList() {
-        rcqlist1 = new ArrayList<>();
-        rcqlist2 = new ArrayList<>();
-        rcqlist3 = new ArrayList<>();
-        rcqlist4 = new ArrayList<>();
-        rcqlist5 = new ArrayList<>();
-        rcqlist6 = new ArrayList<>();
-        rcqlist7 = new ArrayList<>();
+        if (rcqlist1 == null){
+            rcqlist1 = new ArrayList<>();
+        }
+        if (rcqlist2 == null){
+            rcqlist2 = new ArrayList<>();
+        }
+        if (rcqlist3 == null){
+            rcqlist3 = new ArrayList<>();
+        }
+        if (rcqlist4 == null){
+            rcqlist4 = new ArrayList<>();
+        }
+        if (rcqlist5 == null){
+            rcqlist5 = new ArrayList<>();
+        }
+        if (rcqlist6 == null){
+            rcqlist6 = new ArrayList<>();
+        }
+        if (rcqlist7 == null){
+            rcqlist7 = new ArrayList<>();
+        }
 
         Rc_q rcq1 = new Rc_q("2019-4-8 15:03:59","标题111","备注111",ColorUtil.colors[5]);
         Rc_q rcq2 = new Rc_q("2019-4-8 21:35:03","标题222","备注222",ColorUtil.colors[6]);
@@ -210,11 +250,14 @@ public class RcActivity extends AppCompatActivity {
     }
 
     private void iniRcUnqList() {
-        rcUnqList = new ArrayList<>();
-        Rc_unq rcUnq1 = new Rc_unq();
-        rcUnq1.setColor("#ff0000");
-        Rc_unq rcUnq2 = new Rc_unq();
-        rcUnq2.setColor("#00ff00");
+        if (rcUnqList == null){
+            rcUnqList = new ArrayList<>();
+        }
+
+        Rc_q rcq1 = new Rc_q("2019-4-8 15:03:59","标题333","备注333",ColorUtil.colors[10]);
+        Rc_q rcq2 = new Rc_q("2019-4-8 21:35:03","标题444","备注444",ColorUtil.colors[11]);
+        Rc_unq rcUnq1 = ObjectUtil.rcqToRcunq(rcq1);
+        Rc_unq rcUnq2 = ObjectUtil.rcqToRcunq(rcq2);
         rcUnqList.add(rcUnq1);
         rcUnqList.add(rcUnq2);
         rcUnqList.add(rcUnq1);

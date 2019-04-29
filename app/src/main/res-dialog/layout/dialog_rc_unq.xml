@@ -27,7 +27,7 @@
                 android:gravity="center" />
 
             <TextView
-                android:id="@+id/text_rc_q_title"
+                android:id="@+id/text_rc_unq_title"
                 android:text="标题内容"
                 android:textSize="22dp"
                 android:layout_width="175dp"
@@ -54,7 +54,7 @@
                 android:gravity="center"/>
 
             <TextView
-                android:id="@+id/text_rc_q_des"
+                android:id="@+id/text_rc_unq_des"
                 android:text="备注内容备注内容备注内容备注内容备注内容备注内容备注内容备注内容备注内容"
                 android:textSize="20dp"
                 android:layout_width="175dp"
@@ -63,34 +63,6 @@
                 android:maxLines="3"
                 android:minLines="1"
                 android:ellipsize="end"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="20dp"
-            android:layout_marginLeft="25dp"
-            android:layout_alignParentLeft="true"
-            >
-
-            <TextView
-                android:text="时间"
-                android:textSize="24dp"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center" />
-
-
-                <TextView
-                    android:id="@+id/text_rc_q_time"
-                    android:text="2019年12月31日"
-                    android:textSize="20dp"
-                    android:layout_width="175dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="20dp"
-                    android:gravity="center"/>
 
         </LinearLayout>
 
@@ -110,7 +82,7 @@
                 android:layout_height="wrap_content" />
 
             <TextView
-                android:id="@+id/text_rc_q_color"
+                android:id="@+id/text_rc_unq_color"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="20dp"
@@ -137,8 +109,8 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_rc_q_addunq"
-                android:text="添加待定"
+                android:id="@+id/btn_rc_unq_addq"
+                android:text="添加日程"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -151,7 +123,7 @@
                 android:background="#c0c0c0"/>
 
             <Button
-                android:id="@+id/btn_rc_q_del"
+                android:id="@+id/btn_rc_unq_del"
                 android:text="删除"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -165,7 +137,7 @@
                 android:background="#c0c0c0"/>
 
             <Button
-                android:id="@+id/btn_rc_q_edit"
+                android:id="@+id/btn_rc_unq_edit"
                 android:text="编辑"
                 android:layout_width="0dp"
                 android:layout_weight="1"
@@ -174,6 +146,7 @@
                 android:gravity="center"/>
 
         </LinearLayout>
+
     </LinearLayout>
 
 </LinearLayout>

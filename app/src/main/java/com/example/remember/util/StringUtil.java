@@ -52,4 +52,8 @@ public class StringUtil {
         }
     }
 
+    public static String conDateStr(String year,String month,String day,String H,String M,String S){
+        return year+"-"+month+"-"+day+" "+H+":"+M+":"+S;
+    }
+
 }

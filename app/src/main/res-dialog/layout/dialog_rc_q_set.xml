@@ -98,6 +98,7 @@
                         android:id="@+id/edit_rc_q_time_set_year"
                         android:textSize="18dp"
                         android:text="2019"
+                        android:inputType="number"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-2dp"/>
@@ -110,6 +111,7 @@
                         android:id="@+id/edit_rc_q_time_set_month"
                         android:textSize="18dp"
                         android:text="12"
+                        android:inputType="number"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-2dp"/>
@@ -122,6 +124,7 @@
                         android:id="@+id/edit_rc_q_time_set_day"
                         android:textSize="18dp"
                         android:text="31"
+                        android:inputType="number"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-2dp"/>
@@ -143,6 +146,7 @@
                         android:id="@+id/edit_rc_q_time_set_H"
                         android:textSize="18dp"
                         android:text="17"
+                        android:inputType="number"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-2dp"/>
@@ -155,6 +159,7 @@
                         android:id="@+id/edit_rc_q_time_set_M"
                         android:textSize="18dp"
                         android:text="12"
+                        android:inputType="number"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-2dp"/>
@@ -167,6 +172,7 @@
                         android:id="@+id/edit_rc_q_time_set_S"
                         android:textSize="18dp"
                         android:text="31"
+                        android:inputType="number"
                         android:layout_width="30dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="-2dp"/>
@@ -197,7 +203,7 @@
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="20dp"
-                android:background="@drawable/circle_15"/>
+                android:background="@drawable/circle_15_c"/>
 
         </LinearLayout>
 
@@ -221,7 +227,22 @@
 
             <Button
                 android:id="@+id/btn_rc_q_set_addunq"
-                android:text="添加待定"
+                android:layout_width="102dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:gravity="center"
+                android:text="添加待定" />
+
+            <TextView
+                android:id="@+id/line_addunq"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#c0c0c0"/>
+
+            <Button
+                android:id="@+id/btn_rc_q_set_del"
+                android:text="删除"
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
@@ -229,15 +250,16 @@
                 android:gravity="center"/>
 
             <TextView
+                android:id="@+id/line_del"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="#c0c0c0"/>
 
             <Button
                 android:id="@+id/btn_rc_q_set_save"
-                android:text="确定"
+                android:text="保存"
                 android:layout_width="0dp"
-                android:layout_weight="2"
+                android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:background="@null"
                 android:gravity="center"/>

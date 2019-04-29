@@ -5,13 +5,17 @@ import android.graphics.Typeface;
 import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.remember.R;
+import com.example.remember.adapter.ColorAdapter;
 import com.example.remember.util.CheckUtil;
 import com.example.remember.util.FontManager;
+import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
 import com.example.remember.listener.MaBtnListener;
 
@@ -21,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Button btn_share = (Button)findViewById(R.id.btn_mail);
         Button btn_set = (Button)findViewById(R.id.btn_set);
         Button btn_rc = (Button)findViewById(R.id.btn_rc);
@@ -32,7 +37,6 @@ public class MainActivity extends AppCompatActivity {
         Button btn_login = (Button)findViewById(R.id.btn_login);
         View logView = this.getLayoutInflater().inflate(R.layout.login, null);
         View regView = this.getLayoutInflater().inflate(R.layout.register, null);
-        View colorView = this.getLayoutInflater().inflate(R.layout.choose_color,null);
 
         btn_share.setTypeface(FontManager.font);
         btn_set.setTypeface(FontManager.font);
@@ -53,11 +57,10 @@ public class MainActivity extends AppCompatActivity {
         btn_login.setOnClickListener(listener);
         MyDialog.loginDialog=new MyDialog(this, logView, R.style.DialogTheme);
         MyDialog.regDialog=new MyDialog(this, regView, R.style.DialogTheme);
-        MyDialog.colorDialog=new MyDialog(this,colorView,R.style.DialogTheme);
         MyDialog.loginDialog.setCancelable(true);
         MyDialog.regDialog.setCancelable(true);
-        MyDialog.colorDialog.setCancelable(true);
 
+        //验证登陆
         CheckUtil.setUserLoginState(this);
 
     }
