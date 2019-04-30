@@ -1,7 +1,5 @@
 package com.example.remember.activity;
 
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -10,9 +8,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.adapter.ColorAdapter;
@@ -23,10 +19,10 @@ import com.example.remember.db.Rc_unq;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.listener.BtnLongListener;
 import com.example.remember.listener.TouchListener;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
-import com.example.remember.util.FontManager;
-import com.example.remember.util.MyApplication;
+import com.example.remember.util.ViewUtil;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ObjectUtil;
 import com.example.remember.util.StringUtil;
@@ -36,7 +32,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-public class RcActivity extends AppCompatActivity {
+public class RcActivity extends BaseActivity {
 
     private float mPosX;
     private float mPosY;
@@ -124,8 +120,8 @@ public class RcActivity extends AppCompatActivity {
         Button btn_change = (Button) findViewById(R.id.btn_rc_change);
 
         //设置字体、监听器
-        btn_history.setTypeface(FontManager.font);
-        btn_change.setTypeface(FontManager.font);
+        btn_history.setTypeface(ViewUtil.font);
+        btn_change.setTypeface(ViewUtil.font);
         btn_add.setOnClickListener(listener);
         btn_history.setOnClickListener(listener);
         btn_change.setOnClickListener(listener);

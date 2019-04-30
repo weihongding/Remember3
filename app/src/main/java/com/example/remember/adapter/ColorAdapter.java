@@ -12,10 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.BwlDetailActivity;
+import com.example.remember.activity.RcActivity;
 import com.example.remember.db.Rc_q;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.ViewUtil;
 
 import java.util.Arrays;
 import java.util.List;
@@ -41,23 +45,28 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
         holder.btn_choose_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (MyDialog.rcqDialog_set.isShowing()){
-                    Button btn_color_set = (Button) MyDialog.rcqDialog_set.findViewById(R.id.btn_rc_q_set_color);
-                    GradientDrawable p1 = (GradientDrawable) btn_color_set.getBackground();
-                    p1.setColor(Color.parseColor(color));
-                    if (Rc_q.chooseRcq!=null){
-                        Rc_q.chooseRcq.setColor(color);
+                if (BaseActivity.getCurrentActivity() instanceof RcActivity){
+                    if (MyDialog.rcqDialog_set.isShowing()){
+                        Button btn_color_set = (Button) MyDialog.rcqDialog_set.findViewById(R.id.btn_rc_q_set_color);
+                        ViewUtil.setViewColor(btn_color_set,color);
+                        if (Rc_q.chooseRcq!=null){
+                            Rc_q.chooseRcq.setColor(color);
+                        }
+                        MyDialog.colorDialog_rc.hide();
+                    }else if(MyDialog.rcqDialog_add.isShowing()){
+                        Button btn_color_add = (Button) MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_color);
+                        ViewUtil.setViewColor(btn_color_add,color);
+                        MyDialog.colorDialog_rc.hide();
+                    }else if(MyDialog.rcunqDialog_set.isShowing()){
+                        Button btn_color_unqset = (Button)MyDialog.rcunqDialog_set.findViewById(R.id.btn_rc_unq_set_color);
+                        ViewUtil.setViewColor(btn_color_unqset,color);
+                        MyDialog.colorDialog_rc.hide();
                     }
-                }else if(MyDialog.rcqDialog_add.isShowing()){
-                    Button btn_color_add = (Button) MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_color);
-                    GradientDrawable p2 = (GradientDrawable) btn_color_add.getBackground();
-                    p2.setColor(Color.parseColor(color));
-                }else if(MyDialog.rcunqDialog_set.isShowing()){
-                    Button btn_color_unqset = (Button)MyDialog.rcunqDialog_set.findViewById(R.id.btn_rc_unq_set_color);
-                    GradientDrawable p2 = (GradientDrawable) btn_color_unqset.getBackground();
-                    p2.setColor(Color.parseColor(color));
+                }else if(BaseActivity.getCurrentActivity() instanceof BwlDetailActivity){
+                    Button btn_color = BaseActivity.getCurrentActivity().findViewById(R.id.btn_bwl_color);
+                    ViewUtil.setViewColor(btn_color,color);
+                    MyDialog.colorDialog_bwl.hide();
                 }
-                MyDialog.colorDialog_rc.hide();
                 Toast.makeText(MyApplication.getContext(), "点击颜色："+color, Toast.LENGTH_SHORT).show();
             }
         });

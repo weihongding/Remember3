@@ -15,6 +15,7 @@ import com.example.remember.R;
 import com.example.remember.entity.Sb;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.ViewUtil;
 
 import java.util.List;
 
@@ -45,6 +46,8 @@ public class SbAdapter extends RecyclerView.Adapter<SbAdapter.ViewHolder> {
         holder.tv_name.setText(name);
         holder.tv_state.setText(state);
         holder.tv_time.setText(time);
+        ViewUtil.setViewColor(holder.layout,color);
+
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -52,8 +55,6 @@ public class SbAdapter extends RecyclerView.Adapter<SbAdapter.ViewHolder> {
                 return true;
             }
         });
-        GradientDrawable p = (GradientDrawable) holder.layout.getBackground();
-        p.setColor(Color.parseColor(color));
 
     }
 

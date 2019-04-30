@@ -17,11 +17,12 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.map.MapView;
 import com.example.remember.R;
 import com.example.remember.listener.MyLocationListener;
+import com.example.remember.util.BaseActivity;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DtActivity extends AppCompatActivity {
+public class DtActivity extends BaseActivity {
     public LocationClient mLocationClient;
     private TextView positionText;
     private MapView mapView;

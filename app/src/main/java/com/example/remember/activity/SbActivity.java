@@ -10,6 +10,7 @@ import com.example.remember.R;
 import com.example.remember.adapter.SbAdapter;
 import com.example.remember.entity.Sb;
 import com.example.remember.listener.BtnListener;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.StringUtil;
@@ -19,7 +20,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.zip.InflaterInputStream;
 
-public class SbActivity extends AppCompatActivity {
+public class SbActivity extends BaseActivity {
 
     public static List<Sb> sbList;
     public static SbAdapter sbAdapter;

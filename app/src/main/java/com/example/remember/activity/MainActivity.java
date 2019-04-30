@@ -1,25 +1,18 @@
 package com.example.remember.activity;
 
-import android.graphics.Color;
-import android.graphics.Typeface;
-import android.graphics.drawable.GradientDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
 import com.example.remember.R;
-import com.example.remember.adapter.ColorAdapter;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.CheckUtil;
-import com.example.remember.util.FontManager;
-import com.example.remember.util.MyApplication;
+import com.example.remember.util.ViewUtil;
 import com.example.remember.util.MyDialog;
 import com.example.remember.listener.MaBtnListener;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,8 +31,8 @@ public class MainActivity extends AppCompatActivity {
         View logView = this.getLayoutInflater().inflate(R.layout.login, null);
         View regView = this.getLayoutInflater().inflate(R.layout.register, null);
 
-        btn_share.setTypeface(FontManager.font);
-        btn_set.setTypeface(FontManager.font);
+        btn_share.setTypeface(ViewUtil.font);
+        btn_set.setTypeface(ViewUtil.font);
         MaBtnListener listener = new MaBtnListener(this);
 
         //修改颜色

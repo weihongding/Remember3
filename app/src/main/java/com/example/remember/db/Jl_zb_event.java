@@ -1,9 +1,11 @@
 package com.example.remember.db;
 
+import com.example.remember.util.DateUtil;
+
 import org.litepal.crud.DataSupport;
 
 //指标记录
-public class Jl_zb_event extends DataSupport {
+public class Jl_zb_event extends DataSupport implements Comparable<Jl_zb_event>{
 
     private int id;
     private int jid;//指标id
@@ -40,5 +42,10 @@ public class Jl_zb_event extends DataSupport {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    @Override
+    public int compareTo(Jl_zb_event jze) {
+        return DateUtil.getGapOfTime(jze.time,this.time);
     }
 }

@@ -4,18 +4,24 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.view.View;
 import android.widget.Button;
 
 import com.example.remember.R;
 import com.example.remember.adapter.BwlAdapter;
+import com.example.remember.adapter.ColorAdapter;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.listener.BtnListener;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
+import com.example.remember.util.MyDialog;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class BwlActivity extends AppCompatActivity {
+public class BwlActivity extends BaseActivity {
 
     public static List<Bwl_event> bwlList;
     public static BwlAdapter bwlAdapter;
@@ -39,6 +45,8 @@ public class BwlActivity extends AppCompatActivity {
         rv.setLayoutManager(layoutManager);
         bwlAdapter = new BwlAdapter(bwlList);
         rv.setAdapter(bwlAdapter);
+
+        sort();
 
     }
 
@@ -66,6 +74,17 @@ public class BwlActivity extends AppCompatActivity {
         bwlList.add(be2);
         bwlList.add(be1);
         bwlList.add(be2);
+    }
+
+    @Override
+    protected void onResume() {
+        sort();
+        super.onResume();
+    }
+
+    public static void sort(){
+        Collections.sort(BwlActivity.bwlList);
+        BwlActivity.bwlAdapter.notifyDataSetChanged();
     }
 
 }

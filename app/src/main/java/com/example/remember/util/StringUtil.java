@@ -45,6 +45,10 @@ public class StringUtil {
     }
 
     public static String getContent_bwl(String str){
+        str = str.trim();
+        while (str.startsWith(" ")){
+            str = str.substring(1,str.length()).trim();
+        }
         if (str.length()>10){
             return str.substring(0,10)+"...";
         }else{

@@ -1,6 +1,7 @@
 package com.example.remember.listener;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.View;
@@ -11,13 +12,16 @@ import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.activity.BwlActivity;
+import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.RcActivity;
+import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.ViewUtil;
 
 import java.util.Collections;
 
@@ -34,12 +38,25 @@ public class BtnListener implements View.OnClickListener  {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+            //备忘录相关监听
             case R.id.btn_bwl_add:{
-                Collections.sort(BwlActivity.bwlList);
-                BwlActivity.bwlAdapter.notifyDataSetChanged();
-                Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MyApplication.getContext(), BwlDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+                intent.putExtra("be",new Bwl_event());
+                MyApplication.getContext().startActivity(intent);
                 break;
             }
+            case R.id.btn_bwl_color:{
+                MyDialog.colorDialog_bwl.show();
+                Toast.makeText(MyApplication.getContext(), "点击了选择颜色", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_bwl_save:{
+                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
+
             case R.id.btn_jl_add:{
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
@@ -76,8 +93,7 @@ public class BtnListener implements View.OnClickListener  {
                 et_M.setText(Integer.toString(DateUtil.getM()));
                 et_S.setText(Integer.toString(DateUtil.getS()));
 
-                GradientDrawable p = (GradientDrawable) btn_rcq_add_color.getBackground();
-                p.setColor(Color.parseColor(ColorUtil.colors[0]));
+                ViewUtil.setViewColor(btn_rcq_add_color,ColorUtil.colors[0]);
 
                 btn_rcq_add_color.setOnClickListener(this);
                 btn_rcq_add_addunq.setOnClickListener(this);
@@ -145,8 +161,7 @@ public class BtnListener implements View.OnClickListener  {
                 btn_rcq_set_addunq.setOnClickListener(BtnListener.instance);
                 btn_rcq_set_save.setOnClickListener(BtnListener.instance);
 
-                GradientDrawable p = (GradientDrawable) btn_rcq_set_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(btn_rcq_set_color,color);
 
                 MyDialog.rcqDialog.hide();
                 MyDialog.rcqDialog_set.show();
@@ -204,8 +219,7 @@ public class BtnListener implements View.OnClickListener  {
                 et_M.setText(Integer.toString(DateUtil.getM()));
                 et_S.setText(Integer.toString(DateUtil.getS()));
 
-                GradientDrawable p = (GradientDrawable) btn_rcq_add_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(btn_rcq_add_color,color);
 
                 btn_rcq_add_color.setOnClickListener(this);
                 btn_rcq_add_addunq.setVisibility(View.GONE);
@@ -243,8 +257,7 @@ public class BtnListener implements View.OnClickListener  {
                 btn_rcUnq_set_del.setOnClickListener(BtnListener.instance);
                 btn_rcUnq_set_save.setOnClickListener(BtnListener.instance);
 
-                GradientDrawable p = (GradientDrawable) btn_rcUnq_set_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(btn_rcUnq_set_color,color);
 
                 MyDialog.rcunqDialog.hide();
                 MyDialog.rcunqDialog_set.show();
@@ -286,8 +299,7 @@ public class BtnListener implements View.OnClickListener  {
                 et_M.setText(Integer.toString(DateUtil.getM()));
                 et_S.setText(Integer.toString(DateUtil.getS()));
 
-                GradientDrawable p = (GradientDrawable) btn_rcq_add_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(btn_rcq_add_color,color);
 
                 btn_rcq_add_color.setOnClickListener(this);
                 btn_rcq_add_addunq.setVisibility(View.GONE);

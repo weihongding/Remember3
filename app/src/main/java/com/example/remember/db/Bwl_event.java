@@ -1,18 +1,27 @@
 package com.example.remember.db;
 
+import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.StringUtil;
 
 import org.litepal.crud.DataSupport;
 
-public class Bwl_event extends DataSupport implements Comparable<Bwl_event>{
+import java.io.Serializable;
+import java.util.Date;
+
+public class Bwl_event extends DataSupport implements Comparable<Bwl_event>, Serializable {
 
     private int id;
     private String color;
     private String content;
     private String time;
 
-    public Bwl_event(){};
+    public Bwl_event(){
+        setTime(DateUtil.dateToStr(new Date()));
+        setColor(ColorUtil.colors[0]);
+        setContent("");
+        setId(-1);
+    };
 
     public Bwl_event(String color, String content,String time){
         setColor(color);
@@ -54,6 +63,6 @@ public class Bwl_event extends DataSupport implements Comparable<Bwl_event>{
 
     @Override
     public int compareTo(Bwl_event be) {
-        return DateUtil.getGapOfTime(this.time,be.time);
+        return DateUtil.getGapOfTime(be.time,this.time);
     }
 }

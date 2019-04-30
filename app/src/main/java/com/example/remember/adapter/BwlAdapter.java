@@ -1,5 +1,6 @@
 package com.example.remember.adapter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
@@ -12,9 +13,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.StringUtil;
+import com.example.remember.util.ViewUtil;
 
 import java.util.List;
 
@@ -36,20 +39,22 @@ public class BwlAdapter extends RecyclerView.Adapter<BwlAdapter.ViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Bwl_event be = mBwlList.get(position);
+        final Bwl_event be = mBwlList.get(position);
         String content = StringUtil.getContent_bwl(be.getContent());
         String time = be.getTime();
         final String color = be.getColor();
         holder.tv_content.setText(content);
-        holder.tv_time.setText("2019-4-25 13:27:18");
+        holder.tv_time.setText(time);
+        ViewUtil.setViewColor(holder.layout,color);
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MyApplication.getContext(), "点击了备忘录，颜色为："+color, Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MyApplication.getContext(), BwlDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+                intent.putExtra("be",be);
+                MyApplication.getContext().startActivity(intent);
             }
         });
-        GradientDrawable p = (GradientDrawable) holder.layout.getBackground();
-        p.setColor(Color.parseColor(color));
     }
 
     @Override

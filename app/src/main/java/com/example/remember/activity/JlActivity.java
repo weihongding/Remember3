@@ -11,13 +11,14 @@ import com.example.remember.R;
 import com.example.remember.adapter.JlAdapter;
 import com.example.remember.db.Jl;
 import com.example.remember.listener.BtnListener;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.StringUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class JlActivity extends AppCompatActivity {
+public class JlActivity extends BaseActivity {
 
     public static List<Jl> jlList;
     public static JlAdapter jlAdapter;

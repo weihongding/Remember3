@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.remember.R;
+import com.example.remember.util.BaseActivity;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
@@ -25,7 +26,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TqActivity extends AppCompatActivity{
+public class TqActivity extends BaseActivity {
 
     TextView responseText;
 

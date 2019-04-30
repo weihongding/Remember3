@@ -73,6 +73,6 @@ public class Jl extends DataSupport implements Comparable<Jl> {
 
     @Override
     public int compareTo(Jl jl) {
-        return DateUtil.getGapOfTime(this.finTime,jl.finTime);
+        return DateUtil.getGapOfTime(jl.finTime,this.finTime);
     }
 }

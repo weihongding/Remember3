@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.db.Jl;
-import com.example.remember.util.FontManager;
+import com.example.remember.util.ViewUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.StringUtil;
 
@@ -103,9 +103,8 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
                 }
             });
         }
-        GradientDrawable p = (GradientDrawable) holder.layout.getBackground();
-        p.setColor(Color.parseColor(color));
-        holder.btn_item_add.setTypeface(FontManager.getTypeface());
+        ViewUtil.setViewColor(holder.layout,color);
+        holder.btn_item_add.setTypeface(ViewUtil.getTypeface());
     }
 
     @Override

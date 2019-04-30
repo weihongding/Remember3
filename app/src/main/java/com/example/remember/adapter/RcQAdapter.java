@@ -18,6 +18,7 @@ import com.example.remember.listener.BtnListener;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.ViewUtil;
 
 import java.util.List;
 
@@ -109,8 +110,7 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
                 btn_rcq_set_del.setOnClickListener(BtnListener.instance);
                 btn_rcq_set_save.setOnClickListener(BtnListener.instance);
 
-                GradientDrawable p = (GradientDrawable) btn_rcq_set_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(btn_rcq_set_color,color);
 
                 MyDialog.rcqDialog_set.show();
                 return true;

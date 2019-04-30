@@ -16,6 +16,7 @@ import com.example.remember.db.Rc_unq;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.ViewUtil;
 
 import java.util.List;
 
@@ -88,8 +89,7 @@ public class RcUnqAdapter extends RecyclerView.Adapter<RcUnqAdapter.ViewHolder> 
                 btn_rcUnq_set_del.setOnClickListener(BtnListener.instance);
                 btn_rcUnq_set_save.setOnClickListener(BtnListener.instance);
 
-                GradientDrawable p = (GradientDrawable) btn_rcUnq_set_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(btn_rcUnq_set_color,color);
 
                 MyDialog.rcunqDialog_set.show();
                 return true;

@@ -1,7 +1,7 @@
 <litepal>
 
     <dbname value="Remember" />
-    <version value="4" />
+    <version value="5" />
 
     <list>
         <mapping class="com.example.remember.db.Province" />

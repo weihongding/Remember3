@@ -3,7 +3,6 @@ package com.example.remember.activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -26,18 +25,18 @@ import com.example.remember.R;
 import com.example.remember.gson.Forecast;
 import com.example.remember.gson.Weather;
 import com.example.remember.service.TqAutoUpdateService;
-import com.example.remember.util.FontManager;
+import com.example.remember.util.BaseActivity;
+import com.example.remember.util.ViewUtil;
 import com.example.remember.util.HttpUtil;
 import com.example.remember.util.JsonUtil;
 
 import java.io.IOException;
-import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class WeatherActivity extends AppCompatActivity {
+public class WeatherActivity extends BaseActivity {
 
     public DrawerLayout drawerLayout;
     public SwipeRefreshLayout swipeRefresh;
@@ -83,7 +82,7 @@ public class WeatherActivity extends AppCompatActivity {
         sportText = (TextView)findViewById(R.id.text_tq_sport);
         bingPicImg = (ImageView)findViewById(R.id.img_tq_bing);
 
-        navButton.setTypeface(FontManager.font);
+        navButton.setTypeface(ViewUtil.font);
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String weatherString = prefs.getString("weather",null);

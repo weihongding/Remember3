@@ -14,6 +14,7 @@ import com.example.remember.adapter.ColorAdapter;
 
 public class MyDialog extends Dialog {
 
+    public static MyDialog colorDialog_bwl;
     public static MyDialog colorDialog_rc;
     public static MyDialog loginDialog;
     public static MyDialog regDialog;
