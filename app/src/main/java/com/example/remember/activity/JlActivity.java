@@ -16,6 +16,7 @@ import com.example.remember.util.ColorUtil;
 import com.example.remember.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class JlActivity extends BaseActivity {
@@ -43,15 +44,23 @@ public class JlActivity extends BaseActivity {
         jlAdapter = new JlAdapter(jlList);
         rv.setAdapter(jlAdapter);
 
+        sort();
+
     }
 
     private void iniJlList(){
         jlList = new ArrayList<>();
         Jl jl1 = new Jl(StringUtil.eventType_sj,"吃感冒药","无", ColorUtil.colors[2]);
+        jl1.setFinTime("2019-4-19 14:23:32");
         Jl jl2 = new Jl(StringUtil.eventType_zb,"体重","减肥",ColorUtil.colors[3]);
+        jl2.setFinTime("2019-4-20 14:23:32");
         jlList.add(jl1);
         jlList.add(jl2);
     }
 
+    public static void sort(){
+        Collections.sort(jlList);
+        jlAdapter.notifyDataSetChanged();
+    }
 
 }

@@ -4,30 +4,37 @@
     android:layout_height="match_parent"
     android:background="#FFFDE4">
 
-
-    <LinearLayout
-        android:orientation="vertical"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipe_sb_refresh"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:text="设备"
-            android:gravity="center"
-            android:textSize="30dp"
+        <LinearLayout
+            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:layout_height="match_parent">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_sb"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="9">
+            <TextView
+                android:text="设备"
+                android:gravity="center"
+                android:textSize="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
 
-        </android.support.v7.widget.RecyclerView>
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_sb"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="9">
+
+            </android.support.v7.widget.RecyclerView>
 
 
-    </LinearLayout>
+        </LinearLayout>
+
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
     <Button
         android:id="@+id/btn_sb_add"

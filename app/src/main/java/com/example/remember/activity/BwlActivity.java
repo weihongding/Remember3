@@ -83,8 +83,8 @@ public class BwlActivity extends BaseActivity {
     }
 
     public static void sort(){
-        Collections.sort(BwlActivity.bwlList);
-        BwlActivity.bwlAdapter.notifyDataSetChanged();
+        Collections.sort(bwlList);
+        bwlAdapter.notifyDataSetChanged();
     }
 
 }

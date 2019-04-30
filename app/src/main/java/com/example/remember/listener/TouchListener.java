@@ -27,16 +27,6 @@ public class TouchListener implements View.OnTouchListener {
 
                 break;
             case MotionEvent.ACTION_UP:
-//                        if (mCurPosY - mPosY > 0
-//                                && (Math.abs(mCurPosY - mPosY) > 25)) {
-//                            //向下滑動
-//                            tiShi(mContext,"向下");
-//
-//                        } else if (mCurPosY - mPosY < 0
-//                                && (Math.abs(mCurPosY - mPosY) > 25)) {
-//                            //向上滑动
-//                            tiShi(mContext,"向上");
-//                        }
                 if (mCurPosX - mPosX > 0
                         && (Math.abs(mCurPosX - mPosX) > 25)) {
                     Toast.makeText(MyApplication.getContext(), "向左滑动", Toast.LENGTH_SHORT).show();

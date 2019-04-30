@@ -63,19 +63,6 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
                     return true;
                 }
             });
-            holder.btn_item_add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MyApplication.getContext(), "点击了事件Item中的添加", Toast.LENGTH_SHORT).show();
-                }
-            });
-            holder.btn_item_add.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(MyApplication.getContext(), "长按了事件Item中的添加", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
         }else if (type.equals(StringUtil.eventType_zb)){//记录类型为指标时添加监听器
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -90,21 +77,9 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
                     return true;
                 }
             });
-            holder.btn_item_add.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Toast.makeText(MyApplication.getContext(), "点击了指标Item中的添加", Toast.LENGTH_SHORT).show();
-                }
-            });
-            holder.btn_item_add.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    return true;
-                }
-            });
         }
+
         ViewUtil.setViewColor(holder.layout,color);
-        holder.btn_item_add.setTypeface(ViewUtil.getTypeface());
     }
 
     @Override
@@ -117,7 +92,6 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
         TextView tv_title;
         TextView tv_time;
         TextView tv_type;
-        Button btn_item_add;
 
         public ViewHolder(@NonNull View view) {
             super(view);
@@ -125,7 +99,6 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
             tv_title = (TextView)view.findViewById(R.id.text_jl_item_title);
             tv_time = (TextView)view.findViewById(R.id.text_jl_item_time);
             tv_type = (TextView)view.findViewById(R.id.text_jl_item_type);
-            btn_item_add = (Button)view.findViewById(R.id.btn_jl_item_add);
         }
     }
 
