@@ -7,7 +7,7 @@
     android:layout_marginRight="5dp"
     android:layout_marginLeft="5dp"
     android:layout_marginTop="5dp"
-    android:background="@drawable/circle_5">
+    android:background="@drawable/circle_5_final">
 
     <TextView
         android:id="@+id/text_jl_detail_zb_item_content"

@@ -1,9 +1,6 @@
 package com.example.remember.listener;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.GradientDrawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,10 +8,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
-import com.example.remember.activity.BwlActivity;
 import com.example.remember.activity.BwlDetailActivity;
-import com.example.remember.activity.RcActivity;
+import com.example.remember.activity.JlActivity;
+import com.example.remember.activity.JlDetailActivity;
 import com.example.remember.db.Bwl_event;
+import com.example.remember.db.Jl;
+import com.example.remember.db.Jl_sj_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 import com.example.remember.util.BaseActivity;
@@ -22,6 +21,7 @@ import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.StringUtil;
 import com.example.remember.util.ViewUtil;
 
 import java.util.Collections;
@@ -55,23 +55,61 @@ public class BtnListener implements View.OnClickListener  {
 
 
             case R.id.btn_jl_add:{
+                MyDialog.jlDialog_add.show();
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.btn_jl_add_sj:{
+                Jl jl = new Jl(StringUtil.eventType_sj);
+                JlActivity.jlList.add(jl);
+                JlActivity.sort();
+                MyDialog.jlDialog_add.hide();
+                break;
+            }
+            case R.id.btn_jl_add_zb:{
+                Jl jl = new Jl(StringUtil.eventType_zb);
+                JlActivity.jlList.add(jl);
+                JlActivity.sort();
+                MyDialog.jlDialog_add.hide();
+                break;
+            }
+
             case R.id.btn_jl_detail_add:{
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_detail_color:{
-                Toast.makeText(MyApplication.getContext(), "点击了颜色选择", Toast.LENGTH_SHORT).show();
-                break;
-            }
-            case R.id.btn_jl_detail_save:{
-                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+                MyDialog.colorDialog_jl.show();
+                Toast.makeText(MyApplication.getContext(), "点击了选择颜色", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_detail_set:{
+
+                View layoutText = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_jl_detail);
+                View layoutSet = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_jl_detail_set);
+
+                layoutText.setVisibility(View.GONE);
+                layoutSet.setVisibility(View.VISIBLE);
                 Toast.makeText(MyApplication.getContext(), "点击了设置", Toast.LENGTH_SHORT).show();
+                break;
+
+            }
+            case R.id.btn_jl_detail_save:{
+                View layoutText = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_jl_detail);
+                View layoutSet = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_jl_detail_set);
+                TextView tv_color = (TextView) BaseActivity.getCurrentActivity().findViewById(R.id.text_jl_detail_color);
+                TextView tv_title = (TextView) BaseActivity.getCurrentActivity().findViewById(R.id.text_jl_detail_title);
+                TextView tv_des = (TextView) BaseActivity.getCurrentActivity().findViewById(R.id.text_jl_detail_des);
+                EditText et_title = (EditText) BaseActivity.getCurrentActivity().findViewById(R.id.edit_jl_detail_title);
+                EditText et_des = (EditText) BaseActivity.getCurrentActivity().findViewById(R.id.edit_jl_detail_des);
+
+                ViewUtil.setChooseColor(tv_color);
+                tv_title.setText(et_title.getText());
+                tv_des.setText(et_des.getText());
+
+                layoutText.setVisibility(View.VISIBLE);
+                layoutSet.setVisibility(View.GONE);
+                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
                 break;
             }
 

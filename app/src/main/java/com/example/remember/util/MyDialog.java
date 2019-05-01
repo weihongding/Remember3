@@ -14,6 +14,7 @@ import com.example.remember.adapter.ColorAdapter;
 
 public class MyDialog extends Dialog {
 
+    public static MyDialog colorDialog_jl;
     public static MyDialog colorDialog_bwl;
     public static MyDialog colorDialog_rc;
     public static MyDialog loginDialog;
@@ -22,6 +23,8 @@ public class MyDialog extends Dialog {
     public static MyDialog rcqDialog;
     public static MyDialog rcqDialog_set;
     public static MyDialog rcqDialog_add;
+
+    public static MyDialog jlDialog_add;
 
     public static MyDialog rcunqDialog;
     public static MyDialog rcunqDialog_set;

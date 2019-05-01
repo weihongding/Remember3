@@ -56,18 +56,6 @@ public class StringUtil {
         }
     }
 
-    public static String getTitle_Jl(String str){
-        str = str.trim();
-        while (str.startsWith(" ")){
-            str = str.substring(1,str.length()).trim();
-        }
-        if (str.length()>8){
-            return str.substring(0,8)+"...";
-        }else{
-            return str;
-        }
-    }
-
     public static String conDateStr(String year,String month,String day,String H,String M,String S){
         return year+"-"+month+"-"+day+" "+H+":"+M+":"+S;
     }

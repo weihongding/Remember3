@@ -197,10 +197,13 @@ public class RcActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
+        MyDialog.rcqDialog.dismiss();
         MyDialog.rcqDialog_set.dismiss();
         MyDialog.rcqDialog_add.dismiss();
-        MyDialog.rcqDialog.dismiss();
+        MyDialog.rcunqDialog.dismiss();
+        MyDialog.rcunqDialog_set.dismiss();
         MyDialog.colorDialog_rc.dismiss();
+
         super.onDestroy();
     }
 

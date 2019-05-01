@@ -49,4 +49,9 @@ public class BwlDetailActivity extends BaseActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        MyDialog.colorDialog_bwl.dismiss();
+        super.onDestroy();
+    }
 }
