@@ -24,7 +24,7 @@ import java.util.List;
 public class BwlActivity extends BaseActivity {
 
     public static List<Bwl_event> bwlList;
-    public static BwlAdapter bwlAdapter;
+    public static RecyclerView.Adapter bwlAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,9 +37,7 @@ public class BwlActivity extends BaseActivity {
         RecyclerView rv = (RecyclerView)findViewById(R.id.recycler_bwl);
         Button btn_add = (Button)findViewById(R.id.btn_bwl_add);
 
-        BtnListener listener = new BtnListener(this);
-
-        btn_add.setOnClickListener(listener);
+        btn_add.setOnClickListener(BtnListener.instance);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);

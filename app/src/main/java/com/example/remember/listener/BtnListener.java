@@ -17,6 +17,7 @@ import com.example.remember.activity.RcActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
+import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
@@ -28,12 +29,8 @@ import java.util.Collections;
 public class BtnListener implements View.OnClickListener  {
 
     public static BtnListener instance = new BtnListener();
-    private Activity mActivity;
 
     public BtnListener(){};
-    public BtnListener(Activity activity){
-        mActivity = activity;
-    }
 
     @Override
     public void onClick(View v) {
@@ -61,6 +58,23 @@ public class BtnListener implements View.OnClickListener  {
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.btn_jl_detail_add:{
+                Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_jl_detail_color:{
+                Toast.makeText(MyApplication.getContext(), "点击了颜色选择", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_jl_detail_save:{
+                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_jl_detail_set:{
+                Toast.makeText(MyApplication.getContext(), "点击了设置", Toast.LENGTH_SHORT).show();
+                break;
+            }
+
             case R.id.btn_sb_add:{
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
@@ -110,8 +124,8 @@ public class BtnListener implements View.OnClickListener  {
 //                RcActivity.notifyDateChange();
             }
             case R.id.btn_rc_change: {
-                View layout_rc_add = (View) mActivity.findViewById(R.id.layout_rc_add);
-                View layout_rc_unq = (View) mActivity.findViewById(R.id.layout_rc_unq);
+                View layout_rc_add = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_rc_add);
+                View layout_rc_unq = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_rc_unq);
                 layout_rc_add.setVisibility(View.VISIBLE);
                 layout_rc_unq.setVisibility(View.GONE);
                 break;

@@ -35,9 +35,7 @@ public class JlActivity extends BaseActivity {
         RecyclerView rv = (RecyclerView)findViewById(R.id.recycler_jl);
         Button btn_add = (Button)findViewById(R.id.btn_jl_add);
 
-        BtnListener listener = new BtnListener(this);
-
-        btn_add.setOnClickListener(listener);
+        btn_add.setOnClickListener(BtnListener.instance);
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         rv.setLayoutManager(layoutManager);

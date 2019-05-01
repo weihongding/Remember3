@@ -4,8 +4,10 @@ import com.example.remember.util.DateUtil;
 
 import org.litepal.crud.DataSupport;
 
+import java.io.Serializable;
+
 //指标记录
-public class Jl extends DataSupport implements Comparable<Jl> {
+public class Jl extends DataSupport implements Comparable<Jl>, Serializable {
 
     private int id;
     private String type;

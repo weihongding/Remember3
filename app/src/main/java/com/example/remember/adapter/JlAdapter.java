@@ -1,5 +1,6 @@
 package com.example.remember.adapter;
 
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
@@ -13,6 +14,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.BwlDetailActivity;
+import com.example.remember.activity.JlDetailActivity;
+import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Jl;
 import com.example.remember.util.ViewUtil;
 import com.example.remember.util.MyApplication;
@@ -38,7 +42,7 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Jl jl = mJlList.get(position);
+        final Jl jl = mJlList.get(position);
 //        int id = jl.getId();
         String title = jl.getTitle();
         String type = jl.getType();
@@ -53,6 +57,10 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(MyApplication.getContext(), JlDetailActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+                    intent.putExtra("jl",jl);
+                    MyApplication.getContext().startActivity(intent);
                     Toast.makeText(MyApplication.getContext(), "点击了整个事件Item", Toast.LENGTH_SHORT).show();
                 }
             });
@@ -67,6 +75,10 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
             holder.layout.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    Intent intent = new Intent(MyApplication.getContext(), JlDetailActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+                    intent.putExtra("jl",jl);
+                    MyApplication.getContext().startActivity(intent);
                     Toast.makeText(MyApplication.getContext(), "点击了整个指标Item", Toast.LENGTH_SHORT).show();
                 }
             });

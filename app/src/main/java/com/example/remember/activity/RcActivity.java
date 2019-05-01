@@ -89,7 +89,6 @@ public class RcActivity extends BaseActivity {
         dateList = DateUtil.getWeek(new Date());
 
         TouchListener touchListener = new TouchListener();
-        BtnListener listener = new BtnListener(this);
         BtnLongListener longListener = new BtnLongListener(this);
         View rcqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q, null);
         View rcqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
@@ -122,9 +121,9 @@ public class RcActivity extends BaseActivity {
         //设置字体、监听器
         btn_history.setTypeface(ViewUtil.font);
         btn_change.setTypeface(ViewUtil.font);
-        btn_add.setOnClickListener(listener);
-        btn_history.setOnClickListener(listener);
-        btn_change.setOnClickListener(listener);
+        btn_add.setOnClickListener(BtnListener.instance);
+        btn_history.setOnClickListener(BtnListener.instance);
+        btn_change.setOnClickListener(BtnListener.instance);
         btn_add.setOnLongClickListener(longListener);
 
         //设置文本内容

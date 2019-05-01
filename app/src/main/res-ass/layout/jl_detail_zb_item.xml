@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_jl_detail_zb_item"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginTop="5dp"
+    android:background="@drawable/circle_5">
+
+    <TextView
+        android:id="@+id/text_jl_detail_zb_item_content"
+        android:text="67.8kg"
+        android:textSize="20dp"
+        android:textColor="#827F59"
+        android:gravity="left"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginLeft="15dp"/>
+
+    <TextView
+        android:id="@+id/text_jl_detail_zb_item_time"
+        android:text="2019-04-08 12:12:12"
+        android:textSize="18dp"
+        android:textColor="#827F59"
+        android:gravity="right"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp"
+        android:layout_marginRight="15dp"/>
+
+</LinearLayout>

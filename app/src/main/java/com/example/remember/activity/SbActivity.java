@@ -41,11 +41,9 @@ public class SbActivity extends BaseActivity {
         RecyclerView rv = (RecyclerView)findViewById(R.id.recycler_sb);
         Button btn_add = (Button)findViewById(R.id.btn_sb_add);
 
-        BtnListener listener = new BtnListener(this);
-
         swipeRefresh.setColorSchemeResources(R.color.colorPrimary);
 
-        btn_add.setOnClickListener(listener);
+        btn_add.setOnClickListener(BtnListener.instance);
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
