@@ -1,6 +1,7 @@
 package com.example.remember.listener;
 
 import android.content.Intent;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,6 +12,7 @@ import com.example.remember.R;
 import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.JlActivity;
 import com.example.remember.activity.JlDetailActivity;
+import com.example.remember.activity.RcActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Jl;
 import com.example.remember.db.Jl_sj_event;
@@ -18,6 +20,7 @@ import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
+import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
@@ -53,7 +56,7 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
 
-
+            //记录相关监听
             case R.id.btn_jl_add:{
                 MyDialog.jlDialog_add.show();
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
@@ -113,6 +116,7 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
 
+            //设备相关监听
             case R.id.btn_sb_add:{
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
@@ -121,20 +125,17 @@ public class BtnListener implements View.OnClickListener  {
             //日程表相关监听
             case R.id.btn_rc_add: {
 
-                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_set_title);
-                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_set_des);
-                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_year);
-                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_month);
-                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_day);
-                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_H);
-                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_M);
-                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_S);
-                Button btn_rcq_add_color = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_color);
-                Button btn_rcq_add_addunq = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_addunq);
-                Button btn_rcq_add_del = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_del);
-                Button btn_rcq_add_save = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_save);
-                TextView line1 = (TextView)MyDialog.rcqDialog_add.findViewById(R.id.line_addunq);
-                TextView line2 = (TextView)MyDialog.rcqDialog_add.findViewById(R.id.line_del);
+                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_title);
+                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_des);
+                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_year);
+                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_month);
+                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_day);
+                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_H);
+                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_M);
+                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_S);
+                Button btn_rcq_add_color = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_color);
+                Button btn_rcq_add_addunq = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_addunq);
+                Button btn_rcq_add_save = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_save);
 
                 et_title.setText("");
                 et_des.setText("");
@@ -149,10 +150,6 @@ public class BtnListener implements View.OnClickListener  {
 
                 btn_rcq_add_color.setOnClickListener(this);
                 btn_rcq_add_addunq.setOnClickListener(this);
-                btn_rcq_add_addunq.setVisibility(View.VISIBLE);
-                btn_rcq_add_del.setVisibility(View.GONE);
-                line1.setVisibility(View.VISIBLE);
-                line2.setVisibility(View.GONE);
                 btn_rcq_add_save.setOnClickListener(this);
                 MyDialog.rcqDialog_add.show();
 
@@ -223,9 +220,6 @@ public class BtnListener implements View.OnClickListener  {
             //确定日程编辑\添加
             case R.id.btn_rc_q_set_color:{
                 MyDialog.colorDialog_rc.show();
-                if (MyDialog.rcqDialog_set.isShowing()){
-                    Toast.makeText(MyApplication.getContext(), "日程设置开启中", Toast.LENGTH_SHORT).show();
-                }
                 break;
             }
             case R.id.btn_rc_q_set_addunq:{
@@ -237,8 +231,78 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_rc_q_set_save:{
-                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+
+                EditText et_title = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_set_title);
+                EditText et_des = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_set_des);
+                EditText et_year = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_time_set_year);
+                EditText et_month = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_time_set_month);
+                EditText et_day = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_time_set_day);
+                EditText et_H = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_time_set_H);
+                EditText et_M = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_time_set_M);
+                EditText et_S = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_time_set_S);
+
+                String title = et_title.getText().toString();
+                String des = et_des.getText().toString();
+                String year = et_year.getText().toString();
+                String month = et_month.getText().toString();
+                String day = et_day.getText().toString();
+                String H = et_H.getText().toString();
+                String M = et_M.getText().toString();
+                String S = et_S.getText().toString();
+                String time = DateUtil.conDateStr(year,month,day,H,M,S);
+
+                Rc_q.chooseRcq.setTitle(title);
+                Rc_q.chooseRcq.setDes(des);
+                Rc_q.chooseRcq.setTime(time);
+                Rc_q.chooseRcq.setColor(ColorUtil.choose_color);
+                Rc_q.chooseRcq.save();
+                ColorUtil.choose_color=null;
+
+                Toast.makeText(MyApplication.getContext(), "修改日程保存成功", Toast.LENGTH_SHORT).show();
+                MyDialog.rcqDialog_set.hide();
+                RcActivity.refresh();
+
                 break;
+            }
+            case R.id.btn_rc_q_add_color:{
+                MyDialog.colorDialog_rc.show();
+                break;
+            }
+            case R.id.btn_rc_q_add_addunq:{
+                Toast.makeText(MyApplication.getContext(), "点击了添加待定", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_rc_q_add_save: {
+
+                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_title);
+                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_des);
+                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_year);
+                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_month);
+                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_day);
+                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_H);
+                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_M);
+                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_S);
+
+                String title = et_title.getText().toString();
+                String des = et_des.getText().toString();
+                String year = et_year.getText().toString();
+                String month = et_month.getText().toString();
+                String day = et_day.getText().toString();
+                String H = et_H.getText().toString();
+                String M = et_M.getText().toString();
+                String S = et_S.getText().toString();
+                String time = DateUtil.conDateStr(year, month, day, H, M, S);
+
+                Rc_q rcq = new Rc_q(time, title, des, ColorUtil.choose_color == null ? ColorUtil.colors[0] : ColorUtil.choose_color);
+                rcq.save();
+
+                ColorUtil.choose_color = null;
+                Toast.makeText(MyApplication.getContext(), "新增日程成功", Toast.LENGTH_SHORT).show();
+                MyDialog.rcqDialog_add.hide();
+                RcActivity.refresh();
+
+                break;
+
             }
             //待定日程查看
             case R.id.btn_rc_unq_addq:{
@@ -247,20 +311,17 @@ public class BtnListener implements View.OnClickListener  {
                 String des = Rc_unq.chooseRcUnq.getDes();
                 String color = Rc_unq.chooseRcUnq.getColor();
 
-                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_set_title);
-                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_set_des);
-                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_year);
-                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_month);
-                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_day);
-                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_H);
-                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_M);
-                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_S);
-                Button btn_rcq_add_color = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_color);
-                Button btn_rcq_add_addunq = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_addunq);
-                Button btn_rcq_add_del = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_del);
-                Button btn_rcq_add_save = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_save);
-                TextView line2 = (TextView)MyDialog.rcqDialog_add.findViewById(R.id.line_addunq);
-                TextView line1 = (TextView)MyDialog.rcqDialog_add.findViewById(R.id.line_del);
+                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_title);
+                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_des);
+                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_year);
+                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_month);
+                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_day);
+                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_H);
+                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_M);
+                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_S);
+                Button btn_rcq_add_color = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_color);
+                Button btn_rcq_add_addunq = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_addunq);
+                Button btn_rcq_add_save = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_save);
 
                 et_title.setText(title);
                 et_des.setText(des);
@@ -275,9 +336,6 @@ public class BtnListener implements View.OnClickListener  {
 
                 btn_rcq_add_color.setOnClickListener(this);
                 btn_rcq_add_addunq.setVisibility(View.GONE);
-                btn_rcq_add_del.setVisibility(View.GONE);
-                line1.setVisibility(View.GONE);
-                line2.setVisibility(View.GONE);
                 btn_rcq_add_save.setOnClickListener(this);
 
                 MyDialog.rcunqDialog.hide();
@@ -327,20 +385,17 @@ public class BtnListener implements View.OnClickListener  {
                 String des = Rc_unq.chooseRcUnq.getDes();
                 String color = Rc_unq.chooseRcUnq.getColor();
 
-                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_set_title);
-                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_set_des);
-                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_year);
-                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_month);
-                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_day);
-                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_H);
-                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_M);
-                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_set_S);
-                Button btn_rcq_add_color = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_color);
-                Button btn_rcq_add_addunq = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_addunq);
-                Button btn_rcq_add_del = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_del);
-                Button btn_rcq_add_save = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_save);
-                TextView line2 = (TextView)MyDialog.rcqDialog_add.findViewById(R.id.line_addunq);
-                TextView line1 = (TextView)MyDialog.rcqDialog_add.findViewById(R.id.line_del);
+                EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_title);
+                EditText et_des = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_des);
+                EditText et_year = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_year);
+                EditText et_month = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_month);
+                EditText et_day = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_day);
+                EditText et_H = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_H);
+                EditText et_M = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_M);
+                EditText et_S = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_time_add_S);
+                Button btn_rcq_add_color = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_color);
+                Button btn_rcq_add_addunq = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_addunq);
+                Button btn_rcq_add_save = (Button)MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_save);
 
                 et_title.setText(title);
                 et_des.setText(des);
@@ -355,9 +410,6 @@ public class BtnListener implements View.OnClickListener  {
 
                 btn_rcq_add_color.setOnClickListener(this);
                 btn_rcq_add_addunq.setVisibility(View.GONE);
-                btn_rcq_add_del.setVisibility(View.GONE);
-                line1.setVisibility(View.GONE);
-                line2.setVisibility(View.GONE);
                 btn_rcq_add_save.setOnClickListener(this);
 
                 MyDialog.rcunqDialog_set.hide();

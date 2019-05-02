@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +22,9 @@ import com.example.remember.listener.BtnLongListener;
 import com.example.remember.listener.TouchListener;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
+import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
+import com.example.remember.util.DbUtil;
 import com.example.remember.util.ViewUtil;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ObjectUtil;
@@ -30,7 +33,9 @@ import com.example.remember.util.StringUtil;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class RcActivity extends BaseActivity {
 
@@ -48,7 +53,7 @@ public class RcActivity extends BaseActivity {
     private TextView tv5;
     private TextView tv6;
     private TextView tv7;
-    private List<Date> dateList;
+    private static List<Date> dateList;
     private List<String> list;
 
     private RecyclerView rv1;
@@ -84,15 +89,15 @@ public class RcActivity extends BaseActivity {
         setContentView(R.layout.activity_rc);
 
         //初始化数据
+        dateList = DateUtil.getWeek(new Date());
         iniRcqList();
         iniRcUnqList();
-        dateList = DateUtil.getWeek(new Date());
 
         TouchListener touchListener = new TouchListener();
         BtnLongListener longListener = new BtnLongListener(this);
         View rcqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q, null);
         View rcqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
-        View rcqAddView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_set, null);
+        View rcqAddView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_add, null);
         View rcUnqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_unq, null);
         View rcUnqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_unq_set, null);
 
@@ -193,6 +198,9 @@ public class RcActivity extends BaseActivity {
         RecyclerView recycler_color = (RecyclerView)MyDialog.colorDialog_rc.findViewById(R.id.recycler_color);
         recycler_color.setLayoutManager(colorLayoutManager);
         recycler_color.setAdapter(new ColorAdapter());
+
+        sort();
+
     }
 
     @Override
@@ -207,43 +215,28 @@ public class RcActivity extends BaseActivity {
         super.onDestroy();
     }
 
-    private void iniRcqList() {
-        if (rcqlist1 == null){
-            rcqlist1 = new ArrayList<>();
-        }
-        if (rcqlist2 == null){
-            rcqlist2 = new ArrayList<>();
-        }
-        if (rcqlist3 == null){
-            rcqlist3 = new ArrayList<>();
-        }
-        if (rcqlist4 == null){
-            rcqlist4 = new ArrayList<>();
-        }
-        if (rcqlist5 == null){
-            rcqlist5 = new ArrayList<>();
-        }
-        if (rcqlist6 == null){
-            rcqlist6 = new ArrayList<>();
-        }
-        if (rcqlist7 == null){
-            rcqlist7 = new ArrayList<>();
-        }
+    private static void iniRcqList() {
 
-        Rc_q rcq1 = new Rc_q("2019-4-8 15:03:59","标题111","备注111",ColorUtil.colors[5]);
-        Rc_q rcq2 = new Rc_q("2019-4-8 21:35:03","标题222","备注222",ColorUtil.colors[6]);
+        if (rcqlist1 == null){rcqlist1 = new ArrayList<>();}
+        if (rcqlist2 == null){rcqlist2 = new ArrayList<>();}
+        if (rcqlist3 == null){rcqlist3 = new ArrayList<>();}
+        if (rcqlist4 == null){rcqlist4 = new ArrayList<>();}
+        if (rcqlist5 == null){rcqlist5 = new ArrayList<>();}
+        if (rcqlist6 == null){rcqlist6 = new ArrayList<>();}
+        if (rcqlist7 == null){rcqlist7 = new ArrayList<>();}
 
-        rcqlist1.add(rcq2);
-        rcqlist1.add(rcq1);
+        Map<String,List<Rc_q>> map = new HashMap<>();
+        map.put("0",rcqlist1);
+        map.put("1",rcqlist2);
+        map.put("2",rcqlist3);
+        map.put("3",rcqlist4);
+        map.put("4",rcqlist5);
+        map.put("5",rcqlist6);
+        map.put("6",rcqlist7);
 
-        rcqlist2.add(rcq1);
-        rcqlist2.add(rcq2);
+        List<String> ymdList = DateUtil.dateListToYMDList(dateList);
 
-        rcqlist3.add(rcq2);
-        rcqlist3.add(rcq1);
-
-        rcqlist4.add(rcq1);
-        rcqlist4.add(rcq2);
+        DbUtil.requestRcqList(ymdList,map);
 
     }
 
@@ -303,6 +296,7 @@ public class RcActivity extends BaseActivity {
                     tv5.setText(list.get(4));
                     tv6.setText(list.get(5));
                     tv7.setText(list.get(6));
+                    refresh();
                 }
                 if (mCurPosX - mPosX > 0) {
                     dateList = DateUtil.getPreWeek(dateList.get(0));
@@ -316,13 +310,22 @@ public class RcActivity extends BaseActivity {
                     tv5.setText(list.get(4));
                     tv6.setText(list.get(5));
                     tv7.setText(list.get(6));
+                    refresh();
                 }
                 break;
         }
         return super.onTouchEvent(event);
     }
 
-    public static void notifyDateChange(){
+    public static void refresh(){
+
+        iniRcqList();
+        sort();
+
+    }
+
+    public static void sort(){
+
         Collections.sort(RcActivity.rcqlist1);
         Collections.sort(RcActivity.rcqlist2);
         Collections.sort(RcActivity.rcqlist3);
@@ -337,6 +340,7 @@ public class RcActivity extends BaseActivity {
         adapter5.notifyDataSetChanged();
         adapter6.notifyDataSetChanged();
         adapter7.notifyDataSetChanged();
+
     }
 
 }

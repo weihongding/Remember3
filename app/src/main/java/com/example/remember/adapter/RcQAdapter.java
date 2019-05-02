@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,8 @@ import android.widget.Toast;
 import com.example.remember.R;
 import com.example.remember.db.Rc_q;
 import com.example.remember.listener.BtnListener;
+import com.example.remember.util.ColorUtil;
+import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
@@ -40,8 +43,8 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Rc_q rcq = mRcqList.get(position);
-//        final int id = rcq.getId();
+        final Rc_q rcq = mRcqList.get(position);
+        final int id = rcq.getId();
         final String des = rcq.getDes();
         final String time = rcq.getTime();
         final String title = rcq.getTitle();
@@ -54,8 +57,7 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
             @Override
             public void onClick(View v) {
 
-                Rc_q.chooseRcq = new Rc_q(time,title,des,color);//保存一个备份
-//                Rc_q.chooseRcq.setId(id);
+                Rc_q.chooseRcq = rcq;
 
                 TextView tv_title = (TextView)MyDialog.rcqDialog.findViewById(R.id.text_rc_q_title);
                 TextView tv_des = (TextView)MyDialog.rcqDialog.findViewById(R.id.text_rc_q_des);
@@ -72,17 +74,18 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
                 tv_title.setText(title);
                 tv_des.setText(des);
                 tv_time.setText(time);
-                GradientDrawable p = (GradientDrawable) tv_color.getBackground();
-                p.setColor(Color.parseColor(color));
+                ViewUtil.setViewColor(tv_color,color);
+
+                ColorUtil.choose_color = color;
                 MyDialog.rcqDialog.show();
+
             }
         });
         holder.rcTime.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
 
-                Rc_q.chooseRcq = new Rc_q(time,title,des,color);//保存一个备份
-//                Rc_q.chooseRcq.setId(id);
+                Rc_q.chooseRcq = rcq;
 
                 EditText et_title = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_set_title);
                 EditText et_des = (EditText) MyDialog.rcqDialog_set.findViewById(R.id.edit_rc_q_set_des);
@@ -112,6 +115,7 @@ public class RcQAdapter extends RecyclerView.Adapter<RcQAdapter.ViewHolder> {
 
                 ViewUtil.setViewColor(btn_rcq_set_color,color);
 
+                ColorUtil.choose_color = color;
                 MyDialog.rcqDialog_set.show();
                 return true;
             }

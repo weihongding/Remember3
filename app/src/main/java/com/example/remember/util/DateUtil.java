@@ -25,6 +25,11 @@ public class DateUtil {
         return convertSuccess;
     }
 
+    //根据标准日期获得其中的年月日
+    public static String getYMD(String dateStr){
+        return getYear(dateStr)+"-"+getMonth(dateStr)+"-"+getDay(dateStr);
+    }
+
     //获取标准日期字符串中的年份
     public static String getYear(String str) {
         int index = str.indexOf("-");
@@ -187,6 +192,15 @@ public class DateUtil {
         return list;
     }
 
+    //把周日期list转化为完整的年月日日期list
+    public static List<String> dateListToYMDList(List<Date> datelist){
+        List<String> list = new ArrayList<>();
+        for (Date date : datelist) {
+            list.add(getYMD(dateToStr(date)));
+        }
+        return list;
+    }
+
     //把周日期List转化为Strlist
     public static List<String> dateListToStrList(List<Date> datelist){
         List<String> list = new ArrayList<>();
@@ -204,10 +218,16 @@ public class DateUtil {
         return no.getTime();
     }
 
+    //将片段日期转化为整个日期Str
+    public static String conDateStr(String year,String month,String day,String H,String M,String S){
+        return year+"-"+month+"-"+day+" "+H+":"+M+":"+S;
+    }
+
     //Date转String
     public static String dateToStr(Date mdate) {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(mdate);
+        String str = sdf.format(mdate);
+        return conDateStr(getYear(str), getMonth(str), getDay(str), getH(str), getM(str), getS(str));
     }
 
     //String转Date

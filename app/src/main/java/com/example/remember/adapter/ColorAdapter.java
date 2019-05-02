@@ -52,14 +52,19 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
                         Button btn_color_set = (Button) MyDialog.rcqDialog_set.findViewById(R.id.btn_rc_q_set_color);
                         ViewUtil.setChooseColor(btn_color_set);
                         MyDialog.colorDialog_rc.hide();
-                    }else if(MyDialog.rcqDialog_add.isShowing()){
-                        Button btn_color_add = (Button) MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_set_color);
+                        Toast.makeText(MyApplication.getContext(), "日程设置"+color, Toast.LENGTH_SHORT).show();
+                    }
+                    if(MyDialog.rcqDialog_add.isShowing()){
+                        Button btn_color_add = (Button) MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_color);
                         ViewUtil.setChooseColor(btn_color_add);
                         MyDialog.colorDialog_rc.hide();
-                    }else if(MyDialog.rcunqDialog_set.isShowing()){
+                        Toast.makeText(MyApplication.getContext(), "日程添加"+color, Toast.LENGTH_SHORT).show();
+                    }
+                    if(MyDialog.rcunqDialog_set.isShowing()){
                         Button btn_color_unqset = (Button)MyDialog.rcunqDialog_set.findViewById(R.id.btn_rc_unq_set_color);
                         ViewUtil.setChooseColor(btn_color_unqset);
                         MyDialog.colorDialog_rc.hide();
+                        Toast.makeText(MyApplication.getContext(), "待定日程"+color, Toast.LENGTH_SHORT).show();
                     }
                 }else if (BaseActivity.getCurrentActivity() instanceof BwlDetailActivity){
                     Button btn_color = BaseActivity.getCurrentActivity().findViewById(R.id.btn_bwl_color);
@@ -70,7 +75,6 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
                     ViewUtil.setChooseColor(btn_color);
                     MyDialog.colorDialog_jl.hide();
                 }
-                Toast.makeText(MyApplication.getContext(), "点击颜色："+color, Toast.LENGTH_SHORT).show();
             }
         });
 

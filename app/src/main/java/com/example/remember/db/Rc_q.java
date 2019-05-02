@@ -65,6 +65,6 @@ public class Rc_q extends DataSupport implements Comparable<Rc_q>{
 
     @Override
     public int compareTo(Rc_q r) {
-        return DateUtil.getSofB(this.getTime())- DateUtil.getSofB(r.getTime());
+        return DateUtil.getGapOfTime(this.getTime(),r.getTime());
     }
 }

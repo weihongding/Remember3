@@ -27,7 +27,7 @@
                 android:gravity="center" />
 
             <EditText
-                android:id="@+id/edit_rc_q_set_title"
+                android:id="@+id/edit_rc_q_add_title"
                 android:text="标题内容"
                 android:textSize="22dp"
                 android:layout_width="175dp"
@@ -54,7 +54,7 @@
                 android:gravity="center"/>
 
             <EditText
-                android:id="@+id/edit_rc_q_set_des"
+                android:id="@+id/edit_rc_q_add_des"
                 android:text="备注内容备注内容备注内容备注内容备注内容备注内容备注内容备注内容备注内容"
                 android:textSize="20dp"
                 android:layout_width="175dp"
@@ -95,7 +95,7 @@
                     android:layout_height="wrap_content">
 
                     <EditText
-                        android:id="@+id/edit_rc_q_time_set_year"
+                        android:id="@+id/edit_rc_q_time_add_year"
                         android:textSize="18dp"
                         android:text="2019"
                         android:inputType="number"
@@ -108,7 +108,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <EditText
-                        android:id="@+id/edit_rc_q_time_set_month"
+                        android:id="@+id/edit_rc_q_time_add_month"
                         android:textSize="18dp"
                         android:text="12"
                         android:inputType="number"
@@ -121,7 +121,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <EditText
-                        android:id="@+id/edit_rc_q_time_set_day"
+                        android:id="@+id/edit_rc_q_time_add_day"
                         android:textSize="18dp"
                         android:text="31"
                         android:inputType="number"
@@ -143,7 +143,7 @@
                     android:layout_marginLeft="20dp">
 
                     <EditText
-                        android:id="@+id/edit_rc_q_time_set_H"
+                        android:id="@+id/edit_rc_q_time_add_H"
                         android:textSize="18dp"
                         android:text="17"
                         android:inputType="number"
@@ -156,7 +156,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <EditText
-                        android:id="@+id/edit_rc_q_time_set_M"
+                        android:id="@+id/edit_rc_q_time_add_M"
                         android:textSize="18dp"
                         android:text="12"
                         android:inputType="number"
@@ -169,7 +169,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content" />
                     <EditText
-                        android:id="@+id/edit_rc_q_time_set_S"
+                        android:id="@+id/edit_rc_q_time_add_S"
                         android:textSize="18dp"
                         android:text="31"
                         android:inputType="number"
@@ -199,7 +199,7 @@
                 android:layout_height="wrap_content" />
 
             <Button
-                android:id="@+id/btn_rc_q_set_color"
+                android:id="@+id/btn_rc_q_add_color"
                 android:layout_width="50dp"
                 android:layout_height="20dp"
                 android:layout_marginLeft="20dp"
@@ -226,7 +226,7 @@
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/btn_rc_q_set_addunq"
+                android:id="@+id/btn_rc_q_add_addunq"
                 android:layout_width="102dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -234,19 +234,6 @@
                 android:gravity="center"
                 android:text="添加待定" />
 
-            <TextView
-                android:layout_width="1dp"
-                android:layout_height="match_parent"
-                android:background="#c0c0c0"/>
-
-            <Button
-                android:id="@+id/btn_rc_q_set_del"
-                android:text="删除"
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:background="@null"
-                android:gravity="center"/>
 
             <TextView
                 android:layout_width="1dp"
@@ -254,7 +241,7 @@
                 android:background="#c0c0c0"/>
 
             <Button
-                android:id="@+id/btn_rc_q_set_save"
+                android:id="@+id/btn_rc_q_add_save"
                 android:text="保存"
                 android:layout_width="0dp"
                 android:layout_weight="1"
