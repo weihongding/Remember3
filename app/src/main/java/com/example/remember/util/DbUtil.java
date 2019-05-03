@@ -1,6 +1,7 @@
 package com.example.remember.util;
 
 import com.example.remember.db.Rc_q;
+import com.example.remember.db.Rc_unq;
 
 import org.litepal.crud.DataSupport;
 
@@ -10,11 +11,6 @@ import java.util.List;
 import java.util.Map;
 
 public class DbUtil {
-
-    public static List<Rc_q> requestRcqListText(){
-        return DataSupport.findAll(Rc_q.class);
-    }
-
     //查询确定日程表中的数据
     public static void requestRcqList(List<String> ymdList,Map<String,List<Rc_q>> map){
         map.get("0").clear();
@@ -36,6 +32,11 @@ public class DbUtil {
             if (time.equals(ymdList.get(6))){map.get("6").add(rcq);}
         }
 
+    }
+
+    //查询待定日程表中的数据
+    public static List requestRcUnqList(){
+        return DataSupport.findAll(Rc_unq.class);
     }
 
 }

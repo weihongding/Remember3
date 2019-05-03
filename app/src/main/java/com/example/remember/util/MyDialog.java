@@ -16,7 +16,9 @@ public class MyDialog extends Dialog {
 
     public static MyDialog colorDialog_jl;
     public static MyDialog colorDialog_bwl;
-    public static MyDialog colorDialog_rc;
+    public static MyDialog colorDialog_rcq_set;
+    public static MyDialog colorDialog_rcq_add;
+    public static MyDialog colorDialog_rcUnq_set;
     public static MyDialog loginDialog;
     public static MyDialog regDialog;
 

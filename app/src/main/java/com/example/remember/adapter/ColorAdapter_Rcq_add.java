@@ -8,14 +8,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.JlDetailActivity;
 import com.example.remember.activity.RcActivity;
-import com.example.remember.db.Rc_q;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.MyApplication;
@@ -25,7 +23,7 @@ import com.example.remember.util.ViewUtil;
 import java.util.Arrays;
 import java.util.List;
 
-public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> {
+public class ColorAdapter_Rcq_add extends RecyclerView.Adapter<ColorAdapter_Rcq_add.ViewHolder> {
 
     private List<String> mColorList = Arrays.asList(ColorUtil.colors);
 
@@ -46,16 +44,11 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
         holder.btn_choose_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorUtil.choose_color = color;
-                if (BaseActivity.getCurrentActivity() instanceof BwlDetailActivity){
-                    Button btn_color = BaseActivity.getCurrentActivity().findViewById(R.id.btn_bwl_color);
-                    ViewUtil.setChooseColor(btn_color);
-                    MyDialog.colorDialog_bwl.hide();
-                }else if (BaseActivity.getCurrentActivity() instanceof JlDetailActivity){
-                    Button btn_color = BaseActivity.getCurrentActivity().findViewById(R.id.btn_jl_detail_color);
-                    ViewUtil.setChooseColor(btn_color);
-                    MyDialog.colorDialog_jl.hide();
-                }
+                ColorUtil.choose_color_rcq_add = color;
+                Button btn_color_add = (Button) MyDialog.rcqDialog_add.findViewById(R.id.btn_rc_q_add_color);
+                ViewUtil.setViewColor(btn_color_add,color);
+                MyDialog.colorDialog_rcq_add.hide();
+                Toast.makeText(MyApplication.getContext(), "日程添加"+color, Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -13,6 +13,9 @@ import android.widget.TextView;
 
 import com.example.remember.R;
 import com.example.remember.adapter.ColorAdapter;
+import com.example.remember.adapter.ColorAdapter_RcUnq_set;
+import com.example.remember.adapter.ColorAdapter_Rcq_add;
+import com.example.remember.adapter.ColorAdapter_Rcq_set;
 import com.example.remember.adapter.RcQAdapter;
 import com.example.remember.adapter.RcUnqAdapter;
 import com.example.remember.db.Rc_q;
@@ -192,12 +195,29 @@ public class RcActivity extends BaseActivity {
         MyDialog.rcunqDialog.setCancelable(true);
         MyDialog.rcunqDialog_set.setCancelable(true);
 
-        View colorView = this.getLayoutInflater().inflate(R.layout.choose_color,null);
-        MyDialog.colorDialog_rc=new MyDialog(this,colorView,R.style.DialogTheme);
-        StaggeredGridLayoutManager colorLayoutManager = new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL);
-        RecyclerView recycler_color = (RecyclerView)MyDialog.colorDialog_rc.findViewById(R.id.recycler_color);
-        recycler_color.setLayoutManager(colorLayoutManager);
-        recycler_color.setAdapter(new ColorAdapter());
+        View colorView_rcq_set = this.getLayoutInflater().inflate(R.layout.choose_color,null);
+        View colorView_rcq_add = this.getLayoutInflater().inflate(R.layout.choose_color,null);
+        View colorView_rcUnq_set = this.getLayoutInflater().inflate(R.layout.choose_color,null);
+
+        MyDialog.colorDialog_rcq_set=new MyDialog(this,colorView_rcq_set,R.style.DialogTheme);
+        MyDialog.colorDialog_rcq_add=new MyDialog(this,colorView_rcq_add,R.style.DialogTheme);
+        MyDialog.colorDialog_rcUnq_set=new MyDialog(this,colorView_rcUnq_set,R.style.DialogTheme);
+
+        StaggeredGridLayoutManager clm_rcq_Set = new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager clm_rcq_add = new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager clm_rcUnq_Set = new StaggeredGridLayoutManager(5,StaggeredGridLayoutManager.VERTICAL);
+
+        RecyclerView rv_color_rcq_set = (RecyclerView)MyDialog.colorDialog_rcq_set.findViewById(R.id.recycler_color);
+        RecyclerView rv_color_rcq_add = (RecyclerView)MyDialog.colorDialog_rcq_add.findViewById(R.id.recycler_color);
+        RecyclerView rv_color_rcUnq_set = (RecyclerView)MyDialog.colorDialog_rcUnq_set.findViewById(R.id.recycler_color);
+
+        rv_color_rcq_set.setLayoutManager(clm_rcq_Set);
+        rv_color_rcq_add.setLayoutManager(clm_rcq_add);
+        rv_color_rcUnq_set.setLayoutManager(clm_rcUnq_Set);
+
+        rv_color_rcq_set.setAdapter(new ColorAdapter_Rcq_set());
+        rv_color_rcq_add.setAdapter(new ColorAdapter_Rcq_add());
+        rv_color_rcUnq_set.setAdapter(new ColorAdapter_RcUnq_set());
 
         sort();
 
@@ -210,7 +230,9 @@ public class RcActivity extends BaseActivity {
         MyDialog.rcqDialog_add.dismiss();
         MyDialog.rcunqDialog.dismiss();
         MyDialog.rcunqDialog_set.dismiss();
-        MyDialog.colorDialog_rc.dismiss();
+        MyDialog.colorDialog_rcq_set.dismiss();
+        MyDialog.colorDialog_rcq_add.dismiss();
+        MyDialog.colorDialog_rcUnq_set.dismiss();
 
         super.onDestroy();
     }
@@ -240,35 +262,10 @@ public class RcActivity extends BaseActivity {
 
     }
 
-    private void iniRcUnqList() {
-        if (rcUnqList == null){
-            rcUnqList = new ArrayList<>();
-        }
+    private static void iniRcUnqList() {
+        if (rcUnqList == null){rcUnqList = new ArrayList<>();}
+        rcUnqList = DbUtil.requestRcUnqList();
 
-        Rc_q rcq1 = new Rc_q("2019-4-8 15:03:59","标题333","备注333",ColorUtil.colors[10]);
-        Rc_q rcq2 = new Rc_q("2019-4-8 21:35:03","标题444","备注444",ColorUtil.colors[11]);
-        Rc_unq rcUnq1 = ObjectUtil.rcqToRcunq(rcq1);
-        Rc_unq rcUnq2 = ObjectUtil.rcqToRcunq(rcq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
-        rcUnqList.add(rcUnq1);
-        rcUnqList.add(rcUnq2);
     }
 
     @Override
@@ -321,6 +318,15 @@ public class RcActivity extends BaseActivity {
 
         iniRcqList();
         sort();
+
+    }
+
+    //更新待定日程表
+    public static void refreshUnq(){
+
+        rcUnqList.clear();
+        rcUnqList.addAll(DbUtil.requestRcUnqList());
+        adapterUnq.notifyDataSetChanged();
 
     }
 

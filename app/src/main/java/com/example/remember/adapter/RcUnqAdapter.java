@@ -38,7 +38,7 @@ public class RcUnqAdapter extends RecyclerView.Adapter<RcUnqAdapter.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Rc_unq rcUnq = mRcUnqList.get(position);
+        final Rc_unq rcUnq = mRcUnqList.get(position);
         final String title = rcUnq.getTitle();
         final String des = rcUnq.getDes();
         final String color = rcUnq.getColor();
@@ -47,8 +47,7 @@ public class RcUnqAdapter extends RecyclerView.Adapter<RcUnqAdapter.ViewHolder> 
         holder.rcUnq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Rc_unq.chooseRcUnq = new Rc_unq(title,des,color);//保存一个备份
-//                Rc_unq.chooseRcUnq.setId(id);
+                Rc_unq.chooseRcUnq = rcUnq;//保存一个备份
 
                 TextView tv_title = (TextView) MyDialog.rcunqDialog.findViewById(R.id.text_rc_unq_title);
                 TextView tv_des = (TextView)MyDialog.rcunqDialog.findViewById(R.id.text_rc_unq_des);
@@ -72,8 +71,7 @@ public class RcUnqAdapter extends RecyclerView.Adapter<RcUnqAdapter.ViewHolder> 
         holder.rcUnq.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
-                Rc_unq.chooseRcUnq = new Rc_unq(title,des,color);//保存一个备份
-//                Rc_unq.chooseRcUnq.setId(id);
+                Rc_unq.chooseRcUnq = rcUnq;//保存一个备份
 
                 EditText et_title = (EditText) MyDialog.rcunqDialog_set.findViewById(R.id.edit_rc_unq_set_title);
                 EditText et_des = (EditText) MyDialog.rcunqDialog_set.findViewById(R.id.edit_rc_unq_set_des);
