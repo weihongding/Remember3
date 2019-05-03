@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,7 +17,9 @@ import android.widget.Toast;
 import com.example.remember.R;
 import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.db.Bwl_event;
+import com.example.remember.listener.BtnListener;
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.MyDialog;
 import com.example.remember.util.StringUtil;
 import com.example.remember.util.ViewUtil;
 
@@ -50,10 +53,23 @@ public class BwlAdapter extends RecyclerView.Adapter<BwlAdapter.ViewHolder>{
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Bwl_event.choose_be = be;
                 Intent intent = new Intent(MyApplication.getContext(), BwlDetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
-                intent.putExtra("be",be);
                 MyApplication.getContext().startActivity(intent);
+            }
+        });
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Bwl_event.choose_be = be;
+                MyDialog.bwlDialog_long.show();
+                Button btn_del = (Button)MyDialog.bwlDialog_long.findViewById(R.id.btn_bwl_long_del);
+                Button btn_share = (Button)MyDialog.bwlDialog_long.findViewById(R.id.btn_bwl_long_share);
+                btn_del.setOnClickListener(BtnListener.instance);
+                btn_share.setOnClickListener(BtnListener.instance);
+                Toast.makeText(MyApplication.getContext(), "长按了备忘录Item", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
     }

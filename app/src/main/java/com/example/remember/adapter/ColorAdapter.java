@@ -46,14 +46,15 @@ public class ColorAdapter extends RecyclerView.Adapter<ColorAdapter.ViewHolder> 
         holder.btn_choose_color.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ColorUtil.choose_color = color;
                 if (BaseActivity.getCurrentActivity() instanceof BwlDetailActivity){
+                    ColorUtil.choose_color_bwl = color;
                     Button btn_color = BaseActivity.getCurrentActivity().findViewById(R.id.btn_bwl_color);
-                    ViewUtil.setChooseColor(btn_color);
+                    ViewUtil.setViewColor(btn_color,color);
                     MyDialog.colorDialog_bwl.hide();
                 }else if (BaseActivity.getCurrentActivity() instanceof JlDetailActivity){
+                    ColorUtil.choose_color = color;
                     Button btn_color = BaseActivity.getCurrentActivity().findViewById(R.id.btn_jl_detail_color);
-                    ViewUtil.setChooseColor(btn_color);
+                    ViewUtil.setViewColor(btn_color,color);
                     MyDialog.colorDialog_jl.hide();
                 }
             }

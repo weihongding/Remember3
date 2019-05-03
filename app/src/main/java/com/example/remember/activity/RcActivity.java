@@ -257,7 +257,6 @@ public class RcActivity extends BaseActivity {
         map.put("6",rcqlist7);
 
         List<String> ymdList = DateUtil.dateListToYMDList(dateList);
-
         DbUtil.requestRcqList(ymdList,map);
 
     }

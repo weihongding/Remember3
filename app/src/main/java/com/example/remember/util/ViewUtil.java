@@ -8,6 +8,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 
 import com.example.remember.R;
 import com.example.remember.adapter.ColorAdapter;
@@ -35,6 +36,20 @@ public class ViewUtil {
         if (ColorUtil.choose_color != null) {
             p.setColor(Color.parseColor(ColorUtil.choose_color));
         }
+    }
+    public static void closeInputMethod() {
+
+        InputMethodManager imm = (InputMethodManager) BaseActivity.getCurrentActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+
+        View view = ((Activity) BaseActivity.getCurrentActivity()).getWindow().peekDecorView();
+        if (view != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+
+//        boolean isOpen = imm.isActive(view);
+//        if (isOpen) {
+//            imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//        }
     }
 
 }

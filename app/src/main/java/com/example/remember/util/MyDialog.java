@@ -28,6 +28,8 @@ public class MyDialog extends Dialog {
 
     public static MyDialog jlDialog_add;
 
+    public static MyDialog bwlDialog_long;
+
     public static MyDialog rcunqDialog;
     public static MyDialog rcunqDialog_set;
 

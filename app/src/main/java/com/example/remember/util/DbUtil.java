@@ -1,5 +1,6 @@
 package com.example.remember.util;
 
+import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
@@ -37,6 +38,10 @@ public class DbUtil {
     //查询待定日程表中的数据
     public static List requestRcUnqList(){
         return DataSupport.findAll(Rc_unq.class);
+    }
+
+    public static List requestBwlEventList(){
+        return DataSupport.findAll(Bwl_event.class);
     }
 
 }

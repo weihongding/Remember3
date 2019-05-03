@@ -11,6 +11,8 @@ import java.util.Date;
 
 public class Bwl_event extends DataSupport implements Comparable<Bwl_event>, Serializable {
 
+    public static Bwl_event choose_be = null;
+
     private int id;
     private String color;
     private String content;

@@ -52,6 +52,7 @@
             android:id="@+id/edit_bwl_content"
             android:textSize="18sp"
             android:text="备忘录内容"
+            android:inputType="textMultiLine"
             android:gravity="top"
             android:layout_width="match_parent"
             android:layout_height="0dp"

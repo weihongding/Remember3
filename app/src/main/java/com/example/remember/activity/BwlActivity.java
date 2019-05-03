@@ -15,6 +15,7 @@ import com.example.remember.db.Bwl_event;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
+import com.example.remember.util.DbUtil;
 import com.example.remember.util.MyDialog;
 
 import java.util.ArrayList;
@@ -30,6 +31,9 @@ public class BwlActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bwl);
+
+        View bwlView = this.getLayoutInflater().inflate(R.layout.dialog_bwl_long, null);
+        MyDialog.bwlDialog_long=new MyDialog(this,bwlView,R.style.DialogTheme);
 
         //初始化数据
         iniBwlList();
@@ -48,41 +52,34 @@ public class BwlActivity extends BaseActivity {
 
     }
 
-    private void iniBwlList(){
-        bwlList = new ArrayList<>();
-        Bwl_event be1 = new Bwl_event(ColorUtil.colors[1],"一二三四五六七八九十一","2019-4-8 15:03:59");
-        Bwl_event be2 = new Bwl_event(ColorUtil.colors[2],"一二三四五","2019-4-24 15:03:59");
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
-        bwlList.add(be1);
-        bwlList.add(be2);
+    @Override
+    protected void onResume() {
+        refresh();
+        super.onResume();
     }
 
     @Override
-    protected void onResume() {
-        sort();
-        super.onResume();
+    protected void onDestroy() {
+        MyDialog.bwlDialog_long.dismiss();
+        super.onDestroy();
+    }
+
+    private static void iniBwlList(){
+
+        if (bwlList == null){bwlList = new ArrayList<>();}
+        bwlList.clear();
+        bwlList.addAll(DbUtil.requestBwlEventList());
+
     }
 
     public static void sort(){
         Collections.sort(bwlList);
         bwlAdapter.notifyDataSetChanged();
+    }
+
+    public static void refresh(){
+        iniBwlList();
+        sort();
     }
 
 }

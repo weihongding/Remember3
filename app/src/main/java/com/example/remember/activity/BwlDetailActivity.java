@@ -13,29 +13,30 @@ import com.example.remember.adapter.ColorAdapter;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.util.BaseActivity;
+import com.example.remember.util.ColorUtil;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ViewUtil;
 
 public class BwlDetailActivity extends BaseActivity {
 
-    private Bwl_event mBe;
+//    private Bwl_event mBe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bwl_detail);
 
-        mBe = (Bwl_event) getIntent().getSerializableExtra("be");
+//        mBe = (Bwl_event) getIntent().getSerializableExtra("be");
 
         Button btn_color = (Button)findViewById(R.id.btn_bwl_color);
         Button btn_save = (Button)findViewById(R.id.btn_bwl_save);
         EditText et_content = (EditText)findViewById(R.id.edit_bwl_content);
         TextView tv_time = (TextView)findViewById(R.id.text_bwl_time);
 
-        ViewUtil.setViewColor(btn_color,mBe.getColor());
+        ViewUtil.setViewColor(btn_color,Bwl_event.choose_be.getColor());
         btn_save.setTypeface(ViewUtil.getTypeface());
-        et_content.setText(mBe.getContent());
-        tv_time.setText(mBe.getTime());
+        et_content.setText(Bwl_event.choose_be.getContent());
+        tv_time.setText(Bwl_event.choose_be.getTime());
 
         btn_color.setOnClickListener(BtnListener.instance);
         btn_save.setOnClickListener(BtnListener.instance);
@@ -52,6 +53,8 @@ public class BwlDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         MyDialog.colorDialog_bwl.dismiss();
+        Bwl_event.choose_be = null;
+        ColorUtil.choose_color_bwl = null;
         super.onDestroy();
     }
 }

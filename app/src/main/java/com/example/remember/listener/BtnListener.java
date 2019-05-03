@@ -9,6 +9,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.activity.BwlActivity;
 import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.JlActivity;
 import com.example.remember.activity.JlDetailActivity;
@@ -44,17 +45,47 @@ public class BtnListener implements View.OnClickListener  {
             case R.id.btn_bwl_add:{
                 Intent intent = new Intent(MyApplication.getContext(), BwlDetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
-                intent.putExtra("be",new Bwl_event());
+                Bwl_event.choose_be = new Bwl_event();
                 MyApplication.getContext().startActivity(intent);
                 break;
             }
             case R.id.btn_bwl_color:{
                 MyDialog.colorDialog_bwl.show();
-                Toast.makeText(MyApplication.getContext(), "点击了选择颜色", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_bwl_save:{
-                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+
+                EditText et_content = (EditText)BaseActivity.getCurrentActivity().findViewById(R.id.edit_bwl_content);
+                TextView tv_time = (TextView)BaseActivity.getCurrentActivity().findViewById(R.id.text_bwl_time);
+
+                String time = DateUtil.dateToStr(new Date());
+
+                if (ColorUtil.choose_color_bwl != null){
+                    Bwl_event.choose_be.setColor(ColorUtil.choose_color_bwl);
+                }
+                Bwl_event.choose_be.setContent(et_content.getText().toString());
+                Bwl_event.choose_be.setTime(time);
+
+                Bwl_event.choose_be.save();
+                et_content.clearFocus();
+                tv_time.requestFocus();
+                ViewUtil.closeInputMethod();
+
+                tv_time.setText(time);
+
+                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_bwl_long_del:{
+                Bwl_event.choose_be.delete();
+                Bwl_event.choose_be = null;
+                BwlActivity.refresh();
+                MyDialog.bwlDialog_long.hide();
+                Toast.makeText(MyApplication.getContext(), "点击了删除", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_bwl_long_share:{
+                Toast.makeText(MyApplication.getContext(), "点击了分享", Toast.LENGTH_SHORT).show();
                 break;
             }
 
@@ -177,14 +208,14 @@ public class BtnListener implements View.OnClickListener  {
                 rc_unq.save();
                 MyDialog.rcqDialog.hide();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "点击了aaaa添加待定", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "添加待定日程成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_q_del:{
                 Rc_q.chooseRcq.delete();
                 RcActivity.refresh();
                 MyDialog.rcqDialog.hide();
-                Toast.makeText(MyApplication.getContext(), "点击了删除", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_q_edit:{
@@ -240,14 +271,15 @@ public class BtnListener implements View.OnClickListener  {
                 RcActivity.refreshUnq();
                 MyDialog.rcqDialog_set.hide();
                 ColorUtil.choose_color_rcq_set = null;
-                Toast.makeText(MyApplication.getContext(), "点击了添加待定", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "添加待定日程成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_q_set_del:{
                 Rc_q.chooseRcq.delete();
                 MyDialog.rcqDialog_set.hide();
                 ColorUtil.choose_color_rcq_set = null;
-                Toast.makeText(MyApplication.getContext(), "点击了删除", Toast.LENGTH_SHORT).show();
+                RcActivity.refresh();
+                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_q_set_save:{
@@ -279,7 +311,7 @@ public class BtnListener implements View.OnClickListener  {
 
                 ColorUtil.choose_color_rcq_set=null;
 
-                Toast.makeText(MyApplication.getContext(), "修改日程保存成功", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
                 MyDialog.rcqDialog_set.hide();
                 RcActivity.refresh();
 
@@ -300,7 +332,7 @@ public class BtnListener implements View.OnClickListener  {
                 Rc_unq rcUnq = new Rc_unq(title,des,color);
                 rcUnq.save();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "点击了添加待定", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "添加待定日程成功！", Toast.LENGTH_SHORT).show();
 
                 ColorUtil.choose_color_rcq_add = null;
                 MyDialog.rcqDialog_add.hide();
@@ -377,7 +409,6 @@ public class BtnListener implements View.OnClickListener  {
                 MyDialog.rcunqDialog.hide();
                 MyDialog.rcqDialog_add.show();
                 ColorUtil.choose_color_rcq_add = rcq.getColor();
-                Toast.makeText(MyApplication.getContext(), "点击了添加日程", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_unq_del:{
@@ -385,7 +416,7 @@ public class BtnListener implements View.OnClickListener  {
                 Rc_unq.chooseRcUnq=null;
                 MyDialog.rcunqDialog.hide();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "点击了删除", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_unq_edit:{
@@ -424,7 +455,7 @@ public class BtnListener implements View.OnClickListener  {
 
                 Rc_q rcq = ObjectUtil.rcunqToRcq(Rc_unq.chooseRcUnq,DateUtil.dateToStr(new Date()));
                 if (ColorUtil.choose_color_rcUnq_set!=null){
-                    rcq.setColor(ColorUtil.choose_color_rcq_set);
+                    rcq.setColor(ColorUtil.choose_color_rcUnq_set);
                 }
 
                 EditText et_title = (EditText) MyDialog.rcqDialog_add.findViewById(R.id.edit_rc_q_add_title);
@@ -459,8 +490,8 @@ public class BtnListener implements View.OnClickListener  {
                 MyDialog.rcunqDialog_set.hide();
                 MyDialog.rcqDialog_add.show();
                 ColorUtil.choose_color_rcq_add = rcq.getColor();
-                Toast.makeText(MyApplication.getContext(), "点击了添加日程", Toast.LENGTH_SHORT).show();
                 break;
+
             }
             case R.id.btn_rc_unq_set_del:{
                 Rc_unq.chooseRcUnq.delete();
@@ -468,7 +499,7 @@ public class BtnListener implements View.OnClickListener  {
                 ColorUtil.choose_color_rcUnq_set = null;
                 MyDialog.rcunqDialog_set.hide();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "点击了删除", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_rc_unq_set_save:{
@@ -479,14 +510,15 @@ public class BtnListener implements View.OnClickListener  {
 
                 rcUnq.setTitle(et_title.getText().toString());
                 rcUnq.setDes(et_des.getText().toString());
-                if (ColorUtil.choose_color_rcq_set!=null){
-                    rcUnq.setColor(ColorUtil.choose_color_rcq_set);
+                if (ColorUtil.choose_color_rcUnq_set!=null){
+                    rcUnq.setColor(ColorUtil.choose_color_rcUnq_set);
                 }
                 rcUnq.save();
-
                 MyDialog.rcunqDialog_set.hide();
 
-                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+                RcActivity.refreshUnq();
+
+                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
 
