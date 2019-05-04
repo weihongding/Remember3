@@ -9,6 +9,8 @@ import java.util.Date;
 //事件记录
 public class Jl_sj_event extends DataSupport implements Comparable<Jl_sj_event> {
 
+    public static Jl_sj_event choose_jse = null;
+
     private int id;
     private int jid;//事件id
     private String time;//触发时间

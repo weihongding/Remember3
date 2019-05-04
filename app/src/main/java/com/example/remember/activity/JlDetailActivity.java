@@ -4,7 +4,6 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
-import android.text.Layout;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,12 +14,9 @@ import com.example.remember.adapter.ColorAdapter;
 import com.example.remember.adapter.JlAdapter_sj;
 import com.example.remember.adapter.JlAdapter_zb;
 import com.example.remember.db.Jl;
-import com.example.remember.db.Jl_sj_event;
-import com.example.remember.db.Jl_zb_event;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
-import com.example.remember.util.DateUtil;
 import com.example.remember.util.DbUtil;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.StringUtil;
@@ -28,7 +24,6 @@ import com.example.remember.util.ViewUtil;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 import java.util.List;
 
 public class JlDetailActivity extends BaseActivity {
@@ -61,6 +56,8 @@ public class JlDetailActivity extends BaseActivity {
         RecyclerView rv = (RecyclerView) findViewById(R.id.recycler_jl_detail);
 
         //初始化相关组件
+        View itemView = this.getLayoutInflater().inflate(R.layout.dialog_jl_detail_item,null);
+        MyDialog.jlDialog_item=new MyDialog(this,itemView,R.style.DialogTheme);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         View colorView = this.getLayoutInflater().inflate(R.layout.choose_color,null);
         MyDialog.colorDialog_jl=new MyDialog(this,colorView,R.style.DialogTheme);
@@ -100,6 +97,7 @@ public class JlDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         MyDialog.colorDialog_jl.dismiss();
+        MyDialog.jlDialog_item.dismiss();
         Jl.choose_jl = null;
         ColorUtil.choose_color_jlDetail_set = null;
         super.onDestroy();

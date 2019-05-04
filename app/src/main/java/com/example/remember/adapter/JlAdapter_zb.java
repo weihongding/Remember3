@@ -5,14 +5,19 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.remember.R;
+import com.example.remember.db.Jl;
 import com.example.remember.db.Jl_sj_event;
 import com.example.remember.db.Jl_zb_event;
+import com.example.remember.listener.BtnListener;
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.MyDialog;
 
 import java.util.List;
 
@@ -34,12 +39,27 @@ public class JlAdapter_zb extends RecyclerView.Adapter<JlAdapter_zb.ViewHolder> 
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        Jl_zb_event jze = mZbList.get(position);
+        final Jl_zb_event jze = mZbList.get(position);
         holder.tv_time.setText(jze.getTime());
         holder.tv_content.setText(jze.getContent());
         holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+
+                Jl_zb_event.choose_jze = jze;
+
+                EditText et_content = (EditText) MyDialog.jlDialog_item.findViewById(R.id.edit_jl_detail_item_content);
+                TextView tv_time = (TextView)MyDialog.jlDialog_item.findViewById(R.id.text_jl_detail_item_time);
+                Button btn_del = (Button) MyDialog.jlDialog_item.findViewById(R.id.btn_jl_detail_item_del);
+                Button btn_save = (Button) MyDialog.jlDialog_item.findViewById(R.id.btn_jl_detail_item_save);
+
+                et_content.setText(Jl_zb_event.choose_jze.getContent());
+                tv_time.setText(Jl_zb_event.choose_jze.getTime());
+
+                btn_del.setOnClickListener(BtnListener.instance);
+                btn_save.setOnClickListener(BtnListener.instance);
+
+                MyDialog.jlDialog_item.show();
                 Toast.makeText(MyApplication.getContext(), "长按了事件item", Toast.LENGTH_SHORT).show();
                 return true;
             }

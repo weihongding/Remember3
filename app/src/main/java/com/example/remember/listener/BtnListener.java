@@ -190,6 +190,28 @@ public class BtnListener implements View.OnClickListener  {
                 Toast.makeText(MyApplication.getContext(), "保存记录信息", Toast.LENGTH_SHORT).show();
                 break;
             }
+            case R.id.btn_jl_detail_item_del:{
+                if (Jl.choose_jl.getType().equals(StringUtil.eventType_zb)){
+                    Jl_zb_event.choose_jze.delete();
+                }else if (Jl.choose_jl.getType().equals(StringUtil.eventType_sj)){
+                    Jl_sj_event.choose_jse.delete();
+                }
+                JlDetailActivity.refresh();
+                MyDialog.jlDialog_item.hide();
+                break;
+            }
+            case R.id.btn_jl_detail_item_save:{
+                EditText et_content = (EditText) MyDialog.jlDialog_item.findViewById(R.id.edit_jl_detail_item_content);
+
+                Jl_zb_event.choose_jze.setContent(et_content.getText().toString());
+                Jl_zb_event.choose_jze.save();
+
+                JlDetailActivity.refresh();
+                MyDialog.jlDialog_item.hide();
+
+                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                break;
+            }
 
             //设备相关监听
             case R.id.btn_sb_add:{
