@@ -17,6 +17,7 @@ import com.example.remember.activity.RcActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Jl;
 import com.example.remember.db.Jl_sj_event;
+import com.example.remember.db.Jl_zb_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 import com.example.remember.util.BaseActivity;
@@ -97,20 +98,46 @@ public class BtnListener implements View.OnClickListener  {
             }
             case R.id.btn_jl_add_sj:{
                 Jl jl = new Jl(StringUtil.eventType_sj);
-                JlActivity.jlList.add(jl);
-                JlActivity.sort();
+                jl.save();
+                JlActivity.refresh();
                 MyDialog.jlDialog_add.hide();
                 break;
             }
             case R.id.btn_jl_add_zb:{
                 Jl jl = new Jl(StringUtil.eventType_zb);
-                JlActivity.jlList.add(jl);
-                JlActivity.sort();
+                jl.save();
+                JlActivity.refresh();
                 MyDialog.jlDialog_add.hide();
+                break;
+            }
+            case R.id.btn_jl_long_del:{
+                Jl.choose_jl.delete();
+                Jl.choose_jl = null;
+                JlActivity.refresh();
+                MyDialog.jlDialog_long.hide();
+                break;
+            }
+            case R.id.btn_jl_long_share:{
+                Toast.makeText(MyApplication.getContext(), "分享了记录："+Jl.choose_jl.getTitle(), Toast.LENGTH_SHORT).show();
                 break;
             }
 
             case R.id.btn_jl_detail_add:{
+
+                if (Jl.choose_jl.getType().equals(StringUtil.eventType_sj)){
+                    Jl_sj_event jse = new Jl_sj_event(Jl.choose_jl.getId());
+                    Jl.choose_jl.setFinTime(DateUtil.dateToStr(new Date()));
+                    Jl.choose_jl.save();
+                    jse.save();
+                }else if (Jl.choose_jl.getType().equals(StringUtil.eventType_zb)){
+                    Jl_zb_event jze = new Jl_zb_event(Jl.choose_jl.getId(),"无");
+                    Jl.choose_jl.setFinTime(DateUtil.dateToStr(new Date()));
+                    Jl.choose_jl.save();
+                    jze.save();
+                }
+
+                JlDetailActivity.refresh();
+
                 Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
@@ -131,6 +158,7 @@ public class BtnListener implements View.OnClickListener  {
 
             }
             case R.id.btn_jl_detail_save:{
+
                 View layoutText = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_jl_detail);
                 View layoutSet = (View) BaseActivity.getCurrentActivity().findViewById(R.id.layout_jl_detail_set);
                 TextView tv_color = (TextView) BaseActivity.getCurrentActivity().findViewById(R.id.text_jl_detail_color);
@@ -139,13 +167,27 @@ public class BtnListener implements View.OnClickListener  {
                 EditText et_title = (EditText) BaseActivity.getCurrentActivity().findViewById(R.id.edit_jl_detail_title);
                 EditText et_des = (EditText) BaseActivity.getCurrentActivity().findViewById(R.id.edit_jl_detail_des);
 
-                ViewUtil.setChooseColor(tv_color);
-                tv_title.setText(et_title.getText());
-                tv_des.setText(et_des.getText());
+                String title = et_title.getText().toString();
+                String des = et_des.getText().toString();
+
+                Jl.choose_jl.setTitle(title);
+                Jl.choose_jl.setDes(des);
+                if (ColorUtil.choose_color_jlDetail_set != null) {
+                    Jl.choose_jl.setColor(ColorUtil.choose_color_jlDetail_set);
+                }
+
+                Jl.choose_jl.save();
+
+                ViewUtil.setViewColor(tv_color,Jl.choose_jl.getColor());
+                tv_title.setText(Jl.choose_jl.getTitle());
+                tv_des.setText(Jl.choose_jl.getDes());
 
                 layoutText.setVisibility(View.VISIBLE);
                 layoutSet.setVisibility(View.GONE);
-                Toast.makeText(MyApplication.getContext(), "点击了保存", Toast.LENGTH_SHORT).show();
+
+                ViewUtil.closeInputMethod();
+
+                Toast.makeText(MyApplication.getContext(), "保存记录信息", Toast.LENGTH_SHORT).show();
                 break;
             }
 

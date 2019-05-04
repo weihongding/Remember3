@@ -1,6 +1,9 @@
 package com.example.remember.util;
 
 import com.example.remember.db.Bwl_event;
+import com.example.remember.db.Jl;
+import com.example.remember.db.Jl_sj_event;
+import com.example.remember.db.Jl_zb_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
@@ -40,8 +43,26 @@ public class DbUtil {
         return DataSupport.findAll(Rc_unq.class);
     }
 
+    //查询备忘录的数据
     public static List requestBwlEventList(){
         return DataSupport.findAll(Bwl_event.class);
     }
+
+    //查询记录的数据
+    public static List requestJlList(){
+        return DataSupport.findAll(Jl.class);
+    }
+
+    //查询记录的详细数据
+    public static List requestJlDetailList(String type,int jlId){
+        if (type.equals(StringUtil.eventType_zb)){
+            return DataSupport.where("jid = ?",Integer.toString(jlId)).find(Jl_zb_event.class);
+        } else if (type.equals(StringUtil.eventType_sj)){
+            return DataSupport.where("jid = ?",Integer.toString(jlId)).find(Jl_sj_event.class);
+        }
+        return null;
+    }
+
+
 
 }

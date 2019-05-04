@@ -18,6 +18,8 @@ import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.JlDetailActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Jl;
+import com.example.remember.listener.BtnListener;
+import com.example.remember.util.MyDialog;
 import com.example.remember.util.ViewUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.StringUtil;
@@ -43,7 +45,6 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         final Jl jl = mJlList.get(position);
-//        int id = jl.getId();
         String title = jl.getTitle();
         String type = jl.getType();
         String des = jl.getDes();
@@ -53,43 +54,47 @@ public class JlAdapter extends RecyclerView.Adapter<JlAdapter.ViewHolder> {
         holder.tv_title.setText(title);
         holder.tv_time.setText(finTime);
 
-        if (type.equals(StringUtil.eventType_sj)){//记录类型为事件时添加监听器
-            holder.layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MyApplication.getContext(), JlDetailActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
-                    intent.putExtra("jl",jl);
-                    MyApplication.getContext().startActivity(intent);
-                    Toast.makeText(MyApplication.getContext(), "点击了整个事件Item", Toast.LENGTH_SHORT).show();
-                }
-            });
-            holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(MyApplication.getContext(), "长按了整个事件Item", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-        }else if (type.equals(StringUtil.eventType_zb)){//记录类型为指标时添加监听器
-            holder.layout.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(MyApplication.getContext(), JlDetailActivity.class);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
-                    intent.putExtra("jl",jl);
-                    MyApplication.getContext().startActivity(intent);
-                    Toast.makeText(MyApplication.getContext(), "点击了整个指标Item", Toast.LENGTH_SHORT).show();
-                }
-            });
-            holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
-                @Override
-                public boolean onLongClick(View v) {
-                    Toast.makeText(MyApplication.getContext(), "长按了整个指标Item", Toast.LENGTH_SHORT).show();
-                    return true;
-                }
-            });
-        }
+//        if (type.equals(StringUtil.eventType_sj)){//记录类型为事件时添加监听器
+        holder.layout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Jl.choose_jl = jl;
+                Intent intent = new Intent(MyApplication.getContext(), JlDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+                MyApplication.getContext().startActivity(intent);
+            }
+        });
+        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Jl.choose_jl = jl;
+                MyDialog.jlDialog_long.show();
+                Button btn_del = (Button)MyDialog.jlDialog_long.findViewById(R.id.btn_jl_long_del);
+                Button btn_share = (Button)MyDialog.jlDialog_long.findViewById(R.id.btn_jl_long_share);
+                btn_del.setOnClickListener(BtnListener.instance);
+                btn_share.setOnClickListener(BtnListener.instance);
+                return true;
+            }
+        });
+//        }else if (type.equals(StringUtil.eventType_zb)){//记录类型为指标时添加监听器
+//            holder.layout.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent intent = new Intent(MyApplication.getContext(), JlDetailActivity.class);
+//                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+//                    intent.putExtra("jl",jl);
+//                    MyApplication.getContext().startActivity(intent);
+//                    Toast.makeText(MyApplication.getContext(), "点击了整个指标Item", Toast.LENGTH_SHORT).show();
+//                }
+//            });
+//            holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
+//                @Override
+//                public boolean onLongClick(View v) {
+//                    Toast.makeText(MyApplication.getContext(), "长按了整个指标Item", Toast.LENGTH_SHORT).show();
+//                    return true;
+//                }
+//            });
+//        }
 
         ViewUtil.setViewColor(holder.layout,color);
     }

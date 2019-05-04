@@ -19,7 +19,9 @@ import com.example.remember.db.Jl_sj_event;
 import com.example.remember.db.Jl_zb_event;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.util.BaseActivity;
+import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DateUtil;
+import com.example.remember.util.DbUtil;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.StringUtil;
 import com.example.remember.util.ViewUtil;
@@ -33,18 +35,15 @@ public class JlDetailActivity extends BaseActivity {
 
     public static List list;
     public static RecyclerView.Adapter adapter;
-    private Jl mJl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.jl_detail);
 
-        mJl = (Jl) getIntent().getSerializableExtra("jl");
-
         //初始化数据和适配器
-        requestDate(mJl.getId(),mJl.getType());
-        iniAdapter(mJl.getType());
+        requestDate(Jl.choose_jl.getType(),Jl.choose_jl.getId());
+        iniAdapter(Jl.choose_jl.getType());
 
         View layoutText = (View) findViewById(R.id.layout_jl_detail);
         View layoutSet = (View) findViewById(R.id.layout_jl_detail_set);
@@ -73,18 +72,18 @@ public class JlDetailActivity extends BaseActivity {
         //初始化样式
         btn_set.setTypeface(ViewUtil.getTypeface());
         btn_save.setTypeface(ViewUtil.getTypeface());
-        ViewUtil.setViewColor(btn_color,mJl.getColor());
-        ViewUtil.setViewColor(tv_color,mJl.getColor());
+        ViewUtil.setViewColor(btn_color,Jl.choose_jl.getColor());
+        ViewUtil.setViewColor(tv_color,Jl.choose_jl.getColor());
         layoutText.setVisibility(View.VISIBLE);
         layoutSet.setVisibility(View.GONE);
 
         //初始化内容
-        tv_title.setText(mJl.getTitle());
-        tv_des.setText(mJl.getDes());
-        tv_type1.setText(mJl.getType());
-        tv_type2.setText(mJl.getType());
-        et_title.setText(mJl.getTitle());
-        et_des.setText(mJl.getDes());
+        tv_title.setText(Jl.choose_jl.getTitle());
+        tv_des.setText(Jl.choose_jl.getDes());
+        tv_type1.setText(Jl.choose_jl.getType());
+        tv_type2.setText(Jl.choose_jl.getType());
+        et_title.setText(Jl.choose_jl.getTitle());
+        et_des.setText(Jl.choose_jl.getDes());
 
         //添加监听器和适配器
         btn_add.setOnClickListener(BtnListener.instance);
@@ -101,47 +100,43 @@ public class JlDetailActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         MyDialog.colorDialog_jl.dismiss();
+        Jl.choose_jl = null;
+        ColorUtil.choose_color_jlDetail_set = null;
         super.onDestroy();
     }
 
-    public static void requestDate(int jlId, String type){
-        list = new ArrayList<>();
-        if (type.equals(StringUtil.eventType_sj)){
-            Jl_sj_event jse1 = new Jl_sj_event();
-            jse1.setTime("2019-4-5 17:24:31");
-            Jl_sj_event jse2 = new Jl_sj_event();
-            jse2.setTime(DateUtil.dateToStr(new Date()));
-            list.add(jse1);
-            list.add(jse2);
-        }else if (type.equals(StringUtil.eventType_zb)){
-            Jl_zb_event jze1 = new Jl_zb_event();
-            jze1.setTime("2019-4-5 17:24:31");
-            jze1.setContent("70.4kg");
-            Jl_zb_event jze2 = new Jl_zb_event();
-            jze2.setTime(DateUtil.dateToStr(new Date()));
-            jze2.setContent("67.6kg");
-            list.add(jze1);
-            list.add(jze2);
-        }
+    public static void requestDate(String type,int jlId){
+
+        if (list == null){list = new ArrayList<>();}
+        list = DbUtil.requestJlDetailList(type,jlId);
+
     }
 
     public static void iniAdapter(String type){
+
         if (type.equals(StringUtil.eventType_sj)){
             adapter = new JlAdapter_sj(list);
         }else if (type.equals(StringUtil.eventType_zb)){
             adapter = new JlAdapter_zb(list);
         }
+
     }
 
     @Override
     protected void onResume() {
-        sort();
+        refresh();
         super.onResume();
     }
 
     public static void sort(){
         Collections.sort(list);
         adapter.notifyDataSetChanged();
+    }
+
+    public static void refresh(){
+        list.clear();
+        list.addAll(DbUtil.requestJlDetailList(Jl.choose_jl.getType(),Jl.choose_jl.getId()));
+        sort();
     }
 
 }

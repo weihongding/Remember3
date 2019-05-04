@@ -11,6 +11,8 @@ import java.util.Date;
 //指标记录
 public class Jl extends DataSupport implements Comparable<Jl>, Serializable {
 
+    public static Jl choose_jl = null;
+
     private int id;
     private String type;
     private String title;
@@ -88,4 +90,5 @@ public class Jl extends DataSupport implements Comparable<Jl>, Serializable {
     public int compareTo(Jl jl) {
         return DateUtil.getGapOfTime(jl.finTime,this.finTime);
     }
+
 }

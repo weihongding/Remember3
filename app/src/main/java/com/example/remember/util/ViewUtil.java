@@ -30,13 +30,6 @@ public class ViewUtil {
         GradientDrawable p = (GradientDrawable) view.getBackground();
         p.setColor(Color.parseColor(color));
     }
-
-    public static void setChooseColor(View view){
-        GradientDrawable p = (GradientDrawable) view.getBackground();
-        if (ColorUtil.choose_color != null) {
-            p.setColor(Color.parseColor(ColorUtil.choose_color));
-        }
-    }
     public static void closeInputMethod() {
 
         InputMethodManager imm = (InputMethodManager) BaseActivity.getCurrentActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
