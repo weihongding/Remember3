@@ -7,7 +7,9 @@ import android.content.SharedPreferences;
 import com.example.remember.entity.UserInfo;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class UserSetting {
 
@@ -58,6 +60,12 @@ public class UserSetting {
         editor.apply();
     }
 
+    public static void setUserUnread(int unread){
+        editor = BaseActivity.getCurrentActivity().getSharedPreferences("UserInfo",Context.MODE_PRIVATE).edit();
+        editor.putInt("unread",unread);
+        editor.apply();
+    }
+
     //取出（服务器获取的）用户信息
     public static UserInfo getUserInfo(){
         pref = BaseActivity.getCurrentActivity().getSharedPreferences("UserInfo",Context.MODE_PRIVATE);
@@ -65,6 +73,24 @@ public class UserSetting {
         int id= pref.getInt("id",-1);
         int unread = pref.getInt("unread",0);
         return new UserInfo(id,name,unread);
+    }
+
+    public static void putSbKey(String key){
+        Set set = getSbKey();
+        set.add(key);
+        setSbKey(set);
+    }
+
+    public static void setSbKey(Set<String> set){
+        editor = BaseActivity.getCurrentActivity().getSharedPreferences("SbInfo",Context.MODE_PRIVATE).edit();
+        editor.putString("Key",set.toString());
+        editor.apply();
+    }
+
+    public static Set getSbKey(){
+        pref = BaseActivity.getCurrentActivity().getSharedPreferences("SbInfo",Context.MODE_PRIVATE);
+        String keyStr = pref.getString("Key","[]");
+        return ObjectUtil.strToSet(keyStr);
     }
 
 }

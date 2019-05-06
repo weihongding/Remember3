@@ -9,14 +9,19 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.remember.R;
+import com.example.remember.activity.SbActivity;
 import com.example.remember.ccs.Client;
+import com.example.remember.entity.Sb;
 import com.example.remember.entity.UserInfo;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -30,6 +35,8 @@ public class CheckUtil {
     private static final int linkFail = 100860;
     private static final int loginSuccess = 100861;
     private static final int regSuccess = 100862;
+    private static final int unreadSuccess = 100863;
+    private static final int sbSuccess = 100864;
 
 
     private static Handler mHandler = new Handler(){
@@ -37,10 +44,11 @@ public class CheckUtil {
         public void handleMessage(Message msg){
             switch (msg.what){
                 case linkFail:{
-                    new ToastUtil("网络链接请求失败");
+                    new ToastUtil("网络连接请求失败");
+                    break;
                 }
                 case loginSuccess:{
-                    //登陆链接成功
+                    //登陆连接成功
                     Button btn_login = (Button)BaseActivity.getCurrentActivity().findViewById(R.id.btn_login);
                     TextView tv_user = (TextView)BaseActivity.getCurrentActivity().findViewById(R.id.text_user);
 
@@ -76,6 +84,48 @@ public class CheckUtil {
                         MyDialog.regDialog.cancel();
                         MyDialog.loginDialog.show();
                     }
+                    break;
+                }
+                case unreadSuccess:{
+                    //检查未读连接成功
+
+                    String unreadText = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(unreadText);
+
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+
+                    new ToastUtil(desc);
+                    if (status==ConstResponse.STATUS_OK){
+                        UserSetting.setUserUnread(ConstResponse.unread_true);
+                    }
+                    break;
+                }
+                case sbSuccess:{
+                    //设备连接成功
+
+                    String sbText = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(sbText);
+
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+                    String data = json.getString("data");
+
+                    new ToastUtil(desc);
+                    if (status==ConstResponse.STATUS_OK){
+
+                        SbActivity.sbList.clear();
+                        JSONArray ja = JSONArray.parseArray(data);
+                        for (int i=0;i<ja.size();i++){
+                            JSONObject jo = JSONObject.parseObject(ja.getString(i));
+                            Sb sb = new Sb(jo.getString("name"),jo.getString("state"),jo.getString("time"));
+                            SbActivity.sbList.add(sb);
+                            SbActivity.sort();
+                        }
+
+                    }
+
+                    break;
                 }
                 default:{
                     break;
@@ -85,8 +135,86 @@ public class CheckUtil {
 
     };
 
+    //获取所有设备信息
+    public static void getSbInfoAll(){
+
+        String keyStr = UserSetting.getSbKey().toString();
+        RequestBody body = new FormBody.Builder()
+                .add("keySet",keyStr)
+                .build();
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_sbAll;
+
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = sbSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+            }
+        });
+
+    }
+
+    //检查是否有未读的信息
+    public static void unread(){
+
+        String account = UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account");
+        RequestBody body = new FormBody.Builder()
+                .add("account",account)
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_unread;
+
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = unreadSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+
+            }
+        });
+
+
+    }
+
     //注册账号
     public static void register(String account,String password,String username){
+        password = DataUtil.getMd5(password);
         RequestBody body = new FormBody.Builder()
                 .add("account",account)
                 .add("password",password)

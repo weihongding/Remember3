@@ -8,9 +8,12 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSONObject;
 import com.example.remember.R;
+import com.example.remember.util.CheckUtil;
+import com.example.remember.util.ConstResponse;
 import com.example.remember.util.HttpUtil;
 import com.example.remember.util.StringUtil;
 import com.example.remember.util.ToastUtil;
+import com.example.remember.util.UserSetting;
 
 import java.io.IOException;
 
@@ -38,7 +41,6 @@ public class MailActivity extends AppCompatActivity {
             @Override
             public void onRefresh() {
                 requestMessage();
-                Toast.makeText(MailActivity.this, "刷新中", Toast.LENGTH_SHORT).show();
                 swipeRefresh.setRefreshing(false);
             }
         });
@@ -49,29 +51,38 @@ public class MailActivity extends AppCompatActivity {
 
     private void requestMessage(){
 
-        String mailUrl = HttpUtil.urlHead+ StringUtil.httpUrl_getJson;
-        HttpUtil.sendOkHttpRequest(mailUrl, new Callback() {
+        CheckUtil.unread();
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                final String responseText = response.body().string();
-                final JSONObject json = new JSONObject().parseObject(responseText);//将String转为fastJson
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        tv.setText("获得的数据："+json.getString("a"));
-                        new ToastUtil("获取邮箱信息成功");
-                    }
-                });
-                swipeRefresh.setRefreshing(false);
-            }
+        if(UserSetting.getUserInfo().getUnread()== ConstResponse.unread_true){
+            //如果有新信息则发起请求
 
-            @Override
-            public void onFailure(Call call, IOException e) {
-                Toast.makeText(MailActivity.this, "获取邮箱信息失败", Toast.LENGTH_SHORT).show();
-            }
+            String mailUrl = HttpUtil.urlHead+ StringUtil.httpUrl_getJson;
+            HttpUtil.sendOkHttpRequest(mailUrl, new Callback() {
 
-        });
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    final String responseText = response.body().string();
+                    final JSONObject json = new JSONObject().parseObject(responseText);//将String转为fastJson
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            tv.setText("获得的数据："+json.getString("a"));
+                            new ToastUtil("获取新信息成功");
+                        }
+                    });
+                    swipeRefresh.setRefreshing(false);
+                }
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Toast.makeText(MailActivity.this, "获取新信息失败", Toast.LENGTH_SHORT).show();
+                }
+
+            });
+
+
+        }
+
 
     }
 

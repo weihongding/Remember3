@@ -38,9 +38,10 @@ public class Sb implements Comparable<Sb> {
         this.time = time;
     }
 
-
     @Override
     public int compareTo(Sb sb) {
-        return DateUtil.getGapOfTime(this.time,sb.time);
+        return DateUtil.getGapOfTime(sb.time,this.time);
     }
+
+
 }

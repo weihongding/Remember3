@@ -1,10 +1,12 @@
 package com.example.remember.entity;
 
+import com.example.remember.util.ConstResponse;
+
 public class UserInfo {
 
     private int id = -1;
     private String name = "未命名用户";
-    private int unread = 0;
+    private int unread = ConstResponse.unread_false;
 
     public UserInfo(){}
 

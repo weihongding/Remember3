@@ -13,14 +13,18 @@ import com.example.remember.adapter.SbAdapter;
 import com.example.remember.entity.Sb;
 import com.example.remember.listener.BtnListener;
 import com.example.remember.util.BaseActivity;
+import com.example.remember.util.CheckUtil;
 import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
 import com.example.remember.util.StringUtil;
+import com.example.remember.util.UserSetting;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.zip.InflaterInputStream;
 
 public class SbActivity extends BaseActivity {
@@ -47,7 +51,7 @@ public class SbActivity extends BaseActivity {
         swipeRefresh.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                Toast.makeText(SbActivity.this, "刷新中", Toast.LENGTH_SHORT).show();
+                refresh();
                 swipeRefresh.setRefreshing(false);
             }
         });
@@ -57,22 +61,31 @@ public class SbActivity extends BaseActivity {
         sbAdapter = new SbAdapter(sbList);
         rv.setAdapter(sbAdapter);
 
-        sort();
+        refresh();
 
     }
 
     private void iniSbList(){
-        sbList = new ArrayList<>();
-        Sb sb1 = new Sb("设备1", StringUtil.state_sb[0], "2019-4-8 15:03:59");
-        Sb sb2 = new Sb("设备2", StringUtil.state_sb[1], DateUtil.dateToStr(new Date()));
-        sbList.add(sb1);
-        sbList.add(sb2);
+
+        if (sbList == null){sbList = new ArrayList<>();}
+
+        Set<String> set = new HashSet<String>();
+        set.add("sb1");
+        set.add("sb2");
+
+        UserSetting.setSbKey(set);
 
     }
 
     public static void sort(){
         Collections.sort(sbList);
         sbAdapter.notifyDataSetChanged();
+    }
+
+    public static void refresh(){
+
+        CheckUtil.getSbInfoAll();
+
     }
 
 }

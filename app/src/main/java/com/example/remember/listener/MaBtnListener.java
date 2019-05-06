@@ -114,6 +114,7 @@ public class MaBtnListener implements View.OnClickListener {
                 }
                 else {
                     MyDialog.loginDialog.hide();
+                    password = DataUtil.getMd5(password);
                     UserSetting.setUserLoginInfo(mActivity, account, password);
                     Map<String,String> map = UserSetting.getUserLoginInfo(mActivity);
                     CheckUtil.setUserLoginState(mActivity);
