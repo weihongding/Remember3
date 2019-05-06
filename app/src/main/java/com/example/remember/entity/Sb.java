@@ -7,11 +7,13 @@ public class Sb implements Comparable<Sb> {
     private String name;
     private String state;
     private String time;
+    private String key;
 
     public Sb(String name,String state,String time){
         setName(name);
         setState(state);
         setTime(time);
+        setKey(name);
     }
 
     public String getName() {
@@ -38,10 +40,16 @@ public class Sb implements Comparable<Sb> {
         this.time = time;
     }
 
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
     @Override
     public int compareTo(Sb sb) {
         return DateUtil.getGapOfTime(sb.time,this.time);
     }
-
-
 }

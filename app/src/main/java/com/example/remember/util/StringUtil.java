@@ -16,6 +16,7 @@ public class StringUtil {
     public static final String httpUrl_login = "/user/login";
     public static final String httpUrl_register = "/user/register";
     public static final String httpUrl_unread = "/user/unread";
+    public static final String httpUrl_sb = "/sb/getinfo";
     public static final String httpUrl_sbAll = "/sb/getinfoAll";
 
     public static String numToStr(int n){

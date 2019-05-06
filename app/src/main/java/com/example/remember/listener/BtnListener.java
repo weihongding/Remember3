@@ -14,13 +14,16 @@ import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.JlActivity;
 import com.example.remember.activity.JlDetailActivity;
 import com.example.remember.activity.RcActivity;
+import com.example.remember.activity.SbActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Jl;
 import com.example.remember.db.Jl_sj_event;
 import com.example.remember.db.Jl_zb_event;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
+import com.example.remember.entity.Sb;
 import com.example.remember.util.BaseActivity;
+import com.example.remember.util.CheckUtil;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
@@ -28,6 +31,7 @@ import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ObjectUtil;
 import com.example.remember.util.StringUtil;
+import com.example.remember.util.UserSetting;
 import com.example.remember.util.ViewUtil;
 
 import java.util.Collections;
@@ -215,9 +219,59 @@ public class BtnListener implements View.OnClickListener  {
 
             //设备相关监听
             case R.id.btn_sb_add:{
-                Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
+
+                Button btn_sb_add_save = (Button)MyDialog.sbDialog_add.findViewById(R.id.btn_sb_add_save);
+                EditText et_remark = (EditText)MyDialog.sbDialog_add.findViewById(R.id.edit_sb_add_remark);
+                EditText et_key = (EditText)MyDialog.sbDialog_add.findViewById(R.id.edit_sb_add_key);
+
+                et_remark.setText("");
+                et_key.setText("");
+                btn_sb_add_save.setOnClickListener(this);
+
+                MyDialog.sbDialog_add.show();
+                break;
+
+            }
+            case R.id.btn_sb_add_save:{
+
+                EditText et_remark = (EditText)MyDialog.sbDialog_add.findViewById(R.id.edit_sb_add_remark);
+                EditText et_key = (EditText)MyDialog.sbDialog_add.findViewById(R.id.edit_sb_add_key);
+
+                String remark = et_remark.getText().toString();
+                String key = et_key.getText().toString();
+
+                if (!CheckUtil.isEmpty(remark)){
+                    UserSetting.setKeyRemark(key,remark);
+                }
+
+                CheckUtil.exisSb(key);
+
+                MyDialog.sbDialog_add.hide();
+
                 break;
             }
+            case R.id.btn_sb_long_del:{
+                TextView tv_key = (TextView)MyDialog.sbDialog_long.findViewById(R.id.text_sb_long_key);
+                String key = tv_key.getText().toString();
+                UserSetting.delSbKey(key);
+                UserSetting.setKeyRemark(key,"");
+                SbActivity.refresh();
+                MyDialog.sbDialog_long.hide();
+                break;
+            }
+            case R.id.btn_sb_long_save:{
+                EditText et_remark = (EditText)MyDialog.sbDialog_long.findViewById(R.id.edit_sb_long_remark);
+                TextView tv_key = (TextView)MyDialog.sbDialog_long.findViewById(R.id.text_sb_long_key);
+                String remark = et_remark.getText().toString();
+                String key = tv_key.getText().toString();
+
+                UserSetting.setKeyRemark(key,remark);
+                SbActivity.refresh();
+                MyDialog.sbDialog_long.hide();
+
+                break;
+            }
+
 
             //日程表相关监听
             case R.id.btn_rc_add: {

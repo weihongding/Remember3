@@ -81,6 +81,12 @@ public class UserSetting {
         setSbKey(set);
     }
 
+    public static void delSbKey(String key){
+        Set set = getSbKey();
+        set.remove(key);
+        setSbKey(set);
+    }
+
     public static void setSbKey(Set<String> set){
         editor = BaseActivity.getCurrentActivity().getSharedPreferences("SbInfo",Context.MODE_PRIVATE).edit();
         editor.putString("Key",set.toString());
@@ -91,6 +97,17 @@ public class UserSetting {
         pref = BaseActivity.getCurrentActivity().getSharedPreferences("SbInfo",Context.MODE_PRIVATE);
         String keyStr = pref.getString("Key","[]");
         return ObjectUtil.strToSet(keyStr);
+    }
+
+    public static void setKeyRemark(String key,String remark){
+        editor = BaseActivity.getCurrentActivity().getSharedPreferences("SbInfo",Context.MODE_PRIVATE).edit();
+        editor.putString(key,remark);
+        editor.apply();
+    }
+
+    public static String getKeyRemark(String key){
+        pref = BaseActivity.getCurrentActivity().getSharedPreferences("SbInfo",Context.MODE_PRIVATE);
+        return pref.getString(key,"");
     }
 
 }

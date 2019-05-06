@@ -19,6 +19,7 @@ import com.example.remember.entity.UserInfo;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -36,7 +37,8 @@ public class CheckUtil {
     private static final int loginSuccess = 100861;
     private static final int regSuccess = 100862;
     private static final int unreadSuccess = 100863;
-    private static final int sbSuccess = 100864;
+    private static final int sbAllSuccess = 100864;
+    private static final int sbSuccess = 100865;
 
 
     private static Handler mHandler = new Handler(){
@@ -101,8 +103,8 @@ public class CheckUtil {
                     }
                     break;
                 }
-                case sbSuccess:{
-                    //设备连接成功
+                case sbAllSuccess:{
+                    //获取所有设备信息连接成功
 
                     String sbText = msg.getData().getString("text");
                     JSONObject json = JSONObject.parseObject(sbText);
@@ -119,6 +121,10 @@ public class CheckUtil {
                         for (int i=0;i<ja.size();i++){
                             JSONObject jo = JSONObject.parseObject(ja.getString(i));
                             Sb sb = new Sb(jo.getString("name"),jo.getString("state"),jo.getString("time"));
+                            String remark = UserSetting.getKeyRemark(jo.getString("name"));
+                            if (!isEmpty(remark)){
+                                sb.setName(remark);
+                            }
                             SbActivity.sbList.add(sb);
                             SbActivity.sort();
                         }
@@ -126,6 +132,31 @@ public class CheckUtil {
                     }
 
                     break;
+                }
+                case sbSuccess:{
+                    //获取单个设备信息连接成功
+
+                    String sbText = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(sbText);
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+                    String key = json.getString("data");
+
+                    new ToastUtil(desc);
+                    if (status==ConstResponse.STATUS_OK){
+
+                        if(UserSetting.getSbKey().toString().length()<=2){
+                            Set set = new HashSet();
+                            set.add(key);
+                            UserSetting.setSbKey(set);
+                        }else{
+                            UserSetting.putSbKey(key);
+                        }
+
+                        SbActivity.refresh();
+
+                    }
+
                 }
                 default:{
                     break;
@@ -135,10 +166,50 @@ public class CheckUtil {
 
     };
 
+    //查询单个设备是否存在
+    public static void exisSb(String key){
+        RequestBody body = new FormBody.Builder()
+                .add("key",key)
+                .build();
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_sb;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = sbSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+
+            }
+        });
+
+    }
+
     //获取所有设备信息
     public static void getSbInfoAll(){
 
         String keyStr = UserSetting.getSbKey().toString();
+
+        if(keyStr.length()<=2){
+            return;
+        }
+
         RequestBody body = new FormBody.Builder()
                 .add("keySet",keyStr)
                 .build();
@@ -161,7 +232,7 @@ public class CheckUtil {
                     mHandler.sendMessage(msg);
                 }else{
                     Message msg = new Message();
-                    msg.what = sbSuccess;
+                    msg.what = sbAllSuccess;
                     Bundle bundle = new Bundle();
                     bundle.putString("text",responseText);
                     msg.setData(bundle);

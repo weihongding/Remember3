@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -16,6 +17,7 @@ import com.example.remember.util.BaseActivity;
 import com.example.remember.util.CheckUtil;
 import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
+import com.example.remember.util.MyDialog;
 import com.example.remember.util.StringUtil;
 import com.example.remember.util.UserSetting;
 
@@ -61,19 +63,28 @@ public class SbActivity extends BaseActivity {
         sbAdapter = new SbAdapter(sbList);
         rv.setAdapter(sbAdapter);
 
+        View view_add = this.getLayoutInflater().inflate(R.layout.dialog_sb_add, null);
+        MyDialog.sbDialog_add=new MyDialog(this,view_add,R.style.DialogTheme);
+        View view_long = this.getLayoutInflater().inflate(R.layout.dialog_sb_long, null);
+        MyDialog.sbDialog_long=new MyDialog(this,view_long,R.style.DialogTheme);
+
+
         refresh();
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        MyDialog.sbDialog_add.dismiss();
+        MyDialog.sbDialog_long.dismiss();
+        super.onDestroy();
     }
 
     private void iniSbList(){
 
         if (sbList == null){sbList = new ArrayList<>();}
 
-        Set<String> set = new HashSet<String>();
-        set.add("sb1");
-        set.add("sb2");
-
-        UserSetting.setSbKey(set);
+        UserSetting.setSbKey(new HashSet<String>());
 
     }
 
