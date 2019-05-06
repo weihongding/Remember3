@@ -34,11 +34,11 @@ public class MyLocationListener implements BDLocationListener {
         mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                UserSetting.UserLocation_country=location.getCountry();
-                UserSetting.UserLocation_province=location.getProvince();
-                UserSetting.UserLocation_city=location.getCity();
-                UserSetting.UserLocation_district=location.getDistrict();
-                UserSetting.UserLocation_street=location.getStreet();
+//                UserSetting.UserLocation_country=location.getCountry();
+//                UserSetting.UserLocation_province=location.getProvince();
+//                UserSetting.UserLocation_city=location.getCity();
+//                UserSetting.UserLocation_district=location.getDistrict();
+//                UserSetting.UserLocation_street=location.getStreet();
 //                地图数据显示
 //                StringBuilder currentPosition = new StringBuilder();
 //                currentPosition.append("纬度：").append(location.getLatitude()).append("\n");

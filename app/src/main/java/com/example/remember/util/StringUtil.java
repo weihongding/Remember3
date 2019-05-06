@@ -12,6 +12,10 @@ public class StringUtil {
 
     public static final String[] state_sb = {"关","开"};
 
+    public static final String httpUrl_getJson = "/user/getJson";
+    public static final String httpUrl_login = "/user/login";
+    public static final String httpUrl_register = "/user/register";
+
     public static String numToStr(int n){
 
         switch (n){

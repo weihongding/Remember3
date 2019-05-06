@@ -55,7 +55,7 @@ public class JlAdapter_sj extends RecyclerView.Adapter<JlAdapter_sj.ViewHolder> 
                 TextView tv_line1 = (TextView)MyDialog.jlDialog_item.findViewById(R.id.line1);
                 TextView tv_line2 = (TextView)MyDialog.jlDialog_item.findViewById(R.id.line2);
 
-                tv_time.setText(Jl_zb_event.choose_jze.getTime());
+                tv_time.setText(Jl_sj_event.choose_jse.getTime());
                 btn_save.setVisibility(View.GONE);
                 lo_content.setVisibility(View.GONE);
                 tv_line1.setVisibility(View.GONE);
@@ -67,6 +67,7 @@ public class JlAdapter_sj extends RecyclerView.Adapter<JlAdapter_sj.ViewHolder> 
                 MyDialog.jlDialog_item.show();
                 Toast.makeText(MyApplication.getContext(), "长按了事件item", Toast.LENGTH_SHORT).show();
                 return true;
+
             }
         });
     }
