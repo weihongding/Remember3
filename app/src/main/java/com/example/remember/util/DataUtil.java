@@ -1,5 +1,8 @@
 package com.example.remember.util;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.google.gson.JsonObject;
@@ -47,6 +50,16 @@ public class DataUtil {
     public static Map jsonToMap(JSONObject json){
         Map map = (Map) json;
         return map;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String getEncryptStringByTea(String info){
+        return TeaUtil.getEncryptStringByTea(info);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String getDecryptStringByTea(String info){
+        return TeaUtil.getDecryptStringByTea(info);
     }
 
 }

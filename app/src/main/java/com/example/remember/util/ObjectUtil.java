@@ -1,8 +1,12 @@
 package com.example.remember.util;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
+import java.util.Base64;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -34,6 +38,16 @@ public class ObjectUtil {
         b = str.indexOf("]");
         set.add(str.substring(a,b));
         return set;
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static String bytesToStr(byte[] bytes){
+        return Base64.getEncoder().encodeToString(bytes);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static byte[] strToBytes(String str){
+        return Base64.getDecoder().decode(str);
     }
 
 }
