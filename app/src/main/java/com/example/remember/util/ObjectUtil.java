@@ -3,6 +3,7 @@ package com.example.remember.util;
 import android.os.Build;
 import android.support.annotation.RequiresApi;
 
+import com.alibaba.fastjson.JSONObject;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
@@ -48,6 +49,12 @@ public class ObjectUtil {
     @RequiresApi(api = Build.VERSION_CODES.O)
     public static byte[] strToBytes(String str){
         return Base64.getDecoder().decode(str);
+    }
+
+    //对象转String
+    public static String objToStr(Object obj){
+        JSONObject json = (JSONObject)JSONObject.toJSON(obj);
+        return json.toJSONString();
     }
 
 }

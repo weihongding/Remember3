@@ -34,6 +34,8 @@ public class BwlActivity extends BaseActivity {
 
         View bwlView = this.getLayoutInflater().inflate(R.layout.dialog_bwl_long, null);
         MyDialog.bwlDialog_long=new MyDialog(this,bwlView,R.style.DialogTheme);
+        View shareView = this.getLayoutInflater().inflate(R.layout.dialog_bwl_share, null);
+        MyDialog.bwlDialog_share=new MyDialog(this,shareView,R.style.DialogTheme);
 
         //初始化数据
         iniBwlList();
@@ -61,6 +63,7 @@ public class BwlActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         MyDialog.bwlDialog_long.dismiss();
+        MyDialog.bwlDialog_share.dismiss();
         super.onDestroy();
     }
 

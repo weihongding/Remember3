@@ -1,16 +1,19 @@
 package com.example.remember.util;
 
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
+
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Jl;
 import com.example.remember.db.Jl_sj_event;
 import com.example.remember.db.Jl_zb_event;
+import com.example.remember.db.Mail;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
 import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -63,6 +66,16 @@ public class DbUtil {
         return null;
     }
 
+    //查询消息的数据
+    public static List<Mail> requestMailList(){
+        return DataSupport.findAll(Mail.class);
+    }
 
+    public static void delectAllMail(){
+        List<Mail> list = requestMailList();
+        for (Mail mail:list) {
+            mail.delete();
+        }
+    }
 
 }

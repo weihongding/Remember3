@@ -74,7 +74,6 @@ public class JlActivity extends BaseActivity {
 
     private void iniJlList(){
         if (jlList == null){jlList = new ArrayList<>();}
-
         jlList = DbUtil.requestJlList();
 
     }

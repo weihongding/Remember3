@@ -82,28 +82,4 @@ public class MainActivity extends BaseActivity {
         super.onDestroy();
     }
 
-//    public static void login(String name,String password){
-//
-//        String url = HttpUtil.urlHead+StringUtil.httpUrl_login;
-//        HttpUtil.sendOkHttpRequest(url, new Callback() {
-//            @Override
-//            public void onFailure(Call call, IOException e) {
-//                new ToastUtil("登陆请求失败");
-//            }
-//
-//            @Override
-//            public void onResponse(Call call, Response response) throws IOException {
-//                String responseText = response.body().string();
-//                Message msg = new Message();
-////                msg.what = loginSuccesss;
-//                Bundle bundle = new Bundle();
-//                bundle.putString("text",responseText);
-//                msg.setData(bundle);
-//            }
-//        });
-//
-//    }
-
-
-
 }

@@ -4,7 +4,6 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -12,13 +11,14 @@ import android.widget.TextView;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.remember.R;
+import com.example.remember.activity.MailActivity;
 import com.example.remember.activity.SbActivity;
-import com.example.remember.ccs.Client;
+import com.example.remember.db.Mail;
 import com.example.remember.entity.Sb;
 import com.example.remember.entity.UserInfo;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +39,11 @@ public class CheckUtil {
     private static final int unreadSuccess = 100863;
     private static final int sbAllSuccess = 100864;
     private static final int sbSuccess = 100865;
+    private static final int putShareSuccess = 100866;
+    private static final int getShareSuccess = 100867;
+    private static final int haveNewsSuccess = 100868;
+    private static final int haveNotNewsSuccess = 100869;
+
 
 
     private static Handler mHandler = new Handler(){
@@ -97,11 +102,11 @@ public class CheckUtil {
                     String desc = json.getString("desc");
                     int status = json.getInteger("status");
 
-                    new ToastUtil(desc);
                     if (status==ConstResponse.STATUS_OK){
                         UserSetting.setUserUnread(ConstResponse.unread_true);
                     }
                     break;
+
                 }
                 case sbAllSuccess:{
                     //获取所有设备信息连接成功
@@ -158,6 +163,58 @@ public class CheckUtil {
                     }
 
                 }
+                case putShareSuccess:{
+                    //分享连接成功
+
+                    String shareText = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(shareText);
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+                    String data = json.getString("data");
+                    new ToastUtil(desc);
+
+                    if (status==ConstResponse.STATUS_OK){
+                        haveNews(data);
+                    }
+
+                    break;
+                }
+                case getShareSuccess:{
+                    //获取新信息成功
+
+                    String shareText = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(shareText);
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+                    String data = json.getString("data");
+                    List<Integer> list = new ArrayList<>();
+
+                    if (status==ConstResponse.STATUS_OK){
+                        JSONArray ja = JSONArray.parseArray(data);
+                        for (int i = 0;i<ja.size();i++){
+                            Mail mail = new Mail((String) ja.getString(i));
+                            mail.save();
+                            list.add(mail.getId());
+                        }
+                        UserSetting.setUserUnread(ConstResponse.unread_false);
+                    }
+
+                    MailActivity.mailList.clear();
+                    MailActivity.mailList.addAll(DbUtil.requestMailList());
+                    MailActivity.sort();
+
+                    new ToastUtil(desc);
+                    haveNotNews();
+
+                    break;
+                }
+                case haveNewsSuccess:{
+                    break;
+                }
+                case haveNotNewsSuccess:{
+                    break;
+                }
+
                 default:{
                     break;
                 }
@@ -165,6 +222,170 @@ public class CheckUtil {
         }
 
     };
+
+
+    public static void haveNews(String account){
+
+        RequestBody body = new FormBody.Builder()
+                .add("account",account)
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_haveNews;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = haveNewsSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+
+            }
+        });
+
+    }
+
+    public static void haveNotNews(){
+
+        String account = UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account");
+        RequestBody body = new FormBody.Builder()
+                .add("account",account)
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_haveNotNews;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = haveNotNewsSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+
+            }
+        });
+
+    }
+
+    //获取新信息
+    public static void getShare(){
+
+        DbUtil.delectAllMail();
+
+        String account = UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account");
+        RequestBody body = new FormBody.Builder()
+                .add("account",account)
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_getNews;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = getShareSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+
+            }
+        });
+
+    }
+
+    //将分享内容保存到服务器
+    public static void putShare(String ac_re,String type,String objStr){
+        JSONObject conJson = new JSONObject();
+        conJson.put("type",type);
+        conJson.put("objStr",objStr);
+        String content = conJson.toJSONString();
+
+        JSONObject json = new JSONObject();
+        json.put("ac_se",UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"));
+        json.put("ac_re",ac_re);
+        json.put("content",content);
+        String mailStr = json.toJSONString();
+
+        RequestBody body = new FormBody.Builder()
+                .add("mailStr",mailStr)
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_putNews;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = putShareSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+            }
+        });
+
+    }
 
     //查询单个设备是否存在
     public static void exisSb(String key){

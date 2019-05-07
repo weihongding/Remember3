@@ -34,6 +34,10 @@ public class MyDialog extends Dialog {
     public static MyDialog sbDialog_add;
     public static MyDialog sbDialog_long;
 
+    public static MyDialog bwlDialog_share;
+    public static MyDialog jlDialog_share;
+    public static MyDialog sbDialog_share;
+
     public static MyDialog rcunqDialog;
     public static MyDialog rcunqDialog_set;
 

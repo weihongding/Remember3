@@ -18,6 +18,11 @@ public class StringUtil {
     public static final String httpUrl_unread = "/user/unread";
     public static final String httpUrl_sb = "/sb/getinfo";
     public static final String httpUrl_sbAll = "/sb/getinfoAll";
+    public static final String httpUrl_putNews = "/mail/putNews";
+    public static final String httpUrl_getNews = "/mail/getNews";
+    public static final String httpUrl_haveNews = "/user/haveUnread";
+    public static final String httpUrl_haveNotNews = "/user/haveNotUnread";
+
 
     public static String numToStr(int n){
 

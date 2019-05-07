@@ -68,7 +68,6 @@ public class BwlAdapter extends RecyclerView.Adapter<BwlAdapter.ViewHolder>{
                 Button btn_share = (Button)MyDialog.bwlDialog_long.findViewById(R.id.btn_bwl_long_share);
                 btn_del.setOnClickListener(BtnListener.instance);
                 btn_share.setOnClickListener(BtnListener.instance);
-                Toast.makeText(MyApplication.getContext(), "长按了备忘录Item", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

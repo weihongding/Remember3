@@ -36,6 +36,7 @@ import com.example.remember.util.ViewUtil;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.Map;
 
 public class BtnListener implements View.OnClickListener  {
 
@@ -90,7 +91,21 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_bwl_long_share:{
+                MyDialog.bwlDialog_long.hide();
+                MyDialog.bwlDialog_share.show();
+                EditText et_bwl_share_acRe = (EditText)MyDialog.bwlDialog_share.findViewById(R.id.edit_bwl_share_acRe);
+                Button btn_bwl_share_q = (Button)MyDialog.bwlDialog_share.findViewById(R.id.btn_bwl_share_q);
+                et_bwl_share_acRe.setText("");
+                btn_bwl_share_q.setOnClickListener(this);
                 Toast.makeText(MyApplication.getContext(), "点击了分享", Toast.LENGTH_SHORT).show();
+                break;
+            }
+            case R.id.btn_bwl_share_q:{
+                EditText et_bwl_share_acRe = (EditText)MyDialog.bwlDialog_share.findViewById(R.id.edit_bwl_share_acRe);
+                String acRe = et_bwl_share_acRe.getText().toString();
+                String objStr = ObjectUtil.objToStr(Bwl_event.choose_be);
+                CheckUtil.putShare(acRe,StringUtil.eventType_bwl,objStr);
+                MyDialog.bwlDialog_share.hide();
                 break;
             }
 

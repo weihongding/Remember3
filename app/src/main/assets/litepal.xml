@@ -1,7 +1,7 @@
 <litepal>
 
     <dbname value="Remember" />
-    <version value="5" />
+    <version value="8" />
 
     <list>
         <mapping class="com.example.remember.db.Province" />
@@ -13,6 +13,7 @@
         <mapping class="com.example.remember.db.Jl" />
         <mapping class="com.example.remember.db.Jl_zb_event" />
         <mapping class="com.example.remember.db.Jl_sj_event" />
+        <mapping class="com.example.remember.db.Mail" />
     </list>
 
 </litepal>
