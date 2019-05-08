@@ -58,8 +58,6 @@ public class JlDetailActivity extends BaseActivity {
         //初始化相关组件
         View itemView = this.getLayoutInflater().inflate(R.layout.dialog_jl_detail_item,null);
         MyDialog.jlDialog_item=new MyDialog(this,itemView,R.style.DialogTheme);
-        View shareView = this.getLayoutInflater().inflate(R.layout.dialog_jl_share, null);
-        MyDialog.jlDialog_share=new MyDialog(this,shareView,R.style.DialogTheme);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         View colorView = this.getLayoutInflater().inflate(R.layout.choose_color,null);
         MyDialog.colorDialog_jl=new MyDialog(this,colorView,R.style.DialogTheme);
@@ -100,7 +98,6 @@ public class JlDetailActivity extends BaseActivity {
     protected void onDestroy() {
         MyDialog.colorDialog_jl.dismiss();
         MyDialog.jlDialog_item.dismiss();
-        MyDialog.jlDialog_share.dismiss();
         Jl.choose_jl = null;
         ColorUtil.choose_color_jlDetail_set = null;
         super.onDestroy();

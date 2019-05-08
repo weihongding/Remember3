@@ -35,6 +35,9 @@ public class JlActivity extends BaseActivity {
         //初始化数据
         iniJlList();
 
+        View shareView = this.getLayoutInflater().inflate(R.layout.dialog_jl_share, null);
+        MyDialog.jlDialog_share=new MyDialog(this,shareView,R.style.DialogTheme);
+
         View jlView = this.getLayoutInflater().inflate(R.layout.dialog_jl_add, null);
         MyDialog.jlDialog_add=new MyDialog(this,jlView,R.style.DialogTheme);
 
@@ -69,6 +72,7 @@ public class JlActivity extends BaseActivity {
     protected void onDestroy() {
         MyDialog.jlDialog_add.dismiss();
         MyDialog.jlDialog_long.dismiss();
+        MyDialog.jlDialog_share.dismiss();
         super.onDestroy();
     }
 

@@ -16,6 +16,8 @@ public class Jl_zb_event extends DataSupport implements Comparable<Jl_zb_event>{
     private String time;//触发时间
     private String content;//记录内容
 
+    public Jl_zb_event(){}
+
     public Jl_zb_event(int Jlid,String content){
         setJid(Jlid);
         setContent(content);

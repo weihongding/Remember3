@@ -56,6 +56,10 @@ public class DbUtil {
         return DataSupport.findAll(Jl.class);
     }
 
+    public static int requestLastJlId(){
+        return DataSupport.findLast(Jl.class).getId();
+    }
+
     //查询记录的详细数据
     public static List requestJlDetailList(String type,int jlId){
         if (type.equals(StringUtil.eventType_zb)){

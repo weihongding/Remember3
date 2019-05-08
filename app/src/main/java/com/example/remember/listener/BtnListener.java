@@ -8,6 +8,9 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.remember.R;
 import com.example.remember.activity.BwlActivity;
 import com.example.remember.activity.BwlDetailActivity;
@@ -27,6 +30,8 @@ import com.example.remember.util.CheckUtil;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.DataUtil;
 import com.example.remember.util.DateUtil;
+import com.example.remember.util.DbUtil;
+import com.example.remember.util.LogdUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ObjectUtil;
@@ -36,6 +41,7 @@ import com.example.remember.util.ViewUtil;
 
 import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 public class BtnListener implements View.OnClickListener  {
@@ -138,17 +144,28 @@ public class BtnListener implements View.OnClickListener  {
             case R.id.btn_jl_long_share:{
                 MyDialog.jlDialog_long.hide();
                 MyDialog.jlDialog_share.show();
-                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_sb_share_acRe);
-                Button btn_sb_share_q = (Button)MyDialog.jlDialog_share.findViewById(R.id.btn_sb_share_q);
+                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_jl_share_acRe);
+                Button btn_sb_share_q = (Button)MyDialog.jlDialog_share.findViewById(R.id.btn_jl_share_q);
                 et_sb_share_acRe.setText("");
                 btn_sb_share_q.setOnClickListener(this);
                 break;
             }
             case R.id.btn_jl_share_q:{
-                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_sb_share_acRe);
+                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_jl_share_acRe);
                 String acRe = et_sb_share_acRe.getText().toString();
-                String objStr = Sb.choose_key;
-                CheckUtil.putShare(acRe,StringUtil.eventType_sb,objStr);
+
+                List list = DbUtil.requestJlDetailList(Jl.choose_jl.getType(),Jl.choose_jl.getId());
+                String jlStr = JSONObject.toJSONString(Jl.choose_jl);
+                String listStr = JSON.toJSONString(list);
+                JSONObject json = new JSONObject();
+
+                json.put("Jl",jlStr);
+                json.put("JlDetail",listStr);
+
+                String objStr = json.toJSONString();
+
+                CheckUtil.putShare(acRe,Jl.choose_jl.getType(),objStr);
+
                 MyDialog.jlDialog_share.hide();
                 break;
             }

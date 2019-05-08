@@ -15,6 +15,8 @@ public class Jl_sj_event extends DataSupport implements Comparable<Jl_sj_event> 
     private int jid;//事件id
     private String time;//触发时间
 
+    public Jl_sj_event(){}
+
     public Jl_sj_event(int Jlid){
         setJid(Jlid);
         setTime(DateUtil.dateToStr(new Date()));

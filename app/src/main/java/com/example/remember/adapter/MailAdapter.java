@@ -9,15 +9,25 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.example.remember.R;
 import com.example.remember.db.Bwl_event;
+import com.example.remember.db.Jl;
+import com.example.remember.db.Jl_sj_event;
+import com.example.remember.db.Jl_zb_event;
 import com.example.remember.db.Mail;
 import com.example.remember.util.DataUtil;
+import com.example.remember.util.DateUtil;
+import com.example.remember.util.DbUtil;
+import com.example.remember.util.LogdUtil;
 import com.example.remember.util.ObjectUtil;
 import com.example.remember.util.StringUtil;
 import com.example.remember.util.ToastUtil;
 import com.example.remember.util.UserSetting;
 
+import java.util.Date;
 import java.util.List;
 
 public class MailAdapter extends RecyclerView.Adapter<MailAdapter.ViewHolder>{
@@ -55,7 +65,39 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.ViewHolder>{
                     be.save();
                 }else if (type.equals(StringUtil.eventType_sj)){
 
+                    JSONObject json = JSONObject.parseObject(mail.getObjStr());
+                    String jlStr = json.getString("Jl");
+                    String listStr = json.getString("JlDetail");
+                    JSONObject jlJson = JSONObject.parseObject(jlStr);
+                    Jl jl = new Jl(jlJson.getString("type"),jlJson.getString("title"),jlJson.getString("des"),
+                            jlJson.getString("color"), DateUtil.dateToStr(new Date()));
+                    jl.save();
+                    int jlId = DbUtil.requestLastJlId();
+                    JSONArray ja = JSON.parseArray(listStr);
+                    List<Jl_sj_event> list = JSONObject.parseArray(ja.toJSONString(), Jl_sj_event.class);
+                    for (Jl_sj_event jse:list) {
+                        jse.setJid(jlId);
+                        jse.save();
+                        new LogdUtil("jse="+jse.getJid()+","+jse.getTime());
+                    }
+
                 }else if (type.equals(StringUtil.eventType_zb)){
+
+                    JSONObject json = JSONObject.parseObject(mail.getObjStr());
+                    String jlStr = json.getString("Jl");
+                    String listStr = json.getString("JlDetail");
+                    JSONObject jlJson = JSONObject.parseObject(jlStr);
+                    Jl jl = new Jl(jlJson.getString("type"),jlJson.getString("title"),jlJson.getString("des"),
+                            jlJson.getString("color"), DateUtil.dateToStr(new Date()));
+                    jl.save();
+                    int jlId = DbUtil.requestLastJlId();
+                    JSONArray ja = JSON.parseArray(listStr);
+                    List<Jl_zb_event> list = JSONObject.parseArray(ja.toJSONString(), Jl_zb_event.class);
+                    for (Jl_zb_event jze:list) {
+                        jze.setJid(jlId);
+                        jze.save();
+                        new LogdUtil("jse="+jze.getJid()+","+jze.getTime());
+                    }
 
                 }else if (type.equals(StringUtil.eventType_sb)){
                     String key = mail.getObjStr();
