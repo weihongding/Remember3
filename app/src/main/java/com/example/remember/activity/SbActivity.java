@@ -67,6 +67,8 @@ public class SbActivity extends BaseActivity {
         MyDialog.sbDialog_add=new MyDialog(this,view_add,R.style.DialogTheme);
         View view_long = this.getLayoutInflater().inflate(R.layout.dialog_sb_long, null);
         MyDialog.sbDialog_long=new MyDialog(this,view_long,R.style.DialogTheme);
+        View shareView = this.getLayoutInflater().inflate(R.layout.dialog_sb_share, null);
+        MyDialog.sbDialog_share=new MyDialog(this,shareView,R.style.DialogTheme);
 
 
         refresh();
@@ -77,14 +79,13 @@ public class SbActivity extends BaseActivity {
     protected void onDestroy() {
         MyDialog.sbDialog_add.dismiss();
         MyDialog.sbDialog_long.dismiss();
+        MyDialog.sbDialog_share.dismiss();
         super.onDestroy();
     }
 
     private void iniSbList(){
 
         if (sbList == null){sbList = new ArrayList<>();}
-
-        UserSetting.setSbKey(new HashSet<String>());
 
     }
 

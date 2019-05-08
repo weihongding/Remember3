@@ -4,10 +4,13 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.remember.db.Bwl_event;
+import com.example.remember.db.Mail;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
 import java.util.Base64;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -55,6 +58,15 @@ public class ObjectUtil {
     public static String objToStr(Object obj){
         JSONObject json = (JSONObject)JSONObject.toJSON(obj);
         return json.toJSONString();
+    }
+
+    //将mail转为备忘录
+    public static Bwl_event mailToBe(Mail mail){
+
+        JSONObject json = JSONObject.parseObject(mail.getObjStr());
+        Bwl_event be = new Bwl_event(json.getString("color"),json.getString("content"), DateUtil.dateToStr(new Date()));
+        return be;
+
     }
 
 }

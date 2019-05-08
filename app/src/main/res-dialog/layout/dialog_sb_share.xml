@@ -18,7 +18,7 @@
 
         <EditText
             android:id="@+id/edit_sb_share_acRe"
-            android:text="sb1"
+            android:text="aaa"
             android:textSize="22dp"
             android:lines="1"
             android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890"

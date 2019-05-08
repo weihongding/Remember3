@@ -4,6 +4,8 @@ import com.example.remember.util.DateUtil;
 
 public class Sb implements Comparable<Sb> {
 
+    public static String choose_key = null;
+
     private String name;
     private String state;
     private String time;

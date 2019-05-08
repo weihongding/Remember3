@@ -58,13 +58,17 @@ public class SbAdapter extends RecyclerView.Adapter<SbAdapter.ViewHolder> {
             @Override
             public boolean onLongClick(View v) {
 
+                Sb.choose_key = key;
+
                 EditText et_remark = (EditText)MyDialog.sbDialog_long.findViewById(R.id.edit_sb_long_remark);
                 TextView tv_key = (TextView)MyDialog.sbDialog_long.findViewById(R.id.text_sb_long_key);
+                Button btn_share = (Button)MyDialog.sbDialog_long.findViewById(R.id.btn_sb_long_share);
                 Button btn_del = (Button)MyDialog.sbDialog_long.findViewById(R.id.btn_sb_long_del);
                 Button btn_save = (Button)MyDialog.sbDialog_long.findViewById(R.id.btn_sb_long_save);
 
                 et_remark.setText(UserSetting.getKeyRemark(key));
                 tv_key.setText(key);
+                btn_share.setOnClickListener(BtnListener.instance);
                 btn_del.setOnClickListener(BtnListener.instance);
                 btn_save.setOnClickListener(BtnListener.instance);
 

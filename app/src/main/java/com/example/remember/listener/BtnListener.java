@@ -97,7 +97,6 @@ public class BtnListener implements View.OnClickListener  {
                 Button btn_bwl_share_q = (Button)MyDialog.bwlDialog_share.findViewById(R.id.btn_bwl_share_q);
                 et_bwl_share_acRe.setText("");
                 btn_bwl_share_q.setOnClickListener(this);
-                Toast.makeText(MyApplication.getContext(), "点击了分享", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_bwl_share_q:{
@@ -137,7 +136,20 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_jl_long_share:{
-                Toast.makeText(MyApplication.getContext(), "分享了记录："+Jl.choose_jl.getTitle(), Toast.LENGTH_SHORT).show();
+                MyDialog.jlDialog_long.hide();
+                MyDialog.jlDialog_share.show();
+                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_sb_share_acRe);
+                Button btn_sb_share_q = (Button)MyDialog.jlDialog_share.findViewById(R.id.btn_sb_share_q);
+                et_sb_share_acRe.setText("");
+                btn_sb_share_q.setOnClickListener(this);
+                break;
+            }
+            case R.id.btn_jl_share_q:{
+                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_sb_share_acRe);
+                String acRe = et_sb_share_acRe.getText().toString();
+                String objStr = Sb.choose_key;
+                CheckUtil.putShare(acRe,StringUtil.eventType_sb,objStr);
+                MyDialog.jlDialog_share.hide();
                 break;
             }
 
@@ -284,6 +296,23 @@ public class BtnListener implements View.OnClickListener  {
                 SbActivity.refresh();
                 MyDialog.sbDialog_long.hide();
 
+                break;
+            }
+            case R.id.btn_sb_long_share:{
+                MyDialog.sbDialog_long.hide();
+                MyDialog.sbDialog_share.show();
+                EditText et_sb_share_acRe = (EditText)MyDialog.sbDialog_share.findViewById(R.id.edit_sb_share_acRe);
+                Button btn_sb_share_q = (Button)MyDialog.sbDialog_share.findViewById(R.id.btn_sb_share_q);
+                et_sb_share_acRe.setText("");
+                btn_sb_share_q.setOnClickListener(this);
+                break;
+            }
+            case R.id.btn_sb_share_q:{
+                EditText et_sb_share_acRe = (EditText)MyDialog.sbDialog_share.findViewById(R.id.edit_sb_share_acRe);
+                String acRe = et_sb_share_acRe.getText().toString();
+                String objStr = Sb.choose_key;
+                CheckUtil.putShare(acRe,StringUtil.eventType_sb,objStr);
+                MyDialog.sbDialog_share.hide();
                 break;
             }
 

@@ -2,6 +2,7 @@ package com.example.remember.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,8 +10,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.remember.R;
+import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Mail;
+import com.example.remember.util.DataUtil;
+import com.example.remember.util.ObjectUtil;
+import com.example.remember.util.StringUtil;
 import com.example.remember.util.ToastUtil;
+import com.example.remember.util.UserSetting;
 
 import java.util.List;
 
@@ -37,18 +43,26 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.ViewHolder>{
         String ac_se = mail.getSentUser();
         holder.tv_ac_se.setText(ac_se);
         holder.tv_type.setText(type);
-
+        Log.d(DataUtil.TAG, mail.getObjStr());
         holder.layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ToastUtil("点击");
-            }
-        });
-        holder.layout.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View v) {
-                new ToastUtil("长按");
-                return true;
+
+                String type = mail.getType();
+
+                if (type.equals(StringUtil.eventType_bwl)){
+                    Bwl_event be = ObjectUtil.mailToBe(mail);
+                    be.save();
+                }else if (type.equals(StringUtil.eventType_sj)){
+
+                }else if (type.equals(StringUtil.eventType_zb)){
+
+                }else if (type.equals(StringUtil.eventType_sb)){
+                    String key = mail.getObjStr();
+                    UserSetting.putSbKey(key);
+                }
+
+                new ToastUtil(type+"添加成功");
             }
         });
     }
