@@ -10,8 +10,10 @@ import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.activity.MailActivity;
+import com.example.remember.activity.SetActivity;
 import com.example.remember.util.CheckUtil;
 import com.example.remember.util.DataUtil;
+import com.example.remember.util.LogdUtil;
 import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ToastUtil;
@@ -46,8 +48,9 @@ public class MaBtnListener implements View.OnClickListener {
                 break;
             }
             case R.id.btn_set:{
-                UserSetting.setUserLoginInfo(mActivity,"","");
-                CheckUtil.setUserLoginState(mActivity);
+                Intent intent = new Intent(MyApplication.getContext(), SetActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK );//添加一个flag
+                MyApplication.getContext().startActivity(intent);
                 break;
             }
             case R.id.btn_rc:{

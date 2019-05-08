@@ -4,6 +4,13 @@ import android.os.Build;
 import android.support.annotation.RequiresApi;
 
 import com.alibaba.fastjson.JSONObject;
+import com.example.remember.activity.BwlActivity;
+import com.example.remember.activity.DtActivity;
+import com.example.remember.activity.JlActivity;
+import com.example.remember.activity.MainActivity;
+import com.example.remember.activity.RcActivity;
+import com.example.remember.activity.SbActivity;
+import com.example.remember.activity.TqActivity;
 import com.example.remember.db.Bwl_event;
 import com.example.remember.db.Mail;
 import com.example.remember.db.Rc_q;
@@ -67,6 +74,32 @@ public class ObjectUtil {
         Bwl_event be = new Bwl_event(json.getString("color"),json.getString("content"), DateUtil.dateToStr(new Date()));
         return be;
 
+    }
+//    "日程","备忘录","记录","天气","地图","设备"
+    public static Class getIifClass(int id){
+        switch (id){
+            case 1:{
+                return RcActivity.class;
+            }
+            case 2:{
+                return BwlActivity.class;
+            }
+            case 3:{
+                return JlActivity.class;
+            }
+            case 4:{
+                return TqActivity.class;
+            }
+            case 5:{
+                return DtActivity.class;
+            }
+            case 6:{
+                return SbActivity.class;
+            }
+            default:{
+                return MainActivity.class;
+            }
+        }
     }
 
 }

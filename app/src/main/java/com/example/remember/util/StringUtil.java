@@ -11,6 +11,7 @@ public class StringUtil {
     public static final String eventType_sb = "设备";
 
     public static final String[] state_sb = {"关","开"};
+    public static final String[] iniInF = {"默认","日程","备忘录","记录","天气","地图","设备"};
 
     public static final String httpUrl_getJson = "/user/getJson";
     public static final String httpUrl_login = "/user/login";
@@ -22,7 +23,6 @@ public class StringUtil {
     public static final String httpUrl_getNews = "/mail/getNews";
     public static final String httpUrl_haveNews = "/user/haveUnread";
     public static final String httpUrl_haveNotNews = "/user/haveNotUnread";
-
 
     public static String numToStr(int n){
 

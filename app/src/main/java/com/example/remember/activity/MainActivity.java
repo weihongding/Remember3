@@ -1,7 +1,10 @@
 package com.example.remember.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.os.Message;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,6 +15,9 @@ import com.example.remember.entity.UserInfo;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.CheckUtil;
 import com.example.remember.util.HttpUtil;
+import com.example.remember.util.LogdUtil;
+import com.example.remember.util.MyApplication;
+import com.example.remember.util.ObjectUtil;
 import com.example.remember.util.StringUtil;
 import com.example.remember.util.ToastUtil;
 import com.example.remember.util.UserSetting;
@@ -48,10 +54,6 @@ public class MainActivity extends BaseActivity {
         btn_set.setTypeface(ViewUtil.font);
         MaBtnListener listener = new MaBtnListener(this);
 
-        //修改颜色
-//        GradientDrawable p = (GradientDrawable) btn_dt.getBackground();
-//        p.setColor(Color.parseColor("#f0f0f0"));
-
         btn_share.setOnClickListener(listener);
         btn_set.setOnClickListener(listener);
         btn_rc.setOnClickListener(listener);
@@ -68,7 +70,21 @@ public class MainActivity extends BaseActivity {
 
         //验证登陆
         CheckUtil.setUserLoginState(this);
+        int id = UserSetting.getIifId();
+        if (id!=0){
+            Intent intent = new Intent(this,ObjectUtil.getIifClass(id));
+            startActivity(intent);
+        }
 
+    }
+
+    @Override
+    protected void onResume() {
+        if (UserSetting.getLogined() == 0){
+            CheckUtil.setUserLoginState(this);
+            UserSetting.setLogined(1);
+        }
+        super.onResume();
     }
 
     @Override
@@ -79,6 +95,7 @@ public class MainActivity extends BaseActivity {
             UserSetting.setUserLoginInfo(this,"","");
             UserSetting.setUserInfo(new UserInfo());
         }
+        UserSetting.setIsStart();
         super.onDestroy();
     }
 

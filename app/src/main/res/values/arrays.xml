@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="iniInF">
+        <item>默认</item>
+        <item>日程 </item>
+        <item>备忘录</item>
+        <item>记录</item>
+        <item>天气</item>
+        <item>地图</item>
+        <item>设备</item>
+    </string-array>
+</resources>

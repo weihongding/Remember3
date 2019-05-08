@@ -3,6 +3,7 @@ package com.example.remember.util;
 import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.example.remember.entity.UserInfo;
 
@@ -16,7 +17,6 @@ public class UserSetting {
     public static UserInfo user = new UserInfo();
     private static SharedPreferences.Editor editor;
     private static SharedPreferences pref;
-
 
     //存入账号密码
     public static void setUserLoginInfo(Activity activity,String account,String password){
@@ -41,6 +41,7 @@ public class UserSetting {
     public static void setAutoSave(Boolean flag){
         editor = BaseActivity.getCurrentActivity().getSharedPreferences("UserInfo",Context.MODE_PRIVATE).edit();
         editor.putString("autoSave",flag.toString());
+        new LogdUtil("putAutoSave:"+flag);
         editor.apply();
     }
 
@@ -48,6 +49,7 @@ public class UserSetting {
     public static boolean getAutoSave(){
         pref = BaseActivity.getCurrentActivity().getSharedPreferences("UserInfo",Context.MODE_PRIVATE);
         String str = pref.getString("autoSave","false");
+        new LogdUtil("getAutoSave:"+str);
         return Boolean.parseBoolean(str);
     }
 
@@ -74,6 +76,55 @@ public class UserSetting {
         int id= pref.getInt("id",-1);
         int unread = pref.getInt("unread",0);
         return new UserInfo(id,name,unread);
+    }
+
+    //设置初始界面
+    public static void setIifId(int iifId){
+        editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
+        editor.putInt("iifId",iifId);
+        editor.apply();
+    }
+
+    //取出设置的初始界面
+    public static int getIifId(){
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+        int iifId = pref.getInt("iifId",0);
+        return iifId;
+    }
+
+    //设置是否已登录 已登录1 未登录0
+    public static void setLogined(int flag){
+        editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
+        editor.putInt("flag",flag);
+        editor.apply();
+    }
+
+    //取出设置的初始界面
+    public static int getLogined(){
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+        int iifId = pref.getInt("flag",0);
+        return iifId;
+    }
+
+    //设置是启动
+    public static void setIsStart(){
+        editor = BaseActivity.getCurrentActivity().getSharedPreferences("InterFace",Context.MODE_PRIVATE).edit();
+        editor.putInt("start",1);
+        editor.apply();
+    }
+
+    //设置非启动
+    public static void setIsNotStart(){
+        editor = BaseActivity.getCurrentActivity().getSharedPreferences("InterFace",Context.MODE_PRIVATE).edit();
+        editor.putInt("start",0);
+        editor.apply();
+    }
+
+    //获取是否启动
+    public static int getStart(){
+        pref = BaseActivity.getCurrentActivity().getSharedPreferences("InterFace",Context.MODE_PRIVATE);
+        int iifId = pref.getInt("start",1);
+        return iifId;
     }
 
     //添加设备key

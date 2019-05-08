@@ -34,6 +34,7 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="HIhYHjQlQY510kUs45Sbr3zSmELdpko5" />
 
+        <activity android:name=".activity.SetActivity" />
         <activity android:name=".activity.JlDetailActivity" />
         <activity android:name=".activity.BwlDetailActivity" />
         <activity android:name=".activity.SbActivity" />

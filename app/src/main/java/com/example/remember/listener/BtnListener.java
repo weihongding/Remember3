@@ -16,6 +16,7 @@ import com.example.remember.activity.BwlActivity;
 import com.example.remember.activity.BwlDetailActivity;
 import com.example.remember.activity.JlActivity;
 import com.example.remember.activity.JlDetailActivity;
+import com.example.remember.activity.MainActivity;
 import com.example.remember.activity.RcActivity;
 import com.example.remember.activity.SbActivity;
 import com.example.remember.db.Bwl_event;
@@ -36,6 +37,7 @@ import com.example.remember.util.MyApplication;
 import com.example.remember.util.MyDialog;
 import com.example.remember.util.ObjectUtil;
 import com.example.remember.util.StringUtil;
+import com.example.remember.util.ToastUtil;
 import com.example.remember.util.UserSetting;
 import com.example.remember.util.ViewUtil;
 
@@ -53,6 +55,15 @@ public class BtnListener implements View.OnClickListener  {
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
+
+            //退出登录
+            case R.id.btn_set_unlogin:{
+                UserSetting.setUserLoginInfo(BaseActivity.getCurrentActivity(),"","");
+                UserSetting.setLogined(0);
+                new ToastUtil("您已退出登录");
+                break;
+            }
+
             //备忘录相关监听
             case R.id.btn_bwl_add:{
                 Intent intent = new Intent(MyApplication.getContext(), BwlDetailActivity.class);
@@ -97,12 +108,16 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_bwl_long_share:{
-                MyDialog.bwlDialog_long.hide();
-                MyDialog.bwlDialog_share.show();
-                EditText et_bwl_share_acRe = (EditText)MyDialog.bwlDialog_share.findViewById(R.id.edit_bwl_share_acRe);
-                Button btn_bwl_share_q = (Button)MyDialog.bwlDialog_share.findViewById(R.id.btn_bwl_share_q);
-                et_bwl_share_acRe.setText("");
-                btn_bwl_share_q.setOnClickListener(this);
+                if (CheckUtil.isEmpty(UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"))){
+                    new ToastUtil("登录后才可分享");
+                }else {
+                    MyDialog.bwlDialog_long.hide();
+                    MyDialog.bwlDialog_share.show();
+                    EditText et_bwl_share_acRe = (EditText) MyDialog.bwlDialog_share.findViewById(R.id.edit_bwl_share_acRe);
+                    Button btn_bwl_share_q = (Button) MyDialog.bwlDialog_share.findViewById(R.id.btn_bwl_share_q);
+                    et_bwl_share_acRe.setText("");
+                    btn_bwl_share_q.setOnClickListener(this);
+                }
                 break;
             }
             case R.id.btn_bwl_share_q:{
@@ -142,12 +157,16 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_jl_long_share:{
-                MyDialog.jlDialog_long.hide();
-                MyDialog.jlDialog_share.show();
-                EditText et_sb_share_acRe = (EditText)MyDialog.jlDialog_share.findViewById(R.id.edit_jl_share_acRe);
-                Button btn_sb_share_q = (Button)MyDialog.jlDialog_share.findViewById(R.id.btn_jl_share_q);
-                et_sb_share_acRe.setText("");
-                btn_sb_share_q.setOnClickListener(this);
+                if (CheckUtil.isEmpty(UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"))){
+                    new ToastUtil("登录后才可分享");
+                }else {
+                    MyDialog.jlDialog_long.hide();
+                    MyDialog.jlDialog_share.show();
+                    EditText et_sb_share_acRe = (EditText) MyDialog.jlDialog_share.findViewById(R.id.edit_jl_share_acRe);
+                    Button btn_sb_share_q = (Button) MyDialog.jlDialog_share.findViewById(R.id.btn_jl_share_q);
+                    et_sb_share_acRe.setText("");
+                    btn_sb_share_q.setOnClickListener(this);
+                }
                 break;
             }
             case R.id.btn_jl_share_q:{
@@ -316,12 +335,16 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_sb_long_share:{
-                MyDialog.sbDialog_long.hide();
-                MyDialog.sbDialog_share.show();
-                EditText et_sb_share_acRe = (EditText)MyDialog.sbDialog_share.findViewById(R.id.edit_sb_share_acRe);
-                Button btn_sb_share_q = (Button)MyDialog.sbDialog_share.findViewById(R.id.btn_sb_share_q);
-                et_sb_share_acRe.setText("");
-                btn_sb_share_q.setOnClickListener(this);
+                if (CheckUtil.isEmpty(UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"))){
+                    new ToastUtil("登录后才可分享");
+                }else {
+                    MyDialog.sbDialog_long.hide();
+                    MyDialog.sbDialog_share.show();
+                    EditText et_sb_share_acRe = (EditText) MyDialog.sbDialog_share.findViewById(R.id.edit_sb_share_acRe);
+                    Button btn_sb_share_q = (Button) MyDialog.sbDialog_share.findViewById(R.id.btn_sb_share_q);
+                    et_sb_share_acRe.setText("");
+                    btn_sb_share_q.setOnClickListener(this);
+                }
                 break;
             }
             case R.id.btn_sb_share_q:{

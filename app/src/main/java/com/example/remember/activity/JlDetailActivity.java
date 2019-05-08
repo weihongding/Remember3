@@ -98,7 +98,6 @@ public class JlDetailActivity extends BaseActivity {
     protected void onDestroy() {
         MyDialog.colorDialog_jl.dismiss();
         MyDialog.jlDialog_item.dismiss();
-        Jl.choose_jl = null;
         ColorUtil.choose_color_jlDetail_set = null;
         super.onDestroy();
     }
