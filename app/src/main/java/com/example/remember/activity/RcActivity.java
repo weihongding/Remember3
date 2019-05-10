@@ -103,6 +103,7 @@ public class RcActivity extends BaseActivity {
         View rcqAddView = this.getLayoutInflater().inflate(R.layout.dialog_rc_q_add, null);
         View rcUnqView = this.getLayoutInflater().inflate(R.layout.dialog_rc_unq, null);
         View rcUnqSetView = this.getLayoutInflater().inflate(R.layout.dialog_rc_unq_set, null);
+        View rcUnqBackupView = this.getLayoutInflater().inflate(R.layout.dialog_rc_backup, null);
 
         //控件实例获取
         tvYear = (TextView)findViewById(R.id.text_rc_year);
@@ -188,6 +189,7 @@ public class RcActivity extends BaseActivity {
         MyDialog.rcqDialog_add = new MyDialog(this, rcqAddView, R.style.DialogTheme);
         MyDialog.rcunqDialog = new MyDialog(this, rcUnqView, R.style.DialogTheme);
         MyDialog.rcunqDialog_set = new MyDialog(this, rcUnqSetView, R.style.DialogTheme);
+        MyDialog.rcunqDialog_backup = new MyDialog(this, rcUnqBackupView, R.style.DialogTheme);
 
         MyDialog.rcqDialog.setCancelable(true);
         MyDialog.rcqDialog_set.setCancelable(true);
@@ -230,6 +232,7 @@ public class RcActivity extends BaseActivity {
         MyDialog.rcqDialog_add.dismiss();
         MyDialog.rcunqDialog.dismiss();
         MyDialog.rcunqDialog_set.dismiss();
+        MyDialog.rcunqDialog_backup.dismiss();
         MyDialog.colorDialog_rcq_set.dismiss();
         MyDialog.colorDialog_rcq_add.dismiss();
         MyDialog.colorDialog_rcUnq_set.dismiss();

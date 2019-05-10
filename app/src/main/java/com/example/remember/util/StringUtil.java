@@ -23,6 +23,8 @@ public class StringUtil {
     public static final String httpUrl_getNews = "/mail/getNews";
     public static final String httpUrl_haveNews = "/user/haveUnread";
     public static final String httpUrl_haveNotNews = "/user/haveNotUnread";
+    public static final String httpUrl_rcunqBackupUp = "/rcunq/setbackup";
+    public static final String httpUrl_rcunqBackupDown = "/rcunq/getbackup";
 
     public static String numToStr(int n){
 

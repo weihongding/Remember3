@@ -2,19 +2,24 @@ package com.example.remember.util;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.RequiresApi;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.example.remember.R;
 import com.example.remember.activity.MailActivity;
+import com.example.remember.activity.RcActivity;
 import com.example.remember.activity.SbActivity;
 import com.example.remember.db.Mail;
+import com.example.remember.db.Rc_unq;
 import com.example.remember.entity.Sb;
 import com.example.remember.entity.UserInfo;
 
@@ -30,6 +35,7 @@ import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 //检查数据
 public class CheckUtil {
@@ -44,11 +50,14 @@ public class CheckUtil {
     private static final int getShareSuccess = 100867;
     private static final int haveNewsSuccess = 100868;
     private static final int haveNotNewsSuccess = 100869;
+    private static final int rcUnqBackupUpSuccess = 100870;
+    private static final int rcUnqBackupDownSuccess = 100871;
 
 
 
     private static Handler mHandler = new Handler(){
 
+        @RequiresApi(api = Build.VERSION_CODES.O)
         public void handleMessage(Message msg){
             switch (msg.what){
                 case linkFail:{
@@ -215,6 +224,48 @@ public class CheckUtil {
                 case haveNotNewsSuccess:{
                     break;
                 }
+                case rcUnqBackupUpSuccess:{
+
+                    String text = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(text);
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+
+                    if (status==ConstResponse.STATUS_OK){
+                        new ToastUtil(desc);
+                    }else{
+                        new ToastUtil("上传失败");
+                    }
+
+                    break;
+                }
+                case rcUnqBackupDownSuccess:{
+
+                    String text = msg.getData().getString("text");
+                    JSONObject json = JSONObject.parseObject(text);
+                    String desc = json.getString("desc");
+                    int status = json.getInteger("status");
+                    String data = json.getString("data");
+
+                    if (status==ConstResponse.STATUS_OK){
+
+                        data = DataUtil.getDecryptStringByTea(data);
+
+                        JSONArray ja = JSON.parseArray(data);
+
+                        List<Rc_unq> rcunqList = JSONObject.parseArray(ja.toJSONString(), Rc_unq.class);
+                        for (Rc_unq rc_unq:rcunqList) {
+                            rc_unq.save();
+                        }
+                        RcActivity.refreshUnq();
+                        new ToastUtil("添加成功");
+
+                    }else{
+                        new ToastUtil(desc);
+                    }
+
+                    break;
+                }
 
                 default:{
                     break;
@@ -224,6 +275,83 @@ public class CheckUtil {
 
     };
 
+    public static void rcunqBackupDown(){
+
+        RequestBody body = new FormBody.Builder()
+                .add("account",UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"))
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_rcunqBackupDown;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = rcUnqBackupDownSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+            }
+        });
+
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void rcunqBackupUp(String content){
+
+        content = DataUtil.getEncryptStringByTea(content);
+
+        RequestBody body = new FormBody.Builder()
+                .add("account",UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"))
+                .add("content",content)
+                .build();
+
+        String url = HttpUtil.urlHead+StringUtil.httpUrl_rcunqBackupUp;
+        HttpUtil.sendOkHttpRequest(url, body, new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Message msg = new Message();
+                msg.what = linkFail;
+                mHandler.sendMessage(msg);
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+                String responseText = response.body().string();
+                if (responseText==null||responseText.equals("")){
+                    Message msg = new Message();
+                    msg.what = linkFail;
+                    mHandler.sendMessage(msg);
+                }else{
+                    Message msg = new Message();
+                    msg.what = rcUnqBackupUpSuccess;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("text",responseText);
+                    msg.setData(bundle);
+                    mHandler.sendMessage(msg);
+                }
+
+
+            }
+        });
+
+    }
 
     public static void haveNews(String account){
 
@@ -342,11 +470,13 @@ public class CheckUtil {
     }
 
     //将分享内容保存到服务器
-    public static void putShare(String ac_re,String type,String objStr){
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    public static void putShare(String ac_re, String type, String objStr){
         JSONObject conJson = new JSONObject();
         conJson.put("type",type);
         conJson.put("objStr",objStr);
         String content = conJson.toJSONString();
+        content = DataUtil.getEncryptStringByTea(content);
 
         JSONObject json = new JSONObject();
         json.put("ac_se",UserSetting.getUserLoginInfo(BaseActivity.getCurrentActivity()).get("account"));

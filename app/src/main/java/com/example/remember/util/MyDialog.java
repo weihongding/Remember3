@@ -40,7 +40,7 @@ public class MyDialog extends Dialog {
 
     public static MyDialog rcunqDialog;
     public static MyDialog rcunqDialog_set;
-
+    public static MyDialog rcunqDialog_backup;
 
     //    style引用style样式
     public MyDialog(Context context, View layout, int style) {

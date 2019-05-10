@@ -1,6 +1,8 @@
 package com.example.remember.adapter;
 
+import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -55,6 +57,7 @@ public class MailAdapter extends RecyclerView.Adapter<MailAdapter.ViewHolder>{
         holder.tv_type.setText(type);
         Log.d(DataUtil.TAG, mail.getObjStr());
         holder.layout.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
 

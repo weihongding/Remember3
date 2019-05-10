@@ -16,6 +16,7 @@ import com.example.remember.db.Mail;
 import com.example.remember.db.Rc_q;
 import com.example.remember.db.Rc_unq;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Base64;
 import java.util.Date;
 import java.util.HashSet;
@@ -68,6 +69,7 @@ public class ObjectUtil {
     }
 
     //将mail转为备忘录
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public static Bwl_event mailToBe(Mail mail){
 
         JSONObject json = JSONObject.parseObject(mail.getObjStr());

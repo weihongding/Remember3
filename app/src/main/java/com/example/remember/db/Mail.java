@@ -1,6 +1,12 @@
 package com.example.remember.db;
 
+import android.os.Build;
+import android.support.annotation.RequiresApi;
+
 import com.alibaba.fastjson.JSONObject;
+import com.example.remember.util.DataUtil;
+import com.example.remember.util.LogdUtil;
+
 import org.litepal.crud.DataSupport;
 
 public class Mail extends DataSupport implements Comparable<Mail>{
@@ -28,15 +34,16 @@ public class Mail extends DataSupport implements Comparable<Mail>{
         setObjStr(objStr);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     public Mail(String mailStr){
 
         JSONObject json = JSONObject.parseObject(mailStr);
         int id = json.getInteger("id");
         String ac_se = json.getString("ac_se");
         String content = json.getString("content");
-
         setId(id);
         setSentUser(ac_se);
+        content = DataUtil.getDecryptStringByTea(content);
         JSONObject conJson = JSONObject.parseObject(content);
         String type = conJson.getString("type");
         String objStr = conJson.getString("objStr");

@@ -70,6 +70,7 @@ public class MainActivity extends BaseActivity {
 
         //验证登陆
         CheckUtil.setUserLoginState(this);
+        for (int i =0;i<10000;i++){}
         int id = UserSetting.getIifId();
         if (id!=0){
             Intent intent = new Intent(this,ObjectUtil.getIifClass(id));

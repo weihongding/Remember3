@@ -132,7 +132,6 @@ public class BtnListener implements View.OnClickListener  {
             //记录相关监听
             case R.id.btn_jl_add:{
                 MyDialog.jlDialog_add.show();
-                Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_add_sj:{
@@ -205,12 +204,10 @@ public class BtnListener implements View.OnClickListener  {
 
                 JlDetailActivity.refresh();
 
-                Toast.makeText(MyApplication.getContext(), "点击了添加", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_detail_color:{
                 MyDialog.colorDialog_jl.show();
-                Toast.makeText(MyApplication.getContext(), "点击了选择颜色", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_detail_set:{
@@ -220,7 +217,6 @@ public class BtnListener implements View.OnClickListener  {
 
                 layoutText.setVisibility(View.GONE);
                 layoutSet.setVisibility(View.VISIBLE);
-                Toast.makeText(MyApplication.getContext(), "点击了设置", Toast.LENGTH_SHORT).show();
                 break;
 
             }
@@ -254,7 +250,7 @@ public class BtnListener implements View.OnClickListener  {
 
                 ViewUtil.closeInputMethod();
 
-                Toast.makeText(MyApplication.getContext(), "保存记录信息", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MyApplication.getContext(), "记录信息更新成功！", Toast.LENGTH_SHORT).show();
                 break;
             }
             case R.id.btn_jl_detail_item_del:{
@@ -400,7 +396,23 @@ public class BtnListener implements View.OnClickListener  {
                 break;
             }
             case R.id.btn_rc_history: {
-                Toast.makeText(MyApplication.getContext(), "点击了同步", Toast.LENGTH_SHORT).show();
+                MyDialog.rcunqDialog_backup.show();
+                Button btn_up = (Button)MyDialog.rcunqDialog_backup.findViewById(R.id.btn_rc_backup_up);
+                Button btn_down = (Button)MyDialog.rcunqDialog_backup.findViewById(R.id.btn_rc_backup_down);
+                btn_up.setOnClickListener(this);
+                btn_down.setOnClickListener(this);
+                break;
+            }
+            case R.id.btn_rc_backup_up:{
+                List<Rc_unq> list = DbUtil.requestRcUnqList();
+                String content = JSON.toJSONString(list);
+                CheckUtil.rcunqBackupUp(content);
+                MyDialog.rcunqDialog_backup.hide();
+                break;
+            }
+            case R.id.btn_rc_backup_down:{
+                CheckUtil.rcunqBackupDown();
+                MyDialog.rcunqDialog_backup.hide();
                 break;
             }
 
