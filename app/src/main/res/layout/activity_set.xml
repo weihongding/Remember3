@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFFDE4">
 
-
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="0dp"
+        android:layout_weight="4">
 
         <TextView
             android:text="设置"
@@ -74,18 +75,23 @@
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_set_unlogin"
-        android:text="退 出 登 录"
-        android:textSize="23dp"
-        android:textStyle="normal"
-        android:textColor="#442D2D"
-        android:layout_width="210dp"
-        android:layout_height="50dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/btn_unlogin"
-        android:layout_marginBottom="75dp" />
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <Button
+            android:id="@+id/btn_set_unlogin"
+            android:text="退 出 登 录"
+            android:textSize="23dp"
+            android:textStyle="normal"
+            android:textColor="#442D2D"
+            android:layout_width="210dp"
+            android:layout_height="50dp"
+            android:background="@drawable/btn_unlogin"
+            android:layout_centerInParent="true"/>
+
+    </RelativeLayout>
 
 
-</RelativeLayout>
+</LinearLayout>
