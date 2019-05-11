@@ -92,6 +92,20 @@ public class UserSetting {
         return iifId;
     }
 
+    //设置备忘录字体大小
+    public static void setBwlTextSize(int size){
+        editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
+        editor.putInt("bwlTextSize",size);
+        editor.apply();
+    }
+
+    //取出设置的初始界面
+    public static int getBwlTextSize(){
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+        int size = pref.getInt("bwlTextSize",18);
+        return size;
+    }
+
     //设置是否已登录 已登录1 未登录0
     public static void setLogined(int flag){
         editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();

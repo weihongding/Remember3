@@ -12,8 +12,8 @@ public class StringUtil {
 
     public static final String[] state_sb = {"关","开"};
     public static final String[] iniInF = {"默认","日程","备忘录","记录","天气","地图","设备"};
+    public static final String[] bwlTextSize = {"小","中","大"};
 
-    public static final String httpUrl_getJson = "/user/getJson";
     public static final String httpUrl_login = "/user/login";
     public static final String httpUrl_register = "/user/register";
     public static final String httpUrl_unread = "/user/unread";

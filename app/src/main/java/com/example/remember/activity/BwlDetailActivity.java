@@ -15,6 +15,7 @@ import com.example.remember.listener.BtnListener;
 import com.example.remember.util.BaseActivity;
 import com.example.remember.util.ColorUtil;
 import com.example.remember.util.MyDialog;
+import com.example.remember.util.UserSetting;
 import com.example.remember.util.ViewUtil;
 
 public class BwlDetailActivity extends BaseActivity {
@@ -48,6 +49,13 @@ public class BwlDetailActivity extends BaseActivity {
         recycler_color.setLayoutManager(colorLayoutManager);
         recycler_color.setAdapter(new ColorAdapter());
 
+    }
+
+    @Override
+    protected void onResume() {
+        EditText et_content = (EditText)findViewById(R.id.edit_bwl_content);
+        et_content.setTextSize(UserSetting.getBwlTextSize());
+        super.onResume();
     }
 
     @Override

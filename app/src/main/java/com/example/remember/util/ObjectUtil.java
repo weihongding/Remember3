@@ -77,7 +77,41 @@ public class ObjectUtil {
         return be;
 
     }
-//    "日程","备忘录","记录","天气","地图","设备"
+
+    public static int sizeToOrder(int size){
+        switch (size){
+            case 16:{
+                return 0;
+            }
+            case 18:{
+                return 1;
+            }
+            case 20:{
+                return 2;
+            }
+            default:{
+                return 1;
+            }
+        }
+    }
+
+    public static int orderToSize(int size){
+        switch (size){
+            case 0:{
+                return 16;
+            }
+            case 1:{
+                return 18;
+            }
+            case 2:{
+                return 20;
+            }
+            default:{
+                return 18;
+            }
+        }
+    }
+
     public static Class getIifClass(int id){
         switch (id){
             case 1:{

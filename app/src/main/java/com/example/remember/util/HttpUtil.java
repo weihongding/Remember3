@@ -10,9 +10,13 @@ import okhttp3.RequestBody;
 
 public class HttpUtil {
 
-    public static String urlHead = "http://192.168.43.148:8080";
+    //阿里云服务器地址：http://47.100.198.114/api
+    //tomcat服务器地址：http://192.168.43.148:8080/api
+    //IDEA服务器地址：http://192.168.43.148:8080
+    public static String urlHead = "http://47.100.198.114/api";
 
     public static void sendOkHttpRequest(String address,okhttp3.Callback callback){
+        new LogdUtil(address);
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)//设置连接超时时间
                 .readTimeout(5, TimeUnit.SECONDS)//设置读取超时时间;
@@ -22,6 +26,7 @@ public class HttpUtil {
     }
 
     public static void sendOkHttpRequest(String address, RequestBody body, okhttp3.Callback callback){
+        new LogdUtil(address);
         OkHttpClient client = new OkHttpClient.Builder()
                 .connectTimeout(5, TimeUnit.SECONDS)//设置连接超时时间
                 .readTimeout(5, TimeUnit.SECONDS)//设置读取超时时间;
@@ -29,7 +34,5 @@ public class HttpUtil {
         Request request = new Request.Builder().url(address).post(body).build();
         client.newCall(request).enqueue(callback);
     }
-
-
 
 }

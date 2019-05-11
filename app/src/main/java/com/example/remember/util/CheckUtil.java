@@ -686,7 +686,10 @@ public class CheckUtil {
                     .add("password",(String)valueMap.get("password"))
                     .build();
 
+            new LogdUtil((String)valueMap.get("account"));
+
             String url = HttpUtil.urlHead+StringUtil.httpUrl_login;
+            new LogdUtil(url);
             HttpUtil.sendOkHttpRequest(url,body, new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {

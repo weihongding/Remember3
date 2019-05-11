@@ -8,4 +8,9 @@ public class LogdUtil {
         Log.d(DataUtil.TAG, str);
     }
 
+    public LogdUtil(int i){
+        Log.d(DataUtil.TAG, Integer.toString(i));
+    }
+
+
 }
