@@ -84,6 +84,16 @@ public class CheckUtil {
                         tv_user.setText("欢迎使用，"+user.getName());
                         btn_login.setVisibility(View.GONE);
                         tv_user.setVisibility(View.VISIBLE);
+
+                        if (UserSetting.getLogined()==1) {
+                            int id = UserSetting.getIifId();
+                            if (id != 0) {
+                                Intent intent = new Intent(BaseActivity.getCurrentActivity(), ObjectUtil.getIifClass(id));
+                                BaseActivity.getCurrentActivity().startActivity(intent);
+                            }
+                            UserSetting.setIsNotStart();
+                        }
+
                     }
                     break;
                 }

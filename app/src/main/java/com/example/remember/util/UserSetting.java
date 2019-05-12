@@ -141,6 +141,20 @@ public class UserSetting {
         return iifId;
     }
 
+
+    //设置是否加载完
+    public static void setOk(int ok){
+        editor = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext()).edit();
+        editor.putInt("ok",ok);
+        editor.apply();
+    }
+
+    public static int getOk(){
+        pref = PreferenceManager.getDefaultSharedPreferences(MyApplication.getContext());
+        int iifId = pref.getInt("ok",0);
+        return iifId;
+    }
+
     //添加设备key
     public static void putSbKey(String key){
         Set set = getSbKey();
