@@ -9,7 +9,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.remember.R;
 import com.example.remember.db.Jl;
@@ -60,7 +59,6 @@ public class JlAdapter_zb extends RecyclerView.Adapter<JlAdapter_zb.ViewHolder> 
                 btn_save.setOnClickListener(BtnListener.instance);
 
                 MyDialog.jlDialog_item.show();
-                Toast.makeText(MyApplication.getContext(), "长按了事件item", Toast.LENGTH_SHORT).show();
                 return true;
             }
         });

@@ -1,6 +1,8 @@
 package com.example.remember.listener;
 
 import android.content.Intent;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -52,6 +54,7 @@ public class BtnListener implements View.OnClickListener  {
 
     public BtnListener(){};
 
+    @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
@@ -96,7 +99,7 @@ public class BtnListener implements View.OnClickListener  {
 
                 tv_time.setText(time);
 
-                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("保存成功！");
                 break;
             }
             case R.id.btn_bwl_long_del:{
@@ -104,7 +107,7 @@ public class BtnListener implements View.OnClickListener  {
                 Bwl_event.choose_be = null;
                 BwlActivity.refresh();
                 MyDialog.bwlDialog_long.hide();
-                Toast.makeText(MyApplication.getContext(), "点击了删除", Toast.LENGTH_SHORT).show();
+                new ToastUtil("删除成功！");
                 break;
             }
             case R.id.btn_bwl_long_share:{
@@ -250,7 +253,8 @@ public class BtnListener implements View.OnClickListener  {
 
                 ViewUtil.closeInputMethod();
 
-                Toast.makeText(MyApplication.getContext(), "记录信息更新成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("更新成功！");
+
                 break;
             }
             case R.id.btn_jl_detail_item_del:{
@@ -272,7 +276,7 @@ public class BtnListener implements View.OnClickListener  {
                 JlDetailActivity.refresh();
                 MyDialog.jlDialog_item.hide();
 
-                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("保存成功！");
                 break;
             }
 
@@ -422,14 +426,14 @@ public class BtnListener implements View.OnClickListener  {
                 rc_unq.save();
                 MyDialog.rcqDialog.hide();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "添加待定日程成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("添加待定日程成功！");
                 break;
             }
             case R.id.btn_rc_q_del:{
                 Rc_q.chooseRcq.delete();
                 RcActivity.refresh();
                 MyDialog.rcqDialog.hide();
-                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("删除成功！");
                 break;
             }
             case R.id.btn_rc_q_edit:{
@@ -485,7 +489,7 @@ public class BtnListener implements View.OnClickListener  {
                 RcActivity.refreshUnq();
                 MyDialog.rcqDialog_set.hide();
                 ColorUtil.choose_color_rcq_set = null;
-                Toast.makeText(MyApplication.getContext(), "添加待定日程成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("添加待定日程成功！");
                 break;
             }
             case R.id.btn_rc_q_set_del:{
@@ -493,7 +497,7 @@ public class BtnListener implements View.OnClickListener  {
                 MyDialog.rcqDialog_set.hide();
                 ColorUtil.choose_color_rcq_set = null;
                 RcActivity.refresh();
-                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("删除成功！");
                 break;
             }
             case R.id.btn_rc_q_set_save:{
@@ -525,7 +529,7 @@ public class BtnListener implements View.OnClickListener  {
 
                 ColorUtil.choose_color_rcq_set=null;
 
-                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("保存成功！");
                 MyDialog.rcqDialog_set.hide();
                 RcActivity.refresh();
 
@@ -546,7 +550,7 @@ public class BtnListener implements View.OnClickListener  {
                 Rc_unq rcUnq = new Rc_unq(title,des,color);
                 rcUnq.save();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "添加待定日程成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("添加待定日程成功！");
 
                 ColorUtil.choose_color_rcq_add = null;
                 MyDialog.rcqDialog_add.hide();
@@ -579,7 +583,7 @@ public class BtnListener implements View.OnClickListener  {
                 rcq.save();
 
                 ColorUtil.choose_color_rcq_add = null;
-                Toast.makeText(MyApplication.getContext(), "新增日程成功", Toast.LENGTH_SHORT).show();
+                new ToastUtil("新增日程成功！");
                 MyDialog.rcqDialog_add.hide();
                 RcActivity.refresh();
 
@@ -630,7 +634,7 @@ public class BtnListener implements View.OnClickListener  {
                 Rc_unq.chooseRcUnq=null;
                 MyDialog.rcunqDialog.hide();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("删除成功！");
                 break;
             }
             case R.id.btn_rc_unq_edit:{
@@ -713,7 +717,7 @@ public class BtnListener implements View.OnClickListener  {
                 ColorUtil.choose_color_rcUnq_set = null;
                 MyDialog.rcunqDialog_set.hide();
                 RcActivity.refreshUnq();
-                Toast.makeText(MyApplication.getContext(), "删除成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("删除成功！");
                 break;
             }
             case R.id.btn_rc_unq_set_save:{
@@ -732,7 +736,7 @@ public class BtnListener implements View.OnClickListener  {
 
                 RcActivity.refreshUnq();
 
-                Toast.makeText(MyApplication.getContext(), "保存成功！", Toast.LENGTH_SHORT).show();
+                new ToastUtil("保存成功！");
                 break;
             }
 

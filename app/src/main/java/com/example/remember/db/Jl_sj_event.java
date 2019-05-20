@@ -22,6 +22,11 @@ public class Jl_sj_event extends DataSupport implements Comparable<Jl_sj_event> 
         setTime(DateUtil.dateToStr(new Date()));
     }
 
+    public Jl_sj_event(int Jlid,String time){
+        setJid(Jlid);
+        setTime(time);
+    }
+
     public int getId() {
         return id;
     }

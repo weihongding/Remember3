@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.remember.util.MyApplication;
+import com.example.remember.util.ToastUtil;
 
 public class TouchListener implements View.OnTouchListener {
 
@@ -29,11 +30,11 @@ public class TouchListener implements View.OnTouchListener {
             case MotionEvent.ACTION_UP:
                 if (mCurPosX - mPosX > 0
                         && (Math.abs(mCurPosX - mPosX) > 25)) {
-                    Toast.makeText(MyApplication.getContext(), "向左滑动", Toast.LENGTH_SHORT).show();
+                    new ToastUtil("向左滑动");
 
                 } else if (mCurPosX - mPosX < 0
                         && (Math.abs(mCurPosX - mPosX) > 25)) {
-                    Toast.makeText(MyApplication.getContext(), "向右滑动", Toast.LENGTH_SHORT).show();
+                    new ToastUtil("向右滑动");
                 }
                 break;
         }

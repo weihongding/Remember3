@@ -65,7 +65,6 @@ public class JlAdapter_sj extends RecyclerView.Adapter<JlAdapter_sj.ViewHolder> 
                 btn_save.setOnClickListener(BtnListener.instance);
 
                 MyDialog.jlDialog_item.show();
-                Toast.makeText(MyApplication.getContext(), "长按了事件item", Toast.LENGTH_SHORT).show();
                 return true;
 
             }

@@ -48,7 +48,6 @@ public class ColorAdapter_Rcq_set extends RecyclerView.Adapter<ColorAdapter_Rcq_
                 Button btn_color_set = (Button) MyDialog.rcqDialog_set.findViewById(R.id.btn_rc_q_set_color);
                 ViewUtil.setViewColor(btn_color_set,color);
                 MyDialog.colorDialog_rcq_set.hide();
-                Toast.makeText(MyApplication.getContext(), "日程设置"+color, Toast.LENGTH_SHORT).show();
             }
         });
 
